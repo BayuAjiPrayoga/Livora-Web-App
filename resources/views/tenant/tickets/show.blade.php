@@ -8,15 +8,15 @@
     <div class="bg-white shadow-sm border-b">
         <div class="px-6 py-4">
             <div class="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                <a href="{{ route('tenant.dashboard') }}" class="hover:text-livora-primary">Dashboard</a>
+                <a href="{{ route('tenant.dashboard') }}" class="hover:text-[#ff6900]">Dashboard</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <a href="{{ route('tenant.tickets.index') }}" class="hover:text-livora-primary">Tiket Saya</a>
+                <a href="{{ route('tenant.tickets.index') }}" class="hover:text-[#ff6900]">Tiket Saya</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span class="text-livora-primary font-medium">Detail Tiket #{{ $ticket->id }}</span>
+                <span class="text-[#ff6900] font-medium">Detail Tiket #{{ $ticket->id }}</span>
             </div>
             <h1 class="text-2xl font-bold text-livora-text">Detail Tiket #{{ $ticket->id }}</h1>
         </div>

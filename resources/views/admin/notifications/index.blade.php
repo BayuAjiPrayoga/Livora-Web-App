@@ -13,7 +13,7 @@
                 </svg>
                 Export
             </a>
-            <a href="{{ route('admin.notifications.create') }}" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+            <a href="{{ route('admin.notifications.create') }}" class="btn btn-primary">
                 Send Notification
             </a>
         </div>
@@ -129,7 +129,7 @@
             </div>
 
             <div class="flex items-end">
-                <button type="submit" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors w-full">
+                <button type="submit" class="btn btn-primary">
                     Filter
                 </button>
             </div>
@@ -145,7 +145,7 @@
             <div class="flex-1">
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by title, message, or user..." class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
-            <button type="submit" class="bg-livora-primary text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+            <button type="submit" class="btn btn-primary">
                 Search
             </button>
         </form>
@@ -170,7 +170,7 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left">
-                            <input type="checkbox" id="selectAll" class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                            <input type="checkbox" id="selectAll" class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
@@ -185,7 +185,7 @@
                     @forelse($notifications as $notification)
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4">
-                                <input type="checkbox" class="notification-checkbox rounded border-gray-300 text-livora-primary focus:ring-livora-primary" value="{{ $notification->id }}">
+                                <input type="checkbox" class="notification-checkbox rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary" value="{{ $notification->id }}">
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center">
@@ -226,7 +226,7 @@
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-500">
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('admin.notifications.show', $notification) }}" class="text-livora-primary hover:text-blue-700">
+                                    <a href="{{ route('admin.notifications.show', $notification) }}" class="text-[#ff6900] hover:text-blue-700">
                                         View
                                     </a>
                                     <form method="POST" action="{{ route('admin.notifications.destroy', $notification) }}" class="inline" onsubmit="return confirm('Are you sure you want to delete this notification?')">

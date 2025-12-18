@@ -12,7 +12,7 @@
             <p class="text-sm text-gray-600 mt-1">Analisis performa sistem dan key performance indicators</p>
         </div>
         <div class="flex space-x-3">
-            <button onclick="exportReport()" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+            <button onclick="exportReport()" class="btn btn-primary">
                 Export Report
             </button>
         </div>

@@ -29,10 +29,10 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                     <div class="p-6 text-center">
                         <div class="relative inline-block">
-                            <div class="w-24 h-24 bg-livora-primary rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto">
+                            <div class="w- h- bg-gradient-to-br from-[#ff6900] to-[#ff8533] rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto">
                                 {{ substr(Auth::user()->name, 0, 1) }}
                             </div>
-                            <button class="absolute bottom-0 right-0 w-8 h-8 bg-livora-accent rounded-full flex items-center justify-center text-white hover:bg-orange-600 transition-colors">
+                            <button class="absolute bottom-0 right-0 w-8 h-8 bg-gradient-to-br from-[#ff6900] to-[#ff8533] rounded-full flex items-center justify-center text-white hover:opacity-90 transition-colors">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
                                 </svg>
@@ -40,7 +40,7 @@
                         </div>
                         <h2 class="text-xl font-semibold text-gray-900 mt-4">{{ Auth::user()->name }}</h2>
                         <p class="text-gray-600">{{ Auth::user()->email }}</p>
-                        <p class="text-sm text-livora-primary font-medium mt-2">Tenant LIVORA</p>
+                        <p class="text-sm text-[#ff6900] font-medium mt-2">Tenant LIVORA</p>
                         
                         <div class="mt-6 space-y-3">
                             <div class="flex items-center justify-between text-sm">
@@ -110,7 +110,7 @@
                             <div class="pt-4 border-t border-gray-100">
                                 <div class="flex items-center justify-between">
                                     <span class="text-sm font-medium text-gray-900">Total Pengeluaran</span>
-                                    <span class="font-bold text-livora-primary">
+                                    <span class="font-bold text-[#ff6900]">
                                         Rp {{ number_format($userPayments->where('status', 'verified')->sum('amount'), 0, ',', '.') }}
                                     </span>
                                 </div>
@@ -138,7 +138,7 @@
                                     <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
                                     <input type="text" name="name" id="name" 
                                            value="{{ old('name', Auth::user()->name) }}"
-                                           class="w-full rounded-lg border-gray-300 focus:border-livora-primary focus:ring-livora-primary @error('name') border-red-300 @enderror">
+                                           class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-primary @error('name') border-red-300 @enderror">
                                     @error('name')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -148,7 +148,7 @@
                                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
                                     <input type="email" name="email" id="email" 
                                            value="{{ old('email', Auth::user()->email) }}"
-                                           class="w-full rounded-lg border-gray-300 focus:border-livora-primary focus:ring-livora-primary @error('email') border-red-300 @enderror">
+                                           class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-primary @error('email') border-red-300 @enderror">
                                     @error('email')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -160,7 +160,7 @@
                                     <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon</label>
                                     <input type="tel" name="phone" id="phone" 
                                            value="{{ old('phone', Auth::user()->phone ?? '') }}"
-                                           class="w-full rounded-lg border-gray-300 focus:border-livora-primary focus:ring-livora-primary"
+                                           class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-primary"
                                            placeholder="08xxxxxxxxxx">
                                 </div>
 
@@ -168,14 +168,14 @@
                                     <label for="birth_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Lahir</label>
                                     <input type="date" name="birth_date" id="birth_date" 
                                            value="{{ old('birth_date', Auth::user()->birth_date ?? '') }}"
-                                           class="w-full rounded-lg border-gray-300 focus:border-livora-primary focus:ring-livora-primary">
+                                           class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-primary">
                                 </div>
                             </div>
 
                             <div>
                                 <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Alamat</label>
                                 <textarea name="address" id="address" rows="3" 
-                                          class="w-full rounded-lg border-gray-300 focus:border-livora-primary focus:ring-livora-primary"
+                                          class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-primary"
                                           placeholder="Alamat lengkap Anda">{{ old('address', Auth::user()->address ?? '') }}</textarea>
                             </div>
                         </div>
@@ -191,7 +191,7 @@
                             <div>
                                 <label for="current_password" class="block text-sm font-medium text-gray-700 mb-2">Password Saat Ini</label>
                                 <input type="password" name="current_password" id="current_password" 
-                                       class="w-full rounded-lg border-gray-300 focus:border-livora-primary focus:ring-livora-primary @error('current_password') border-red-300 @enderror"
+                                       class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-primary @error('current_password') border-red-300 @enderror"
                                        placeholder="Masukkan password saat ini">
                                 @error('current_password')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -202,7 +202,7 @@
                                 <div>
                                     <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password Baru</label>
                                     <input type="password" name="password" id="password" 
-                                           class="w-full rounded-lg border-gray-300 focus:border-livora-primary focus:ring-livora-primary @error('password') border-red-300 @enderror"
+                                           class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-primary @error('password') border-red-300 @enderror"
                                            placeholder="Masukkan password baru">
                                     @error('password')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -212,7 +212,7 @@
                                 <div>
                                     <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">Konfirmasi Password</label>
                                     <input type="password" name="password_confirmation" id="password_confirmation" 
-                                           class="w-full rounded-lg border-gray-300 focus:border-livora-primary focus:ring-livora-primary"
+                                           class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-primary"
                                            placeholder="Ulangi password baru">
                                 </div>
                             </div>
@@ -249,7 +249,7 @@
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" name="email_notifications" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-livora-primary"></div>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#ff6900]"></div>
                                 </label>
                             </div>
 
@@ -260,7 +260,7 @@
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" name="sms_notifications" class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-livora-primary"></div>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#ff6900]"></div>
                                 </label>
                             </div>
 
@@ -271,7 +271,7 @@
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" name="marketing_notifications" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-livora-primary"></div>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#ff6900]"></div>
                                 </label>
                             </div>
                         </div>
@@ -282,7 +282,7 @@
                         <button type="button" onclick="window.location.reload()" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
                             Reset
                         </button>
-                        <button type="submit" class="px-6 py-2 bg-livora-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <button type="submit" class="btn btn-primary">
                             Simpan Perubahan
                         </button>
                     </div>

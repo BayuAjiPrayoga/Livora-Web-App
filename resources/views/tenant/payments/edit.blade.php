@@ -10,7 +10,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900 flex items-center">
-                        <svg class="w-6 h-6 mr-2 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                         </svg>
                         Edit Pembayaran #{{ str_pad($payment->id, 6, '0', STR_PAD_LEFT) }}
@@ -36,7 +36,7 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-yellow-50 to-orange-50">
                         <h3 class="text-lg font-semibold text-gray-900 flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                             </svg>
                             Booking yang Dibayar
@@ -73,7 +73,7 @@
                             </div>
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-medium text-gray-500 mb-1">Total Harga Booking</label>
-                                <div class="text-2xl font-bold text-livora-primary">
+                                <div class="text-2xl font-bold text-[#ff6900]">
                                     Rp {{ number_format($payment->booking->final_amount, 0, ',', '.') }}
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                                 <p class="mt-2 text-sm text-gray-600">
-                                    💡 Total harga booking: <span class="font-semibold text-livora-primary">Rp {{ number_format($payment->booking->final_amount, 0, ',', '.') }}</span>
+                                    💡 Total harga booking: <span class="font-semibold text-[#ff6900]">Rp {{ number_format($payment->booking->final_amount, 0, ',', '.') }}</span>
                                 </p>
                             </div>
 
@@ -173,7 +173,7 @@
                                 <!-- New Image Preview -->
                                 <div id="new-image-preview" class="mt-4 hidden">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Preview Bukti Baru:</label>
-                                    <img id="new-preview-img" src="" alt="Preview Baru" class="w-full h-64 object-cover rounded-lg shadow-md border-2 border-livora-primary">
+                                    <img id="new-preview-img" src="" alt="Preview Baru" class="w-full h-64 object-cover rounded-lg shadow-md border-2 border-[#ff6900]">
                                 </div>
                             </div>
 

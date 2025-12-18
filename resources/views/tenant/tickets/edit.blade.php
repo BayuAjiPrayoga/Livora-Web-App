@@ -102,7 +102,7 @@
                         Kamar Terkait
                     </label>
                     <select name="room_id" id="room_id"
-                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                         <option value="">Pilih kamar (opsional)...</option>
                         @foreach($rooms as $room)
                             <option value="{{ $room->id }}" {{ old('room_id', $ticket->room_id) == $room->id ? 'selected' : '' }}>
@@ -119,7 +119,7 @@
                     </label>
                     <input type="text" name="subject" id="subject" required
                            value="{{ old('subject', $ticket->subject) }}"
-                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                 </div>
 
                 <!-- Priority -->
@@ -128,7 +128,7 @@
                         Prioritas *
                     </label>
                     <select name="priority" id="priority" required
-                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                         <option value="">Pilih prioritas...</option>
                         <option value="low" {{ old('priority', $ticket->priority) == 'low' ? 'selected' : '' }}>Rendah</option>
                         <option value="medium" {{ old('priority', $ticket->priority) == 'medium' ? 'selected' : '' }}>Sedang</option>
@@ -143,7 +143,7 @@
                     </label>
                     <textarea name="message" id="message" rows="5" required
                               placeholder="Jelaskan masalah atau permintaan Anda dengan detail..."
-                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">{{ old('message', $ticket->message) }}</textarea>
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">{{ old('message', $ticket->message) }}</textarea>
                 </div>
 
                 <!-- Response (if exists) -->
@@ -171,7 +171,7 @@
                     </a>
                     @if($ticket->status === 'open')
                         <button type="submit" 
-                                class="inline-flex items-center px-6 py-2 bg-livora-primary border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                                class="inline-flex items-center px-6 py-2 bg-[#ff6900] border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                             Simpan Perubahan
                         </button>
                     @else

@@ -56,14 +56,14 @@
                                     @if($user->avatar)
                                         <img class="h-16 w-16 object-cover rounded-full" src="{{ asset('storage/' . $user->avatar) }}" alt="Current avatar">
                                     @else
-                                        <div class="h-16 w-16 bg-livora-primary rounded-full flex items-center justify-center">
+                                        <div class="h- w- bg-gradient-to-br from-[#ff6900] to-[#ff8533] rounded-full flex items-center justify-center">
                                             <span class="text-xl font-medium text-white">{{ substr($user->name, 0, 1) }}</span>
                                         </div>
                                     @endif
                                 </div>
                                 <div class="flex-1">
                                     <input type="file" name="avatar" id="avatar" accept="image/*" 
-                                           class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-livora-primary file:text-white hover:file:bg-blue-700">
+                                           class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-[#ff6900] file:text-white hover:file:bg-[#e55a00]">
                                     <p class="mt-1 text-xs text-gray-500">JPG, JPEG, PNG up to 2MB</p>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                             <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" 
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary"
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]"
                                    required>
                         </div>
 
@@ -81,7 +81,7 @@
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                             <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" 
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary"
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]"
                                    required>
                         </div>
 
@@ -89,7 +89,7 @@
                         <div>
                             <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                             <input type="text" name="phone" id="phone" value="{{ old('phone', $user->phone) }}" 
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary"
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]"
                                    placeholder="+62 812-3456-7890">
                         </div>
 
@@ -103,7 +103,7 @@
                     </div>
 
                     <div class="flex justify-end mt-6">
-                        <button type="submit" class="bg-livora-primary text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                        <button type="submit" class="btn btn-primary">
                             Update Profile
                         </button>
                     </div>
@@ -126,7 +126,7 @@
                         <div>
                             <label for="current_password" class="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
                             <input type="password" name="current_password" id="current_password" 
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary"
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]"
                                    required>
                         </div>
 
@@ -134,7 +134,7 @@
                         <div>
                             <label for="password" class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
                             <input type="password" name="password" id="password" 
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary"
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]"
                                    required>
                         </div>
 
@@ -142,7 +142,7 @@
                         <div>
                             <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
                             <input type="password" name="password_confirmation" id="password_confirmation" 
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary"
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]"
                                    required>
                         </div>
                     </div>

@@ -12,7 +12,7 @@
                     <h1 class="text-2xl font-bold text-gray-900">Booking Saya</h1>
                     <p class="text-gray-600 mt-1">Kelola semua booking dan reservasi Anda</p>
                 </div>
-                <a href="{{ route('tenant.bookings.create') }}" class="inline-flex items-center px-4 py-2 bg-livora-primary border border-transparent rounded-lg font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                <a href="{{ route('tenant.bookings.create') }}" class="inline-flex items-center px-4 py-2 bg-[#ff6900] border border-transparent rounded-lg font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
@@ -83,8 +83,8 @@
 
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex items-center">
-                        <div class="p-2 bg-livora-primary/10 rounded-lg">
-                            <svg class="w-6 h-6 text-livora-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="p-2 bg-orange-50 rounded-lg">
+                            <svg class="w-6 h-6 text-[#ff6900]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
                             </svg>
                         </div>
@@ -100,7 +100,7 @@
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
                     <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-                        <select class="rounded-lg border-gray-300 focus:border-livora-primary focus:ring-livora-primary">
+                        <select class="rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-primary">
                             <option value="">Semua Status</option>
                             <option value="pending">Menunggu</option>
                             <option value="confirmed">Dikonfirmasi</option>
@@ -109,9 +109,9 @@
                             <option value="cancelled">Dibatalkan</option>
                         </select>
                         
-                        <input type="date" class="rounded-lg border-gray-300 focus:border-livora-primary focus:ring-livora-primary">
+                        <input type="date" class="rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-primary">
                         
-                        <input type="text" placeholder="Cari booking..." class="rounded-lg border-gray-300 focus:border-livora-primary focus:ring-livora-primary">
+                        <input type="text" placeholder="Cari booking..." class="rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-primary">
                     </div>
 
                     <div class="flex items-center space-x-2">
@@ -183,7 +183,7 @@
                                 </div>
                                 <div>
                                     <p class="text-gray-600">Total Bayar:</p>
-                                    <p class="font-bold text-livora-primary">Rp {{ number_format($booking->final_amount, 0, ',', '.') }}</p>
+                                    <p class="font-bold text-[#ff6900]">Rp {{ number_format($booking->final_amount, 0, ',', '.') }}</p>
                                 </div>
                             </div>
 
@@ -232,7 +232,7 @@
 
                                 @if($booking->status === 'confirmed' && $booking->payments->where('status', 'verified')->isEmpty())
                                     <a href="{{ route('tenant.payments.create', ['booking_id' => $booking->id]) }}" 
-                                       class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-livora-primary border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                                       class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-[#ff6900] border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                         </svg>
@@ -270,7 +270,7 @@
                 <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada booking</h3>
                 <p class="text-gray-600 mb-8">Anda belum memiliki booking apapun. Mulai booking sekarang!</p>
                 <a href="{{ route('tenant.bookings.create') }}" 
-                   class="inline-flex items-center px-6 py-3 bg-livora-primary border border-transparent rounded-lg font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                   class="inline-flex items-center px-6 py-3 bg-[#ff6900] border border-transparent rounded-lg font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>

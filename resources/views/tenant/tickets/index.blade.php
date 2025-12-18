@@ -8,16 +8,16 @@
     <div class="bg-white shadow-sm border-b">
         <div class="px-6 py-4">
             <div class="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                <a href="{{ route('tenant.dashboard') }}" class="hover:text-livora-primary">Dashboard</a>
+                <a href="{{ route('tenant.dashboard') }}" class="hover:text-[#ff6900]">Dashboard</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span class="text-livora-primary font-medium">Tiket Saya</span>
+                <span class="text-[#ff6900] font-medium">Tiket Saya</span>
             </div>
             <div class="flex justify-between items-center">
                 <div>
                     <h1 class="text-2xl font-bold text-livora-text flex items-center">
-                        <svg class="w-6 h-6 mr-2 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
                         </svg>
                         Tiket Saya
@@ -25,7 +25,7 @@
                     <p class="text-gray-600 mt-1">Kelola tiket keluhan dan permintaan Anda</p>
                 </div>
                 <a href="{{ route('tenant.tickets.create') }}" 
-                   class="inline-flex items-center px-4 py-2 bg-livora-primary border border-transparent rounded-md font-semibold text-white hover:bg-blue-800 transition-colors">
+                   class="btn btn-primary">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
@@ -103,14 +103,14 @@
                     <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Cari Tiket</label>
                     <input type="text" name="search" id="search" 
                            value="{{ request('search') }}"
-                           class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent"
+                           class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent"
                            placeholder="Cari berdasarkan subjek atau pesan...">
                 </div>
 
                 <!-- Status Filter -->
                 <div>
                     <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                    <select name="status" id="status" class="rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                    <select name="status" id="status" class="rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         <option value="all" {{ request('status', 'all') == 'all' ? 'selected' : '' }}>Semua Status</option>
                         <option value="open" {{ request('status') == 'open' ? 'selected' : '' }}>Belum Diproses</option>
                         <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>Sedang Diproses</option>
@@ -120,7 +120,7 @@
 
                 <!-- Filter Buttons -->
                 <div class="flex space-x-2">
-                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-livora-primary border border-transparent rounded-md font-semibold text-white hover:bg-blue-800 transition-colors">
+                    <button type="submit" class="btn btn-primary">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
@@ -254,7 +254,7 @@
                                 @endif
                             </div>
                             <a href="{{ route('tenant.tickets.show', $ticket) }}" 
-                               class="inline-flex items-center text-sm text-livora-primary hover:text-livora-secondary font-medium">
+                               class="inline-flex items-center text-sm text-[#ff6900] hover:text-livora-secondary font-medium">
                                 Detail
                                 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -286,7 +286,7 @@
                     </p>
                     <div class="mt-6">
                         <a href="{{ route('tenant.tickets.create') }}" 
-                           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-livora-primary hover:bg-blue-800">
+                           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#ff6900] hover:bg-blue-800">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>

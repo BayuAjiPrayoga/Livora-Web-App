@@ -39,25 +39,25 @@
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">Misi Kami</h2>
                 <ul class="space-y-3 text-gray-700">
                     <li class="flex items-start">
-                        <svg class="w-6 h-6 text-livora-accent mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-orange-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                         Menyediakan platform yang user-friendly dan mudah diakses
                     </li>
                     <li class="flex items-start">
-                        <svg class="w-6 h-6 text-livora-accent mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-orange-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                         Memverifikasi setiap properti untuk keamanan pengguna
                     </li>
                     <li class="flex items-start">
-                        <svg class="w-6 h-6 text-livora-accent mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-orange-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                         Memberikan transparansi harga dan informasi lengkap
                     </li>
                     <li class="flex items-start">
-                        <svg class="w-6 h-6 text-livora-accent mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-orange-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                         Memfasilitasi proses booking yang cepat dan aman

@@ -91,7 +91,7 @@
                         Pilih Property
                     </label>
                     <select name="boarding_house_id" id="boarding_house_id" 
-                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]"
                             onchange="loadRooms()">
                         <option value="">Pilih property...</option>
                         @foreach($boardingHouses as $property)
@@ -109,7 +109,7 @@
                         Pilih Kamar *
                     </label>
                     <select name="room_id" id="room_id" required
-                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                         <option value="">Pilih kamar...</option>
                     </select>
                     <div id="room-info" class="mt-3 hidden p-3 bg-blue-50 border border-blue-200 rounded-lg">
@@ -126,7 +126,7 @@
                         <input type="date" name="start_date" id="start_date" required 
                                min="{{ date('Y-m-d') }}"
                                value="{{ old('start_date', $booking->check_in_date->format('Y-m-d')) }}"
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     </div>
 
                     <div>
@@ -135,7 +135,7 @@
                         </label>
                         <input type="date" name="end_date" id="end_date" required
                                value="{{ old('end_date', $booking->check_out_date->format('Y-m-d')) }}"
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     </div>
                 </div>
 
@@ -149,7 +149,7 @@
                     </label>
                     <textarea name="notes" id="notes" rows="3"
                               placeholder="Permintaan khusus atau catatan untuk pemilik property..."
-                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">{{ old('notes', $booking->notes) }}</textarea>
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">{{ old('notes', $booking->notes) }}</textarea>
                 </div>
 
                 <!-- Price Calculation -->
@@ -174,7 +174,7 @@
                         </div>
                         <div class="border-t border-gray-200 pt-2 flex justify-between font-medium">
                             <span>Total Estimasi:</span>
-                            <span id="total-amount" class="text-livora-primary">-</span>
+                            <span id="total-amount" class="text-[#ff6900]">-</span>
                         </div>
                     </div>
                 </div>
@@ -186,7 +186,7 @@
                         Batal
                     </a>
                     <button type="submit" 
-                            class="inline-flex items-center px-6 py-2 bg-livora-primary border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                            class="inline-flex items-center px-6 py-2 bg-[#ff6900] border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                         Simpan Perubahan
                     </button>
                 </div>

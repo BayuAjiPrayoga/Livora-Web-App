@@ -7,7 +7,7 @@
 @section('content')
 <div class="p-6">
     <div class="flex items-center space-x-4 mb-6">
-        <a href="{{ route('admin.tickets.index') }}" class="inline-flex items-center text-sm text-gray-500 hover:text-livora-primary">
+        <a href="{{ route('admin.tickets.index') }}" class="inline-flex items-center text-sm text-gray-500 hover:text-[#ff6900]">
             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
@@ -110,7 +110,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-medium text-gray-900">Conversation</h3>
-                    <button onclick="toggleResponseForm()" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                    <button onclick="toggleResponseForm()" class="btn btn-primary">
                         Add Response
                     </button>
                 </div>
@@ -125,13 +125,13 @@
                                 <label for="response_message" class="block text-sm font-medium text-gray-700 mb-2">Response Message</label>
                                 <textarea name="response" id="response_message" rows="4" 
                                           placeholder="Type your response here..."
-                                          class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary" required></textarea>
+                                          class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]" required></textarea>
                             </div>
                             
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label for="new_status" class="block text-sm font-medium text-gray-700 mb-2">Update Status</label>
-                                    <select name="status" id="new_status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                    <select name="status" id="new_status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                         <option value="open" {{ $ticket->status == 'open' ? 'selected' : '' }}>Open</option>
                                         <option value="in_progress" {{ $ticket->status == 'in_progress' ? 'selected' : '' }}>In Progress</option>
                                         <option value="resolved" {{ $ticket->status == 'resolved' ? 'selected' : '' }}>Resolved</option>
@@ -141,7 +141,7 @@
 
                                 <div>
                                     <label for="new_priority" class="block text-sm font-medium text-gray-700 mb-2">Update Priority</label>
-                                    <select name="priority" id="new_priority" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                    <select name="priority" id="new_priority" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                         <option value="low" {{ $ticket->priority == 'low' ? 'selected' : '' }}>Low</option>
                                         <option value="medium" {{ $ticket->priority == 'medium' ? 'selected' : '' }}>Medium</option>
                                         <option value="high" {{ $ticket->priority == 'high' ? 'selected' : '' }}>High</option>
@@ -154,7 +154,7 @@
                                 <button type="button" onclick="toggleResponseForm()" class="bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors">
                                     Cancel
                                 </button>
-                                <button type="submit" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                                <button type="submit" class="btn btn-primary">
                                     Send Response
                                 </button>
                             </div>
@@ -248,7 +248,7 @@
                     @endif
                     
                     <a href="{{ route('admin.tickets.edit', $ticket) }}" 
-                       class="w-full block text-center bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                       class="btn btn-primary">
                         Edit Ticket
                     </a>
                 </div>
@@ -296,7 +296,7 @@
                 </div>
                 <div class="mt-4">
                     <a href="{{ route('admin.users.show', $ticket->user->id ?? '#') }}" 
-                       class="text-sm text-livora-primary hover:text-blue-700 font-medium">
+                       class="text-sm text-[#ff6900] hover:text-blue-700 font-medium">
                         View Full Profile →
                     </a>
                 </div>
@@ -310,7 +310,7 @@
                     <div class="space-y-4">
                         <div>
                             <label for="assignee_id" class="block text-sm font-medium text-gray-700 mb-2">Assign to</label>
-                            <select name="assignee_id" id="assignee_id" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                            <select name="assignee_id" id="assignee_id" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                 <option value="">Unassigned</option>
                                 @foreach($admins ?? [] as $admin)
                                     <option value="{{ $admin->id }}" {{ $ticket->assigned_to == $admin->id ? 'selected' : '' }}>{{ $admin->name }}</option>
@@ -320,14 +320,14 @@
                         
                         <div>
                             <label for="priority" class="block text-sm font-medium text-gray-700 mb-2">Priority</label>
-                            <select name="priority" id="priority" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                            <select name="priority" id="priority" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                 <option value="low" {{ $ticket->priority === 'low' ? 'selected' : '' }}>Low</option>
                                 <option value="medium" {{ $ticket->priority === 'medium' ? 'selected' : '' }}>Medium</option>
                                 <option value="high" {{ $ticket->priority === 'high' ? 'selected' : '' }}>High</option>
                             </select>
                         </div>
 
-                        <button type="submit" class="w-full bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                        <button type="submit" class="btn btn-primary">
                             Update Assignment
                         </button>
                     </div>

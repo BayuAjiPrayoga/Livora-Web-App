@@ -10,7 +10,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900 flex items-center">
-                        <svg class="w-6 h-6 mr-2 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
                         Pembayaran Saya
@@ -18,7 +18,7 @@
                     <p class="text-gray-600 mt-1">Kelola dan lacak status pembayaran Anda</p>
                 </div>
                 <a href="{{ route('tenant.payments.create') }}" 
-                   class="inline-flex items-center px-4 py-2 bg-livora-primary border border-transparent rounded-lg font-semibold text-white hover:bg-blue-800 transition-colors">
+                   class="btn btn-primary">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
@@ -79,14 +79,14 @@
             <!-- Total Pembayaran -->
             <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow">
                 <div class="flex items-center">
-                    <div class="p-3 bg-livora-primary/10 rounded-lg">
-                        <svg class="w-6 h-6 text-livora-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="p-3 bg-orange-50 rounded-lg">
+                        <svg class="w-6 h-6 text-[#ff6900]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-600">Total Bayar</p>
-                        <p class="text-2xl font-bold text-livora-primary">Rp {{ number_format($payments->sum('amount'), 0, ',', '.') }}</p>
+                        <p class="text-2xl font-bold text-[#ff6900]">Rp {{ number_format($payments->sum('amount'), 0, ',', '.') }}</p>
                     </div>
                 </div>
             </div>
@@ -210,11 +210,11 @@
                     
                     <div class="flex justify-between items-center">
                         <div>
-                            <p class="text-lg font-bold text-livora-primary">Rp {{ number_format($payment->amount, 0, ',', '.') }}</p>
+                            <p class="text-lg font-bold text-[#ff6900]">Rp {{ number_format($payment->amount, 0, ',', '.') }}</p>
                             <p class="text-xs text-gray-500">{{ $payment->created_at->format('d M Y H:i') }}</p>
                         </div>
                         <a href="{{ route('tenant.payments.show', $payment) }}" 
-                           class="text-livora-primary hover:text-blue-700 text-sm font-medium">
+                           class="text-[#ff6900] hover:text-blue-700 text-sm font-medium">
                             Detail →
                         </a>
                     </div>
@@ -237,7 +237,7 @@
                 <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada pembayaran</h3>
                 <p class="text-gray-500 mb-6">Anda belum melakukan pembayaran apapun.</p>
                 <a href="{{ route('tenant.payments.create') }}" 
-                   class="inline-flex items-center px-6 py-3 bg-livora-primary border border-transparent rounded-lg font-semibold text-white hover:bg-blue-800 transition-colors">
+                   class="inline-flex items-center px-6 py-3 bg-[#ff6900] border border-transparent rounded-lg font-semibold text-white hover:bg-blue-800 transition-colors">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>

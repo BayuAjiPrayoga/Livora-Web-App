@@ -114,7 +114,7 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div class="h-10 w-10 bg-livora-primary rounded-full flex items-center justify-center">
+                                    <div class="h- w- bg-gradient-to-br from-[#ff6900] to-[#ff8533] rounded-full flex items-center justify-center">
                                         <span class="text-white font-medium">{{ substr($booking->tenant->name, 0, 1) }}</span>
                                     </div>
                                     <div class="ml-4">
@@ -151,7 +151,7 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <a href="{{ route('mitra.bookings.show', $booking) }}" class="text-livora-accent hover:text-livora-primary transition-colors">
+                                <a href="{{ route('mitra.bookings.show', $booking) }}" class="text-orange-600 hover:text-[#ff6900] transition-colors">
                                     Detail
                                 </a>
                             </td>

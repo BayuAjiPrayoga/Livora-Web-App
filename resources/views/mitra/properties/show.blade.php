@@ -8,11 +8,11 @@
     <div class="bg-white shadow-sm border-b">
         <div class="px-6 py-4">
             <div class="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                <a href="{{ route('mitra.properties.index') }}" class="hover:text-livora-primary">Properti Saya</a>
+                <a href="{{ route('mitra.properties.index') }}" class="hover:text-[#ff6900]">Properti Saya</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span class="text-livora-primary font-medium">{{ $property->name }}</span>
+                <span class="text-[#ff6900] font-medium">{{ $property->name }}</span>
             </div>
             <div class="flex justify-between items-center">
                 <div>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="flex space-x-3">
                     <a href="{{ route('mitra.properties.edit', $property->id) }}" 
-                       class="inline-flex items-center px-4 py-2 border border-livora-primary text-livora-primary rounded-md hover:bg-livora-primary hover:text-white transition-colors">
+                       class="btn btn-outline rounded-md ">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                         </svg>
@@ -93,14 +93,14 @@
                         <h3 class="text-lg font-semibold text-livora-text">Daftar Kamar ({{ $property->rooms->count() }})</h3>
                         <div class="flex space-x-2">
                             @if($property->rooms->count() > 0)
-                            <a href="{{ route('mitra.rooms.index', $property->id) }}" class="inline-flex items-center px-3 py-2 border border-livora-primary text-livora-primary text-sm rounded hover:bg-livora-primary hover:text-white transition-colors">
+                            <a href="{{ route('mitra.rooms.index', $property->id) }}" class="btn btn-outline text-sm rounded ">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                                 </svg>
                                 Kelola Semua
                             </a>
                             @endif
-                            <a href="{{ route('mitra.rooms.create', $property->id) }}" class="inline-flex items-center px-3 py-2 bg-livora-accent text-white text-sm rounded hover:bg-livora-primary transition-colors">
+                            <a href="{{ route('mitra.rooms.create', $property->id) }}" class="btn btn-primary btn-sm">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                 </svg>
@@ -113,7 +113,7 @@
                         @if($property->rooms->count() > 0)
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             @foreach($property->rooms as $room)
-                            <div class="border border-gray-200 rounded-lg p-4 hover:border-livora-accent transition-colors">
+                            <div class="border border-gray-200 rounded-lg p-4 hover:border-[#ff6900] transition-colors">
                                 <div class="flex justify-between items-start mb-2">
                                     <h4 class="font-medium text-livora-text">{{ $room->name }}</h4>
                                     <span class="px-2 py-1 text-xs rounded-full {{ $room->is_available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
@@ -132,11 +132,11 @@
                                 </div>
                                 <div class="flex space-x-2">
                                     <a href="{{ route('mitra.rooms.show', ['property' => $property->id, 'room' => $room->id]) }}" 
-                                       class="flex-1 text-center px-2 py-1 text-xs border border-livora-accent text-livora-accent rounded hover:bg-livora-accent hover:text-white transition-colors">
+                                       class="flex-1 text-center px-2 py-1 text-xs border border-[#ff6900] text-orange-600 rounded hover:bg-[#ff6900] hover:text-white transition-colors">
                                         Detail
                                     </a>
                                     <a href="{{ route('mitra.rooms.edit', ['property' => $property->id, 'room' => $room->id]) }}" 
-                                       class="flex-1 text-center px-2 py-1 text-xs bg-livora-primary text-white rounded hover:bg-blue-800 transition-colors">
+                                       class="flex-1 text-center px-2 py-1 text-xs bg-[#ff6900] text-white rounded hover:bg-blue-800 transition-colors">
                                         Edit
                                     </a>
                                 </div>
@@ -153,7 +153,7 @@
                             <p class="mt-1 text-sm text-gray-500">Mulai tambahkan kamar untuk properti ini.</p>
                             <div class="mt-4">
                                 <a href="{{ route('mitra.rooms.create', $property->id) }}" 
-                                   class="inline-flex items-center px-4 py-2 bg-livora-accent text-white text-sm rounded hover:bg-livora-primary transition-colors">
+                                   class="btn btn-primary btn-sm">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                     </svg>
@@ -253,7 +253,7 @@
                         
                         <div class="flex justify-between">
                             <span class="text-sm text-gray-500">Total Booking</span>
-                            <span class="text-sm font-medium text-livora-accent">
+                            <span class="text-sm font-medium text-orange-600">
                                 {{ $property->rooms->sum('bookings_count') }}
                             </span>
                         </div>

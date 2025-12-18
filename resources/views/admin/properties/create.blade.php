@@ -50,7 +50,7 @@
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Property Name *</label>
                         <input type="text" name="name" id="name" value="{{ old('name') }}" required
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('name') border-red-500 @enderror">
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('name') border-red-500 @enderror">
                         @error('name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -59,7 +59,7 @@
                     <div>
                         <label for="user_id" class="block text-sm font-medium text-gray-700 mb-2">Property Owner *</label>
                         <select name="user_id" id="user_id" required
-                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('user_id') border-red-500 @enderror">
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('user_id') border-red-500 @enderror">
                             <option value="">Select Owner</option>
                             @foreach($owners as $owner)
                                 <option value="{{ $owner->id }}" {{ old('user_id') == $owner->id ? 'selected' : '' }}>
@@ -78,7 +78,7 @@
                     <div>
                         <label for="city" class="block text-sm font-medium text-gray-700 mb-2">City *</label>
                         <input type="text" name="city" id="city" value="{{ old('city') }}" required
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('city') border-red-500 @enderror">
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('city') border-red-500 @enderror">
                         @error('city')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -89,7 +89,7 @@
                     <div class="flex items-center">
                         <input type="hidden" name="is_verified" value="0">
                         <input type="checkbox" name="is_verified" id="is_verified" value="1" {{ old('is_verified') ? 'checked' : '' }}
-                               class="h-4 w-4 text-livora-primary focus:ring-livora-primary border-gray-300 rounded">
+                               class="h-4 w-4 text-[#ff6900] focus:ring-livora-primary border-gray-300 rounded">
                         <label for="is_verified" class="ml-2 block text-sm text-gray-900">
                             Verified Property
                         </label>
@@ -100,7 +100,7 @@
                 <div>
                     <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Full Address *</label>
                     <textarea name="address" id="address" rows="3" required
-                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('address') border-red-500 @enderror">{{ old('address') }}</textarea>
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('address') border-red-500 @enderror">{{ old('address') }}</textarea>
                     @error('address')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -110,7 +110,7 @@
                 <div>
                     <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
                     <textarea name="description" id="description" rows="4" required
-                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('description') border-red-500 @enderror"
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('description') border-red-500 @enderror"
                               placeholder="Describe the property features, amenities, and other details...">{{ old('description') }}</textarea>
                     @error('description')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -122,7 +122,7 @@
                     <div>
                         <label for="price_range_start" class="block text-sm font-medium text-gray-700 mb-2">Price Range Start (Rp) *</label>
                         <input type="number" name="price_range_start" id="price_range_start" value="{{ old('price_range_start') }}" required min="0"
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('price_range_start') border-red-500 @enderror"
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('price_range_start') border-red-500 @enderror"
                                placeholder="500000">
                         @error('price_range_start')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -132,7 +132,7 @@
                     <div>
                         <label for="price_range_end" class="block text-sm font-medium text-gray-700 mb-2">Price Range End (Rp) *</label>
                         <input type="number" name="price_range_end" id="price_range_end" value="{{ old('price_range_end') }}" required min="0"
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('price_range_end') border-red-500 @enderror"
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('price_range_end') border-red-500 @enderror"
                                placeholder="2000000">
                         @error('price_range_end')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -146,7 +146,7 @@
                 <div>
                     <label for="images" class="block text-sm font-medium text-gray-700 mb-2">Property Images</label>
                     <input type="file" name="images[]" id="images" multiple accept="image/*"
-                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('images') border-red-500 @enderror">
+                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('images') border-red-500 @enderror">
                     <p class="mt-1 text-sm text-gray-500">Upload multiple images (JPG, PNG, GIF). Maximum 5MB per file.</p>
                     @error('images')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -160,7 +160,7 @@
                     <div class="flex items-center">
                         <input type="hidden" name="is_active" value="0">
                         <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', 1) ? 'checked' : '' }}
-                               class="h-4 w-4 text-livora-primary focus:ring-livora-primary border-gray-300 rounded">
+                               class="h-4 w-4 text-[#ff6900] focus:ring-livora-primary border-gray-300 rounded">
                         <label for="is_active" class="ml-2 block text-sm text-gray-900">
                             Active Property
                         </label>
@@ -172,7 +172,7 @@
                     <a href="{{ route('admin.properties.index') }}" class="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
                         Cancel
                     </a>
-                    <button type="submit" id="submit-btn" class="bg-livora-primary text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">
+                    <button type="submit" id="submit-btn" class="btn btn-primary">
                         <span id="submit-text">Create Property</span>
                         <span id="loading-text" class="hidden">
                             <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

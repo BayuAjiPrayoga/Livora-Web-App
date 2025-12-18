@@ -7,7 +7,7 @@
 @section('content')
 <div class="p-6">
     <div class="flex items-center space-x-4 mb-6">
-        <a href="{{ route('admin.payments.index') }}" class="inline-flex items-center text-sm text-gray-500 hover:text-livora-primary">
+        <a href="{{ route('admin.payments.index') }}" class="inline-flex items-center text-sm text-gray-500 hover:text-[#ff6900]">
             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
@@ -36,7 +36,7 @@
                             <label for="amount" class="block text-sm font-medium text-gray-700 mb-2">Payment Amount (IDR)</label>
                             <input type="number" name="amount" id="amount" 
                                    value="{{ $payment->amount }}" 
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary" 
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]" 
                                    required>
                             @error('amount')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -45,7 +45,7 @@
 
                         <div>
                             <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Payment Status</label>
-                            <select name="status" id="status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary" required>
+                            <select name="status" id="status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]" required>
                                 <option value="pending" {{ $payment->status === 'pending' ? 'selected' : '' }}>Pending</option>
                                 <option value="approved" {{ $payment->status === 'approved' ? 'selected' : '' }}>Approved</option>
                                 <option value="rejected" {{ $payment->status === 'rejected' ? 'selected' : '' }}>Rejected</option>
@@ -60,7 +60,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
                             <label for="payment_method" class="block text-sm font-medium text-gray-700 mb-2">Payment Method</label>
-                            <select name="payment_method" id="payment_method" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                            <select name="payment_method" id="payment_method" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                 <option value="Bank Transfer" {{ $payment->payment_method === 'Bank Transfer' ? 'selected' : '' }}>Bank Transfer</option>
                                 <option value="E-Wallet" {{ $payment->payment_method === 'E-Wallet' ? 'selected' : '' }}>E-Wallet</option>
                                 <option value="Credit Card" {{ $payment->payment_method === 'Credit Card' ? 'selected' : '' }}>Credit Card</option>
@@ -72,7 +72,7 @@
                             <label for="payment_date" class="block text-sm font-medium text-gray-700 mb-2">Payment Date</label>
                             <input type="datetime-local" name="payment_date" id="payment_date" 
                                    value="{{ $payment->payment_date ? $payment->payment_date->format('Y-m-d\TH:i') : '' }}"
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                         </div>
                     </div>
 
@@ -82,7 +82,7 @@
                             <input type="text" name="reference_number" id="reference_number" 
                                    value="{{ $payment->reference_number }}" 
                                    placeholder="Enter transaction reference number"
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                         </div>
 
                         <div>
@@ -90,7 +90,7 @@
                             <input type="text" name="bank_account" id="bank_account" 
                                    value="{{ $payment->bank_account }}" 
                                    placeholder="Enter bank account details"
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                         </div>
                     </div>
 
@@ -99,7 +99,7 @@
                         <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Payment Description</label>
                         <textarea name="description" id="description" rows="3" 
                                   placeholder="Add payment description or notes..."
-                                  class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">{{ $payment->description }}</textarea>
+                                  class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">{{ $payment->description }}</textarea>
                     </div>
 
                     <!-- Admin Notes -->
@@ -107,7 +107,7 @@
                         <label for="admin_notes" class="block text-sm font-medium text-gray-700 mb-2">Admin Notes</label>
                         <textarea name="admin_notes" id="admin_notes" rows="4" 
                                   placeholder="Internal admin notes about this payment..."
-                                  class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">{{ $payment->admin_notes }}</textarea>
+                                  class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">{{ $payment->admin_notes }}</textarea>
                     </div>
 
                     <!-- Verification Section (only show for approved/rejected status) -->
@@ -120,7 +120,7 @@
                             <label for="verification_notes" class="block text-sm font-medium text-gray-700 mb-2">Verification Notes</label>
                             <textarea name="verification_notes" id="verification_notes" rows="3" 
                                       placeholder="Add notes about the verification process..."
-                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">{{ $payment->verification_notes }}</textarea>
+                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">{{ $payment->verification_notes }}</textarea>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -128,12 +128,12 @@
                                 <label for="verified_at" class="block text-sm font-medium text-gray-700 mb-2">Verification Date</label>
                                 <input type="datetime-local" name="verified_at" id="verified_at" 
                                        value="{{ $payment->verified_at ? $payment->verified_at->format('Y-m-d\TH:i') : '' }}"
-                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             </div>
 
                             <div>
                                 <label for="verified_by" class="block text-sm font-medium text-gray-700 mb-2">Verified By</label>
-                                <select name="verified_by" id="verified_by" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                <select name="verified_by" id="verified_by" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                     <option value="">Select Admin</option>
                                     @foreach($admins ?? [] as $admin)
                                         <option value="{{ $admin->id }}" {{ $payment->verified_by == $admin->id ? 'selected' : '' }}>{{ $admin->name }}</option>
@@ -149,7 +149,7 @@
                            class="bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors">
                             Cancel
                         </a>
-                        <button type="submit" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                        <button type="submit" class="btn btn-primary">
                             Update Payment
                         </button>
                     </div>
@@ -244,7 +244,7 @@
                 </div>
                 <div class="mt-4">
                     <a href="{{ route('admin.bookings.show', $payment->booking) }}" 
-                       class="text-sm text-livora-primary hover:text-blue-700 font-medium">
+                       class="text-sm text-[#ff6900] hover:text-blue-700 font-medium">
                         View Booking →
                     </a>
                 </div>

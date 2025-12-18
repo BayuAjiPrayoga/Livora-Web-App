@@ -15,7 +15,7 @@
             <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
                 Temukan Kost Impian Anda
                 <br>
-                <span class="text-livora-accent">Dengan Mudah & Cepat</span>
+                <span class="text-orange-600">Dengan Mudah & Cepat</span>
             </h1>
             <p class="text-xl md:text-2xl mb-8 text-orange-100 max-w-3xl mx-auto">
                 Platform terpercaya untuk menemukan kost dan boarding house terbaik di seluruh Indonesia. Proses booking yang mudah, harga transparan.
@@ -186,13 +186,13 @@
                             <div class="flex items-center justify-between pt-4 border-t border-gray-100">
                                 <div>
                                     <div class="text-sm text-gray-500">Mulai dari</div>
-                                    <div class="text-2xl font-bold text-livora-primary">
+                                    <div class="text-2xl font-bold text-[#ff6900]">
                                         Rp {{ number_format($property->rooms->min('price'), 0, ',', '.') }}
                                     </div>
                                     <div class="text-xs text-gray-500">per bulan</div>
                                 </div>
                                 <a href="{{ route('properties.show', $property->id) }}" 
-                                   class="inline-flex items-center px-4 py-2 bg-livora-primary hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                   class="inline-flex items-center px-4 py-2 bg-[#ff6900] hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
                                     Lihat Detail
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -207,7 +207,7 @@
             <!-- View All Button -->
             <div class="text-center mt-12">
                 <a href="{{ route('browse') }}" 
-                   class="inline-flex items-center px-8 py-3 bg-livora-accent hover:bg-yellow-500 text-gray-900 font-semibold rounded-lg transition-colors duration-200">
+                   class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-[#ff6900] to-[#ff8533] hover:opacity-90 text-gray-900 font-semibold rounded-lg transition-colors duration-200">
                     Lihat Semua Kost
                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
@@ -240,8 +240,8 @@
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="text-center p-6">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-livora-primary/10 rounded-full mb-4">
-                    <svg class="w-8 h-8 text-livora-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-50 rounded-full mb-4">
+                    <svg class="w-8 h-8 text-[#ff6900]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
@@ -250,8 +250,8 @@
             </div>
             
             <div class="text-center p-6">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-livora-accent/10 rounded-full mb-4">
-                    <svg class="w-8 h-8 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-50 rounded-full mb-4">
+                    <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
                 </div>
@@ -283,7 +283,7 @@
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="{{ route('register') }}" 
-               class="inline-flex items-center justify-center px-8 py-3 bg-livora-accent hover:bg-yellow-500 text-gray-900 font-bold rounded-lg transition-colors duration-200">
+               class="inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-[#ff6900] to-[#ff8533] hover:opacity-90 text-gray-900 font-bold rounded-lg transition-colors duration-200">
                 Daftar Sekarang
                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>

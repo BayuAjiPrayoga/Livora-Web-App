@@ -8,15 +8,15 @@
     <div class="bg-white shadow-sm border-b">
         <div class="px-6 py-4">
             <div class="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                <a href="{{ route('mitra.properties.index') }}" class="hover:text-livora-primary">Properti Saya</a>
+                <a href="{{ route('mitra.properties.index') }}" class="hover:text-[#ff6900]">Properti Saya</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <a href="{{ route('mitra.properties.show', $property->id) }}" class="hover:text-livora-primary">{{ $property->name }}</a>
+                <a href="{{ route('mitra.properties.show', $property->id) }}" class="hover:text-[#ff6900]">{{ $property->name }}</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span class="text-livora-primary font-medium">Edit Properti</span>
+                <span class="text-[#ff6900] font-medium">Edit Properti</span>
             </div>
             <div class="flex justify-between items-center">
                 <div>
@@ -60,7 +60,7 @@
                 <!-- Section 1: Informasi Dasar -->
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-semibold text-livora-text flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                         </svg>
                         Informasi Dasar Properti
@@ -77,7 +77,7 @@
                             </label>
                             <input type="text" name="name" id="name" 
                                    value="{{ old('name', $property->name) }}"
-                                   class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('name') border-red-300 @enderror"
+                                   class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('name') border-red-300 @enderror"
                                    placeholder="Contoh: Kost Nyaman Pusat Kota"
                                    onkeyup="generateSlug()">
                             @error('name')
@@ -96,7 +96,7 @@
                                 </span>
                                 <input type="text" name="slug" id="slug" 
                                        value="{{ old('slug', $property->slug) }}"
-                                       class="flex-1 rounded-r-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('slug') border-red-300 @enderror"
+                                       class="flex-1 rounded-r-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('slug') border-red-300 @enderror"
                                        placeholder="kost-nyaman-pusat-kota">
                             </div>
                             @error('slug')
@@ -112,7 +112,7 @@
                             </label>
                             <input type="text" name="city" id="city" 
                                    value="{{ old('city', $property->city) }}"
-                                   class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('city') border-red-300 @enderror"
+                                   class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('city') border-red-300 @enderror"
                                    placeholder="Contoh: Jakarta">
                             @error('city')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -125,7 +125,7 @@
                                 Status Properti
                             </label>
                             <select name="is_active" id="is_active" 
-                                    class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('is_active') border-red-300 @enderror">
+                                    class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('is_active') border-red-300 @enderror">
                                 <option value="1" {{ old('is_active', $property->is_active) == 1 ? 'selected' : '' }}>Aktif</option>
                                 <option value="0" {{ old('is_active', $property->is_active) == 0 ? 'selected' : '' }}>Nonaktif</option>
                             </select>
@@ -141,7 +141,7 @@
                             Alamat Lengkap <span class="text-red-500">*</span>
                         </label>
                         <textarea name="address" id="address" rows="3" 
-                                  class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('address') border-red-300 @enderror"
+                                  class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('address') border-red-300 @enderror"
                                   placeholder="Masukkan alamat lengkap properti...">{{ old('address', $property->address) }}</textarea>
                         @error('address')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -154,7 +154,7 @@
                             Deskripsi Properti
                         </label>
                         <textarea name="description" id="description" rows="4" 
-                                  class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('description') border-red-300 @enderror"
+                                  class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('description') border-red-300 @enderror"
                                   placeholder="Ceritakan tentang properti Anda, fasilitas yang tersedia, dan keunggulannya...">{{ old('description', $property->description) }}</textarea>
                         @error('description')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -166,7 +166,7 @@
                 <!-- Section 2: Lokasi & Koordinat -->
                 <div class="px-6 py-4 border-t border-b border-gray-200 bg-gray-50">
                     <h3 class="text-lg font-semibold text-livora-text flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
@@ -184,7 +184,7 @@
                             </label>
                             <input type="number" name="latitude" id="latitude" step="any"
                                    value="{{ old('latitude', $property->latitude) }}"
-                                   class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('latitude') border-red-300 @enderror"
+                                   class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('latitude') border-red-300 @enderror"
                                    placeholder="Contoh: -6.2088">
                             @error('latitude')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -198,7 +198,7 @@
                             </label>
                             <input type="number" name="longitude" id="longitude" step="any"
                                    value="{{ old('longitude', $property->longitude) }}"
-                                   class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('longitude') border-red-300 @enderror"
+                                   class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('longitude') border-red-300 @enderror"
                                    placeholder="Contoh: 106.8456">
                             @error('longitude')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -213,7 +213,7 @@
                 <!-- Section 3: Foto Properti -->
                 <div class="px-6 py-4 border-t border-b border-gray-200 bg-gray-50">
                     <h3 class="text-lg font-semibold text-livora-text flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                         Foto Properti
@@ -251,13 +251,13 @@
                         <label for="images" class="block text-sm font-medium text-gray-700 mb-2">
                             Tambah Foto Baru
                         </label>
-                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-livora-accent transition-colors">
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-[#ff6900] transition-colors">
                             <div class="space-y-1 text-center">
                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <div class="flex text-sm text-gray-600">
-                                    <label for="images" class="relative cursor-pointer bg-white rounded-md font-medium text-livora-accent hover:text-livora-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-livora-accent">
+                                    <label for="images" class="relative cursor-pointer bg-white rounded-md font-medium text-orange-600 hover:text-[#ff6900] focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-livora-accent">
                                         <span>Upload foto</span>
                                         <input id="images" name="images[]" type="file" class="sr-only" multiple accept="image/*" onchange="previewImages(this)">
                                     </label>
@@ -288,7 +288,7 @@
                         Batal
                     </a>
                     <button type="submit" 
-                            class="inline-flex items-center px-6 py-2 bg-livora-primary border border-transparent rounded-md font-semibold text-white hover:bg-blue-800 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 transition ease-in-out duration-150">
+                            class="inline-flex items-center px-6 py-2 bg-[#ff6900] border border-transparent rounded-md font-semibold text-white hover:bg-blue-800 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>

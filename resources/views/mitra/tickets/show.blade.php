@@ -8,15 +8,15 @@
     <div class="bg-white shadow-sm border-b">
         <div class="px-6 py-4">
             <div class="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                <a href="{{ route('mitra.dashboard') }}" class="hover:text-livora-primary">Dashboard</a>
+                <a href="{{ route('mitra.dashboard') }}" class="hover:text-[#ff6900]">Dashboard</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <a href="{{ route('mitra.tickets.index') }}" class="hover:text-livora-primary">Kelola Tiket</a>
+                <a href="{{ route('mitra.tickets.index') }}" class="hover:text-[#ff6900]">Kelola Tiket</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span class="text-livora-primary font-medium">Tiket #{{ $ticket->id }}</span>
+                <span class="text-[#ff6900] font-medium">Tiket #{{ $ticket->id }}</span>
             </div>
             <div class="flex justify-between items-center">
                 <div>
@@ -146,7 +146,7 @@
                                     Respon
                                 </label>
                                 <textarea name="response" id="response" rows="4" 
-                                          class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('response') border-red-300 @enderror"
+                                          class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('response') border-red-300 @enderror"
                                           placeholder="Berikan respon terhadap tiket ini...">{{ old('response', $ticket->response) }}</textarea>
                                 @error('response')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -161,7 +161,7 @@
                                         Status <span class="text-red-500">*</span>
                                     </label>
                                     <select name="status" id="status" 
-                                            class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('status') border-red-300 @enderror">
+                                            class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('status') border-red-300 @enderror">
                                         <option value="open" {{ old('status', $ticket->status) === 'open' ? 'selected' : '' }}>Belum Diproses</option>
                                         <option value="in_progress" {{ old('status', $ticket->status) === 'in_progress' ? 'selected' : '' }}>Sedang Diproses</option>
                                         <option value="resolved" {{ old('status', $ticket->status) === 'resolved' ? 'selected' : '' }}>Selesai</option>
@@ -177,7 +177,7 @@
                                         Prioritas
                                     </label>
                                     <select name="priority" id="priority" 
-                                            class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                                            class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                                         <option value="low" {{ old('priority', $ticket->priority) === 'low' ? 'selected' : '' }}>Rendah</option>
                                         <option value="medium" {{ old('priority', $ticket->priority) === 'medium' ? 'selected' : '' }}>Sedang</option>
                                         <option value="high" {{ old('priority', $ticket->priority) === 'high' ? 'selected' : '' }}>Tinggi</option>
@@ -189,7 +189,7 @@
                             <!-- Submit Button -->
                             <div class="flex justify-end">
                                 <button type="submit" 
-                                        class="inline-flex items-center px-6 py-2 bg-livora-primary border border-transparent rounded-md font-semibold text-white hover:bg-blue-800 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 transition ease-in-out duration-150">
+                                        class="inline-flex items-center px-6 py-2 bg-[#ff6900] border border-transparent rounded-md font-semibold text-white hover:bg-blue-800 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 transition ease-in-out duration-150">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                     </svg>

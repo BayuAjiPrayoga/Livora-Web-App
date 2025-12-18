@@ -123,7 +123,7 @@
             <form method="GET" class="flex flex-wrap gap-4 items-end">
                 <div class="flex-1 min-w-48">
                     <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Filter Status</label>
-                    <select name="status" id="status" class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                    <select name="status" id="status" class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         <option value="all" {{ request('status', 'all') == 'all' ? 'selected' : '' }}>Semua Status</option>
                         <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
@@ -135,7 +135,7 @@
                 
                 <div class="flex-1 min-w-48">
                     <label for="property_id" class="block text-sm font-medium text-gray-700 mb-2">Filter Properti</label>
-                    <select name="property_id" id="property_id" class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                    <select name="property_id" id="property_id" class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         <option value="">Semua Properti</option>
                         @foreach($properties as $property)
                             <option value="{{ $property->id }}" {{ request('property_id') == $property->id ? 'selected' : '' }}>
@@ -222,7 +222,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                                 <a href="{{ route('mitra.bookings.show', $booking) }}" 
-                                   class="text-livora-accent hover:text-livora-primary">Detail</a>
+                                   class="text-orange-600 hover:text-orange-500">Detail</a>
                                 
                                 @if($booking->canBeConfirmed())
                                 <form action="{{ route('mitra.bookings.confirm', $booking) }}" method="POST" class="inline">

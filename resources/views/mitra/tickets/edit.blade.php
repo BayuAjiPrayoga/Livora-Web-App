@@ -116,7 +116,7 @@
                             Status *
                         </label>
                         <select name="status" id="status" required
-                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             <option value="open" {{ old('status', $ticket->status) == 'open' ? 'selected' : '' }}>Open</option>
                             <option value="in_progress" {{ old('status', $ticket->status) == 'in_progress' ? 'selected' : '' }}>In Progress</option>
                             <option value="resolved" {{ old('status', $ticket->status) == 'resolved' ? 'selected' : '' }}>Resolved</option>
@@ -130,7 +130,7 @@
                             Prioritas *
                         </label>
                         <select name="priority" id="priority" required
-                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             <option value="low" {{ old('priority', $ticket->priority) == 'low' ? 'selected' : '' }}>Low</option>
                             <option value="medium" {{ old('priority', $ticket->priority) == 'medium' ? 'selected' : '' }}>Medium</option>
                             <option value="high" {{ old('priority', $ticket->priority) == 'high' ? 'selected' : '' }}>High</option>
@@ -145,7 +145,7 @@
                     </label>
                     <textarea name="response" id="response" rows="5"
                               placeholder="Tulis respon Anda untuk tenant..."
-                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">{{ old('response', $ticket->response) }}</textarea>
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">{{ old('response', $ticket->response) }}</textarea>
                     <p class="text-sm text-gray-500 mt-1">Respon ini akan dikirim ke tenant via notifikasi.</p>
                 </div>
 
@@ -173,7 +173,7 @@
                         Batal
                     </a>
                     <button type="submit" 
-                            class="inline-flex items-center px-6 py-2 bg-livora-primary border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                            class="inline-flex items-center px-6 py-2 bg-[#ff6900] border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                         Update Tiket
                     </button>
                 </div>

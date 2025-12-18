@@ -7,7 +7,7 @@
 @section('content')
 <div class="p-6">
     <div class="flex items-center space-x-4 mb-6">
-        <a href="{{ route('admin.bookings.index') }}" class="inline-flex items-center text-sm text-gray-500 hover:text-livora-primary">
+        <a href="{{ route('admin.bookings.index') }}" class="inline-flex items-center text-sm text-gray-500 hover:text-[#ff6900]">
             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
@@ -35,7 +35,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
                                 <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Booking Status</label>
-                                <select name="status" id="status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                <select name="status" id="status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                     <option value="pending" {{ $booking->status === 'pending' ? 'selected' : '' }}>Pending</option>
                                     <option value="confirmed" {{ $booking->status === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
                                     <option value="checked_in" {{ $booking->status === 'checked_in' ? 'selected' : '' }}>Checked In</option>
@@ -47,7 +47,7 @@
                                 <label for="check_in_date" class="block text-sm font-medium text-gray-700 mb-2">Check-in Date</label>
                                 <input type="date" name="check_in_date" id="check_in_date" 
                                        value="{{ $booking->check_in_date ? $booking->check_in_date->format('Y-m-d') : '' }}"
-                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             </div>
                         </div>
 
@@ -56,13 +56,13 @@
                                 <label for="check_out_date" class="block text-sm font-medium text-gray-700 mb-2">Check-out Date</label>
                                 <input type="date" name="check_out_date" id="check_out_date" 
                                        value="{{ $booking->check_out_date ? $booking->check_out_date->format('Y-m-d') : '' }}"
-                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             </div>
                             <div>
                                 <label for="duration_months" class="block text-sm font-medium text-gray-700 mb-2">Duration (months)</label>
                                 <input type="number" name="duration_months" id="duration_months" 
                                        value="{{ $booking->duration_months }}" min="1"
-                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             </div>
                         </div>
 
@@ -70,7 +70,7 @@
                             <label for="admin_notes" class="block text-sm font-medium text-gray-700 mb-2">Admin Notes</label>
                             <textarea name="admin_notes" id="admin_notes" rows="4" 
                                       placeholder="Add internal notes about this booking..."
-                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">{{ $booking->admin_notes }}</textarea>
+                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">{{ $booking->admin_notes }}</textarea>
                         </div>
 
                         <div class="flex justify-end space-x-3">
@@ -78,7 +78,7 @@
                                class="bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors">
                                 Cancel
                             </a>
-                            <button type="submit" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                            <button type="submit" class="btn btn-primary">
                                 Update Booking
                             </button>
                         </div>
@@ -92,8 +92,8 @@
                 <div class="space-y-4">
                     @forelse($booking->activities ?? [] as $activity)
                     <div class="flex items-start space-x-3">
-                        <div class="flex-shrink-0 w-8 h-8 bg-livora-primary bg-opacity-10 rounded-full flex items-center justify-center">
-                            <svg class="w-4 h-4 text-livora-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex-shrink-0 w-8 h-8 bg-[#ff6900] bg-opacity-10 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-[#ff6900]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
@@ -181,7 +181,7 @@
                 </div>
                 <div class="mt-4">
                     <a href="{{ route('admin.users.show', $booking->tenant->id ?? '#') }}" 
-                       class="text-sm text-livora-primary hover:text-blue-700 font-medium">
+                       class="text-sm text-[#ff6900] hover:text-blue-700 font-medium">
                         View Full Profile →
                     </a>
                 </div>
@@ -210,7 +210,7 @@
                 </div>
                 <div class="mt-4">
                     <a href="{{ route('admin.properties.show', $booking->room->property->id ?? '#') }}" 
-                       class="text-sm text-livora-primary hover:text-blue-700 font-medium">
+                       class="text-sm text-[#ff6900] hover:text-blue-700 font-medium">
                         View Property Details →
                     </a>
                 </div>

@@ -12,7 +12,7 @@
             <nav class="flex" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
-                        <a href="{{ route('admin.bookings.index') }}" class="text-gray-700 hover:text-livora-primary">
+                        <a href="{{ route('admin.bookings.index') }}" class="text-gray-700 hover:text-[#ff6900]">
                             Bookings
                         </a>
                     </li>
@@ -45,7 +45,7 @@
                     </button>
                 </form>
             @endif
-            <a href="{{ route('admin.bookings.edit', $booking) }}" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+            <a href="{{ route('admin.bookings.edit', $booking) }}" class="btn btn-primary">
                 Edit Booking
             </a>
         </div>
@@ -139,7 +139,7 @@
                 <div class="px-6 py-4">
                     <div class="flex items-center">
                         <div class="h-12 w-12 flex-shrink-0">
-                            <div class="h-12 w-12 bg-livora-primary rounded-full flex items-center justify-center">
+                            <div class="h- w- bg-gradient-to-br from-[#ff6900] to-[#ff8533] rounded-full flex items-center justify-center">
                                 <span class="text-lg font-medium text-white">
                                     {{ substr($booking->user->name, 0, 1) }}
                                 </span>
@@ -228,7 +228,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $payment->created_at->format('M d, Y') }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('admin.payments.show', $payment) }}" class="text-livora-primary hover:text-blue-700">View</a>
+                                        <a href="{{ route('admin.payments.show', $payment) }}" class="text-[#ff6900] hover:text-blue-700">View</a>
                                     </td>
                                 </tr>
                                 @endforeach

@@ -10,7 +10,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('mitra.bookings.index') }}" 
-                       class="text-livora-accent hover:text-livora-primary">
+                       class="text-orange-600 hover:text-[#ff6900]">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
@@ -167,7 +167,7 @@
                                     <dd class="text-sm">
                                         <div class="flex flex-wrap gap-2">
                                             @foreach($booking->room->facilities as $facility)
-                                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-livora-accent bg-opacity-10 text-livora-accent border border-livora-accent border-opacity-20">
+                                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-orange-50 text-orange-600 border border-[#ff6900] border-opacity-20">
                                                     @if($facility->icon)
                                                         <span class="mr-1">{!! $facility->icon !!}</span>
                                                     @endif
@@ -202,7 +202,7 @@
                                             $phone = $booking->tenant_phone ?: ($booking->user->phone ?? '');
                                         @endphp
                                         @if($phone)
-                                            <a href="tel:{{ $phone }}" class="text-livora-accent hover:text-livora-primary">
+                                            <a href="tel:{{ $phone }}" class="text-orange-600 hover:text-[#ff6900]">
                                                 {{ $phone }}
                                             </a>
                                         @else
@@ -217,7 +217,7 @@
                                             $email = $booking->tenant_email ?: ($booking->user->email ?? '');
                                         @endphp
                                         @if($email)
-                                            <a href="mailto:{{ $email }}" class="text-livora-accent hover:text-livora-primary">
+                                            <a href="mailto:{{ $email }}" class="text-orange-600 hover:text-[#ff6900]">
                                                 {{ $email }}
                                             </a>
                                         @else
@@ -261,7 +261,7 @@
                                 <div>
                                     <dt class="text-sm text-gray-500">Nomor Kontak Darurat</dt>
                                     <dd class="text-sm font-medium text-gray-900">
-                                        <a href="tel:{{ $booking->emergency_contact_phone }}" class="text-livora-accent hover:text-livora-primary">
+                                        <a href="tel:{{ $booking->emergency_contact_phone }}" class="text-orange-600 hover:text-[#ff6900]">
                                             {{ $booking->emergency_contact_phone }}
                                         </a>
                                     </dd>
@@ -345,7 +345,7 @@
                         <hr>
                         <div class="flex justify-between">
                             <dt class="font-medium text-gray-900">Total</dt>
-                            <dd class="font-bold text-lg text-livora-accent">Rp {{ number_format($booking->final_amount, 0, ',', '.') }}</dd>
+                            <dd class="font-bold text-lg text-orange-600">Rp {{ number_format($booking->final_amount, 0, ',', '.') }}</dd>
                         </div>
                     </dl>
                 </div>

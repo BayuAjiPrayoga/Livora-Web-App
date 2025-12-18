@@ -12,7 +12,7 @@
             <p class="text-sm text-gray-600 mt-1">Analisis behavior dan demographics pengguna platform</p>
         </div>
         <div class="flex space-x-3">
-            <button onclick="exportReport()" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+            <button onclick="exportReport()" class="btn btn-primary">
                 Export Report
             </button>
         </div>
@@ -125,7 +125,7 @@
                             <div class="flex-1">
                                 <h4 class="font-medium text-gray-900">{{ $cityData->city }}</h4>
                                 <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
-                                    <div class="bg-livora-primary h-2 rounded-full progress-bar" data-width="{{ $totalUsers > 0 ? (($cityData->user_count / $totalUsers) * 100) : 0 }}"></div>
+                                    <div class="bg-[#ff6900] h-2 rounded-full progress-bar" data-width="{{ $totalUsers > 0 ? (($cityData->user_count / $totalUsers) * 100) : 0 }}"></div>
                                 </div>
                             </div>
                             <div class="text-right ml-4">
@@ -217,7 +217,7 @@
                         @foreach($topUsers as $user)
                         <div class="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
                             <div class="h-10 w-10 flex-shrink-0">
-                                <div class="h-10 w-10 bg-livora-primary rounded-full flex items-center justify-center">
+                                <div class="h- w- bg-gradient-to-br from-[#ff6900] to-[#ff8533] rounded-full flex items-center justify-center">
                                     <span class="text-sm font-medium text-white">
                                         {{ substr($user->name, 0, 1) }}
                                     </span>

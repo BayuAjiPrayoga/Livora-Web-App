@@ -129,7 +129,7 @@
                                         
                                         <div class="flex flex-col items-end justify-center gap-2">
                                             <div class="text-right">
-                                                <div class="text-2xl font-bold text-livora-primary">
+                                                <div class="text-2xl font-bold text-[#ff6900]">
                                                     Rp {{ number_format($room->price, 0, ',', '.') }}
                                                 </div>
                                                 <div class="text-sm text-gray-500">per bulan</div>
@@ -138,7 +138,7 @@
                                             @auth
                                                 @if(auth()->user()->role === 'tenant')
                                                     <a href="{{ route('tenant.bookings.create', ['room' => $room->id]) }}" 
-                                                       class="inline-flex items-center px-6 py-2 bg-livora-accent hover:bg-yellow-500 text-gray-900 font-semibold rounded-lg transition-colors duration-200">
+                                                       class="inline-flex items-center px-6 py-2 bg-gradient-to-r from-[#ff6900] to-[#ff8533] hover:opacity-90 text-gray-900 font-semibold rounded-lg transition-colors duration-200">
                                                         Book Sekarang
                                                     </a>
                                                 @else
@@ -146,7 +146,7 @@
                                                 @endif
                                             @else
                                                 <a href="{{ route('register') }}" 
-                                                   class="inline-flex items-center px-6 py-2 bg-livora-accent hover:bg-yellow-500 text-gray-900 font-semibold rounded-lg transition-colors duration-200">
+                                                   class="inline-flex items-center px-6 py-2 bg-gradient-to-r from-[#ff6900] to-[#ff8533] hover:opacity-90 text-gray-900 font-semibold rounded-lg transition-colors duration-200">
                                                     Daftar Untuk Book
                                                 </a>
                                             @endauth
@@ -163,7 +163,7 @@
                             <h3 class="text-lg font-semibold text-gray-900 mb-2">Tidak Ada Kamar Tersedia</h3>
                             <p class="text-gray-600 mb-4">Semua kamar saat ini sudah terisi penuh</p>
                             <a href="{{ route('browse') }}" 
-                               class="inline-flex items-center text-livora-primary hover:text-blue-700 font-medium">
+                               class="inline-flex items-center text-[#ff6900] hover:text-blue-700 font-medium">
                                 Cari Kost Lainnya
                                 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -202,7 +202,7 @@
                                             <p class="text-sm text-gray-600 mb-2 truncate">{{ $otherProperty->city }}</p>
                                             <div class="flex items-center justify-between">
                                                 <div class="text-sm">
-                                                    <span class="font-bold text-livora-primary">
+                                                    <span class="font-bold text-[#ff6900]">
                                                         Rp {{ number_format($otherProperty->rooms->min('price'), 0, ',', '.') }}
                                                     </span>
                                                     <span class="text-gray-500 text-xs">/bulan</span>
@@ -228,8 +228,8 @@
                     <div class="space-y-4">
                         <!-- Owner Info -->
                         <div class="flex items-center gap-3 pb-4 border-b border-gray-200">
-                            <div class="w-12 h-12 bg-livora-primary/10 rounded-full flex items-center justify-center">
-                                <svg class="w-6 h-6 text-livora-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-[#ff6900]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                 </svg>
                             </div>
@@ -254,7 +254,7 @@
                             
                             @if($property->user->email)
                                 <a href="mailto:{{ $property->user->email }}" 
-                                   class="flex items-center justify-center gap-2 w-full px-4 py-3 bg-livora-primary hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                   class="flex items-center justify-center gap-2 w-full px-4 py-3 bg-[#ff6900] hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                     </svg>
@@ -266,7 +266,7 @@
                         <!-- Info Text -->
                         <div class="pt-4 border-t border-gray-200">
                             <p class="text-sm text-gray-600 leading-relaxed">
-                                <svg class="w-5 h-5 text-livora-accent inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-5 h-5 text-orange-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                                 Hubungi pemilik untuk informasi lebih lanjut atau jadwalkan kunjungan

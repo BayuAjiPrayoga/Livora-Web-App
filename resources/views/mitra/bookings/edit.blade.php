@@ -9,7 +9,7 @@
         <div class="px-6 py-4">
             <div class="flex items-center space-x-4">
                 <a href="{{ route('mitra.bookings.show', $booking) }}" 
-                   class="text-livora-accent hover:text-livora-primary">
+                   class="text-orange-600 hover:text-[#ff6900]">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
@@ -69,7 +69,7 @@
                     <div>
                         <label for="booking_type" class="block text-sm font-medium text-gray-700 mb-2">Tipe Booking <span class="text-red-500">*</span></label>
                         <select name="booking_type" id="booking_type" required 
-                                class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                                class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                             <option value="daily" {{ old('booking_type', $booking->booking_type) == 'daily' ? 'selected' : '' }}>Harian</option>
                             <option value="monthly" {{ old('booking_type', $booking->booking_type) == 'monthly' ? 'selected' : '' }}>Bulanan</option>
                             <option value="yearly" {{ old('booking_type', $booking->booking_type) == 'yearly' ? 'selected' : '' }}>Tahunan</option>
@@ -84,7 +84,7 @@
                         <input type="date" name="check_in_date" id="check_in_date" required
                                value="{{ old('check_in_date', $booking->check_in_date ? $booking->check_in_date->format('Y-m-d') : '') }}"
                                min="{{ date('Y-m-d') }}"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('check_in_date')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -94,7 +94,7 @@
                         <label for="check_out_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Check-out <span class="text-red-500">*</span></label>
                         <input type="date" name="check_out_date" id="check_out_date" required
                                value="{{ old('check_out_date', $booking->check_out_date ? $booking->check_out_date->format('Y-m-d') : '') }}"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('check_out_date')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -145,7 +145,7 @@
                         <label for="tenant_name" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap <span class="text-red-500">*</span></label>
                         <input type="text" name="tenant_name" id="tenant_name" required
                                value="{{ old('tenant_name', $booking->tenant_name) }}"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('tenant_name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -155,7 +155,7 @@
                         <label for="tenant_phone" class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon <span class="text-red-500">*</span></label>
                         <input type="tel" name="tenant_phone" id="tenant_phone" required
                                value="{{ old('tenant_phone', $booking->tenant_phone) }}"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('tenant_phone')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -165,7 +165,7 @@
                         <label for="tenant_email" class="block text-sm font-medium text-gray-700 mb-2">Email <span class="text-red-500">*</span></label>
                         <input type="email" name="tenant_email" id="tenant_email" required
                                value="{{ old('tenant_email', $booking->tenant_email) }}"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('tenant_email')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -176,7 +176,7 @@
                         <input type="text" name="tenant_identity_number" id="tenant_identity_number" required
                                value="{{ old('tenant_identity_number', $booking->tenant_identity_number) }}"
                                maxlength="16"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('tenant_identity_number')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -185,7 +185,7 @@
                     <div class="md:col-span-2">
                         <label for="tenant_address" class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap <span class="text-red-500">*</span></label>
                         <textarea name="tenant_address" id="tenant_address" required rows="3"
-                                  class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">{{ old('tenant_address', $booking->tenant_address) }}</textarea>
+                                  class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">{{ old('tenant_address', $booking->tenant_address) }}</textarea>
                         @error('tenant_address')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -202,7 +202,7 @@
                         <label for="emergency_contact_name" class="block text-sm font-medium text-gray-700 mb-2">Nama Kontak Darurat</label>
                         <input type="text" name="emergency_contact_name" id="emergency_contact_name"
                                value="{{ old('emergency_contact_name', $booking->emergency_contact_name) }}"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('emergency_contact_name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -212,7 +212,7 @@
                         <label for="emergency_contact_phone" class="block text-sm font-medium text-gray-700 mb-2">Nomor Kontak Darurat</label>
                         <input type="tel" name="emergency_contact_phone" id="emergency_contact_phone"
                                value="{{ old('emergency_contact_phone', $booking->emergency_contact_phone) }}"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('emergency_contact_phone')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -221,7 +221,7 @@
                     <div>
                         <label for="emergency_contact_relation" class="block text-sm font-medium text-gray-700 mb-2">Hubungan</label>
                         <select name="emergency_contact_relation" id="emergency_contact_relation"
-                                class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                                class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                             <option value="">Pilih hubungan</option>
                             <option value="Orang Tua" {{ old('emergency_contact_relation', $booking->emergency_contact_relation) == 'Orang Tua' ? 'selected' : '' }}>Orang Tua</option>
                             <option value="Saudara" {{ old('emergency_contact_relation', $booking->emergency_contact_relation) == 'Saudara' ? 'selected' : '' }}>Saudara</option>
@@ -243,7 +243,7 @@
                 <div>
                     <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Catatan Tambahan</label>
                     <textarea name="notes" id="notes" rows="4"
-                              class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">{{ old('notes', $booking->notes) }}</textarea>
+                              class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">{{ old('notes', $booking->notes) }}</textarea>
                     @error('notes')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -272,7 +272,7 @@
                         <hr>
                         <div class="flex justify-between font-semibold text-lg">
                             <span>Total Pembayaran:</span>
-                            <span id="final_total" class="text-livora-accent">Rp {{ number_format($booking->final_amount, 0, ',', '.') }}</span>
+                            <span id="final_total" class="text-orange-600">Rp {{ number_format($booking->final_amount, 0, ',', '.') }}</span>
                         </div>
                     </div>
                     
@@ -296,7 +296,7 @@
                         Batal
                     </a>
                     <button type="submit" 
-                            class="px-6 py-2 bg-livora-accent text-white rounded-lg hover:bg-livora-primary transition-colors">
+                            class="btn btn-primary">
                         Simpan Perubahan
                     </button>
                 </div>

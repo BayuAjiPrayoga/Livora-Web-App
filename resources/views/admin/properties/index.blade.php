@@ -13,7 +13,7 @@
             <p class="text-sm text-gray-600 mt-1">Kelola semua properti dalam sistem LIVORA</p>
         </div>
         <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-            <a href="{{ route('admin.properties.create') }}" class="inline-flex items-center px-4 py-2 bg-livora-primary text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+            <a href="{{ route('admin.properties.create') }}" class="btn btn-primary">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
@@ -96,7 +96,7 @@
                 <div class="relative">
                     <input type="text" name="search" id="search" value="{{ request('search') }}" 
                            placeholder="Cari nama properti atau lokasi..."
-                           class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                           class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -108,7 +108,7 @@
             <!-- Location Filter -->
             <div>
                 <label for="location" class="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                <select name="location" id="location" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                <select name="location" id="location" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     <option value="">Semua Lokasi</option>
                     @foreach($locations as $location)
                         <option value="{{ $location }}" {{ request('location') == $location ? 'selected' : '' }}>{{ $location }}</option>
@@ -119,7 +119,7 @@
             <!-- Status Filter -->
             <div>
                 <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                <select name="status" id="status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                <select name="status" id="status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     <option value="">Semua Status</option>
                     <option value="verified" {{ request('status') == 'verified' ? 'selected' : '' }}>Verified</option>
                     <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
@@ -130,7 +130,7 @@
 
             <!-- Actions -->
             <div class="flex items-end space-x-2">
-                <button type="submit" class="flex-1 bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                <button type="submit" class="btn btn-primary">
                     Filter
                 </button>
                 <a href="{{ route('admin.properties.index') }}" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors">
@@ -147,7 +147,7 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            <input type="checkbox" id="selectAll" class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                            <input type="checkbox" id="selectAll" class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Property</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Owner</th>
@@ -162,7 +162,7 @@
                     @forelse($properties as $property)
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <input type="checkbox" name="selected_properties[]" value="{{ $property->id }}" class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                                <input type="checkbox" name="selected_properties[]" value="{{ $property->id }}" class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
@@ -217,7 +217,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end space-x-2">
-                                    <a href="{{ route('admin.properties.show', $property) }}" class="text-livora-primary hover:text-blue-700">
+                                    <a href="{{ route('admin.properties.show', $property) }}" class="text-[#ff6900] hover:text-blue-700">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>

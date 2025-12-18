@@ -7,7 +7,7 @@
 @section('content')
 <div class="p-6">
     <div class="flex items-center space-x-4 mb-6">
-        <a href="{{ route('admin.tickets.index') }}" class="inline-flex items-center text-sm text-gray-500 hover:text-livora-primary">
+        <a href="{{ route('admin.tickets.index') }}" class="inline-flex items-center text-sm text-gray-500 hover:text-[#ff6900]">
             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
@@ -36,7 +36,7 @@
                             <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
                             <input type="text" name="subject" id="subject" 
                                    value="{{ $ticket->subject }}" 
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary" 
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]" 
                                    required>
                             @error('subject')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -46,7 +46,7 @@
                         <div>
                             <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
                             <textarea name="description" id="description" rows="5" 
-                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary" 
+                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]" 
                                       required>{{ $ticket->description }}</textarea>
                             @error('description')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -58,7 +58,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                             <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                            <select name="status" id="status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary" required>
+                            <select name="status" id="status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]" required>
                                 <option value="open" {{ $ticket->status === 'open' ? 'selected' : '' }}>Open</option>
                                 <option value="in_progress" {{ $ticket->status === 'in_progress' ? 'selected' : '' }}>In Progress</option>
                                 <option value="resolved" {{ $ticket->status === 'resolved' ? 'selected' : '' }}>Resolved</option>
@@ -68,7 +68,7 @@
 
                         <div>
                             <label for="priority" class="block text-sm font-medium text-gray-700 mb-2">Priority</label>
-                            <select name="priority" id="priority" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary" required>
+                            <select name="priority" id="priority" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]" required>
                                 <option value="low" {{ $ticket->priority === 'low' ? 'selected' : '' }}>Low</option>
                                 <option value="medium" {{ $ticket->priority === 'medium' ? 'selected' : '' }}>Medium</option>
                                 <option value="high" {{ $ticket->priority === 'high' ? 'selected' : '' }}>High</option>
@@ -78,7 +78,7 @@
 
                         <div>
                             <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                            <select name="category" id="category" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                            <select name="category" id="category" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                 <option value="General" {{ $ticket->category === 'General' ? 'selected' : '' }}>General</option>
                                 <option value="Technical" {{ $ticket->category === 'Technical' ? 'selected' : '' }}>Technical</option>
                                 <option value="Billing" {{ $ticket->category === 'Billing' ? 'selected' : '' }}>Billing</option>
@@ -93,7 +93,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label for="assigned_to" class="block text-sm font-medium text-gray-700 mb-2">Assigned To</label>
-                            <select name="assigned_to" id="assigned_to" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                            <select name="assigned_to" id="assigned_to" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                 <option value="">Unassigned</option>
                                 @foreach($admins ?? [] as $admin)
                                     <option value="{{ $admin->id }}" {{ $ticket->assigned_to == $admin->id ? 'selected' : '' }}>{{ $admin->name }}</option>
@@ -103,7 +103,7 @@
 
                         <div>
                             <label for="department" class="block text-sm font-medium text-gray-700 mb-2">Department</label>
-                            <select name="department" id="department" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                            <select name="department" id="department" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                 <option value="Support" {{ $ticket->department === 'Support' ? 'selected' : '' }}>Support</option>
                                 <option value="Technical" {{ $ticket->department === 'Technical' ? 'selected' : '' }}>Technical</option>
                                 <option value="Billing" {{ $ticket->department === 'Billing' ? 'selected' : '' }}>Billing</option>
@@ -122,7 +122,7 @@
                             <label for="resolution_notes" class="block text-sm font-medium text-gray-700 mb-2">Resolution Notes</label>
                             <textarea name="resolution_notes" id="resolution_notes" rows="4" 
                                       placeholder="Describe how this ticket was resolved..."
-                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">{{ $ticket->resolution_notes }}</textarea>
+                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">{{ $ticket->resolution_notes }}</textarea>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -130,12 +130,12 @@
                                 <label for="resolved_at" class="block text-sm font-medium text-gray-700 mb-2">Resolution Date</label>
                                 <input type="datetime-local" name="resolved_at" id="resolved_at" 
                                        value="{{ $ticket->resolved_at ? $ticket->resolved_at->format('Y-m-d\TH:i') : '' }}"
-                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             </div>
 
                             <div>
                                 <label for="resolved_by" class="block text-sm font-medium text-gray-700 mb-2">Resolved By</label>
-                                <select name="resolved_by" id="resolved_by" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                <select name="resolved_by" id="resolved_by" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                     <option value="">Select Admin</option>
                                     @foreach($admins ?? [] as $admin)
                                         <option value="{{ $admin->id }}" {{ $ticket->resolved_by == $admin->id ? 'selected' : '' }}>{{ $admin->name }}</option>
@@ -150,7 +150,7 @@
                         <label for="admin_notes" class="block text-sm font-medium text-gray-700 mb-2">Internal Notes</label>
                         <textarea name="admin_notes" id="admin_notes" rows="3" 
                                   placeholder="Internal admin notes (not visible to user)..."
-                                  class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">{{ $ticket->admin_notes }}</textarea>
+                                  class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">{{ $ticket->admin_notes }}</textarea>
                     </div>
 
                     <!-- Tags -->
@@ -159,7 +159,7 @@
                         <input type="text" name="tags" id="tags" 
                                value="{{ is_array($ticket->tags ?? []) ? implode(', ', $ticket->tags) : $ticket->tags }}" 
                                placeholder="Enter tags separated by commas"
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                         <p class="text-xs text-gray-500 mt-1">Separate multiple tags with commas</p>
                     </div>
 
@@ -169,7 +169,7 @@
                            class="bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors">
                             Cancel
                         </a>
-                        <button type="submit" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                        <button type="submit" class="btn btn-primary">
                             Update Ticket
                         </button>
                     </div>
@@ -236,7 +236,7 @@
                 </div>
                 <div class="mt-4">
                     <a href="{{ route('admin.users.show', $ticket->user->id ?? '#') }}" 
-                       class="text-sm text-livora-primary hover:text-blue-700 font-medium">
+                       class="text-sm text-[#ff6900] hover:text-blue-700 font-medium">
                         View User Profile →
                     </a>
                 </div>

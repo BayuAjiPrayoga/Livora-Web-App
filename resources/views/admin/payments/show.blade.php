@@ -12,7 +12,7 @@
             <nav class="flex" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
-                        <a href="{{ route('admin.payments.index') }}" class="text-gray-700 hover:text-livora-primary">
+                        <a href="{{ route('admin.payments.index') }}" class="text-gray-700 hover:text-[#ff6900]">
                             Payments
                         </a>
                     </li>
@@ -132,7 +132,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-gray-100">
                 <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                     <h3 class="text-lg font-medium text-gray-900">Related Booking</h3>
-                    <a href="{{ route('admin.bookings.show', $payment->booking) }}" class="text-livora-primary hover:text-blue-700 text-sm font-medium">
+                    <a href="{{ route('admin.bookings.show', $payment->booking) }}" class="text-[#ff6900] hover:text-blue-700 text-sm font-medium">
                         View Booking Details →
                     </a>
                 </div>
@@ -181,7 +181,7 @@
                 <div class="px-6 py-4">
                     <div class="flex items-center">
                         <div class="h-12 w-12 flex-shrink-0">
-                            <div class="h-12 w-12 bg-livora-primary rounded-full flex items-center justify-center">
+                            <div class="h- w- bg-gradient-to-br from-[#ff6900] to-[#ff8533] rounded-full flex items-center justify-center">
                                 <span class="text-lg font-medium text-white">
                                     {{ substr($payment->booking->user->name, 0, 1) }}
                                 </span>

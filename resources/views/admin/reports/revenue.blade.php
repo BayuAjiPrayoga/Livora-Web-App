@@ -12,7 +12,7 @@
             <p class="text-sm text-gray-600 mt-1">Analisis pendapatan dan performa finansial platform</p>
         </div>
         <div class="flex space-x-3">
-            <button onclick="exportReport()" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+            <button onclick="exportReport()" class="btn btn-primary">
                 Export Report
             </button>
         </div>
@@ -86,7 +86,7 @@
         <form method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
                 <label for="period" class="block text-sm font-medium text-gray-700 mb-2">Time Period</label>
-                <select name="period" id="period" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                <select name="period" id="period" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     <option value="7days" {{ request('period') == '7days' ? 'selected' : '' }}>Last 7 Days</option>
                     <option value="30days" {{ request('period') == '30days' ? 'selected' : '' }}>Last 30 Days</option>
                     <option value="90days" {{ request('period') == '90days' ? 'selected' : '' }}>Last 90 Days</option>
@@ -98,17 +98,17 @@
             <div>
                 <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
                 <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}" 
-                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
             </div>
 
             <div>
                 <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
                 <input type="date" name="end_date" id="end_date" value="{{ request('end_date') }}" 
-                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
             </div>
 
             <div class="flex items-end">
-                <button type="submit" class="w-full bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                <button type="submit" class="btn btn-primary">
                     Apply Filters
                 </button>
             </div>

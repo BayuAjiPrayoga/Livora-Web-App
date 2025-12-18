@@ -8,11 +8,11 @@
     <div class="bg-white shadow-sm border-b">
         <div class="px-6 py-4">
             <div class="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                <a href="{{ route('mitra.properties.index') }}" class="hover:text-livora-primary">Properti Saya</a>
+                <a href="{{ route('mitra.properties.index') }}" class="hover:text-[#ff6900]">Properti Saya</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span class="text-livora-primary font-medium">Tambah Properti</span>
+                <span class="text-[#ff6900] font-medium">Tambah Properti</span>
             </div>
             <h1 class="text-2xl font-bold text-livora-text">Tambah Properti Baru</h1>
             <p class="text-gray-600 mt-1">Lengkapi informasi properti kost Anda</p>
@@ -154,7 +154,7 @@
                         Batal
                     </a>
                     <button type="submit" 
-                            class="px-6 py-2 bg-livora-accent border border-transparent rounded-md font-semibold text-white hover:bg-livora-primary focus:bg-livora-primary active:bg-livora-primary focus:outline-none focus:ring-2 focus:ring-livora-accent focus:ring-offset-2 transition ease-in-out duration-150">
+                            class="btn btn-primary">
                         Simpan Properti
                     </button>
                 </div>

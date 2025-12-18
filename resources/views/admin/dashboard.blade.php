@@ -127,7 +127,7 @@
                 </div>
             </div>
             <div class="mt-4 pt-4 border-t border-gray-100">
-                <a href="{{ route('admin.users.index') }}" class="text-sm text-livora-primary hover:text-blue-700 font-medium">
+                <a href="{{ route('admin.users.index') }}" class="text-sm text-[#ff6900] hover:text-blue-700 font-medium">
                     Kelola Semua User →
                 </a>
             </div>
@@ -167,7 +167,7 @@
                 </div>
             </div>
             <div class="mt-4 pt-4 border-t border-gray-100">
-                <a href="{{ route('admin.bookings.index') }}" class="text-sm text-livora-primary hover:text-blue-700 font-medium">
+                <a href="{{ route('admin.bookings.index') }}" class="text-sm text-[#ff6900] hover:text-blue-700 font-medium">
                     Kelola Semua Booking →
                 </a>
             </div>
@@ -200,7 +200,7 @@
                 </div>
             </div>
             <div class="mt-4 pt-4 border-t border-gray-100">
-                <a href="{{ route('admin.payments.index') }}" class="text-sm text-livora-primary hover:text-blue-700 font-medium">
+                <a href="{{ route('admin.payments.index') }}" class="text-sm text-[#ff6900] hover:text-blue-700 font-medium">
                     Kelola Semua Pembayaran →
                 </a>
             </div>
@@ -215,7 +215,7 @@
                 <h3 class="text-lg font-semibold text-gray-900">Revenue Trends</h3>
                 <div class="flex space-x-2">
                     <button class="px-3 py-1 text-xs font-medium text-gray-500 bg-gray-100 rounded-lg hover:bg-gray-200">6M</button>
-                    <button class="px-3 py-1 text-xs font-medium text-white bg-livora-primary rounded-lg">12M</button>
+                    <button class="px-3 py-1 text-xs font-medium text-white bg-[#ff6900] rounded-lg">12M</button>
                 </div>
             </div>
             <div class="h-80">
@@ -229,7 +229,7 @@
                 <h3 class="text-lg font-semibold text-gray-900">User Growth</h3>
                 <div class="flex space-x-2">
                     <button class="px-3 py-1 text-xs font-medium text-gray-500 bg-gray-100 rounded-lg hover:bg-gray-200">6M</button>
-                    <button class="px-3 py-1 text-xs font-medium text-white bg-livora-primary rounded-lg">12M</button>
+                    <button class="px-3 py-1 text-xs font-medium text-white bg-[#ff6900] rounded-lg">12M</button>
                 </div>
             </div>
             <div class="h-80">
@@ -323,7 +323,7 @@
                         <span class="text-sm font-medium text-gray-900">{{ $storagePercentage }}%</span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-livora-primary h-2 rounded-full progress-bar" 
+                        <div class="bg-[#ff6900] h-2 rounded-full progress-bar" 
                              data-width="{{ $storagePercentage }}"></div>
                     </div>
                     <div class="flex justify-between text-xs text-gray-500">
@@ -349,7 +349,7 @@
                         </svg>
                         Tambah Properti
                     </a>
-                    <a href="{{ route('admin.reports.revenue') }}" class="w-full flex items-center justify-center px-4 py-2 bg-livora-primary text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                    <a href="{{ route('admin.reports.revenue') }}" class="btn btn-primary">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>

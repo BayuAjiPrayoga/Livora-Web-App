@@ -8,19 +8,19 @@
     <div class="bg-white shadow-sm border-b">
         <div class="px-6 py-4">
             <div class="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                <a href="{{ route('mitra.properties.index') }}" class="hover:text-livora-primary">Properti Saya</a>
+                <a href="{{ route('mitra.properties.index') }}" class="hover:text-[#ff6900]">Properti Saya</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <a href="{{ route('mitra.properties.show', $property->id) }}" class="hover:text-livora-primary">{{ $property->name }}</a>
+                <a href="{{ route('mitra.properties.show', $property->id) }}" class="hover:text-[#ff6900]">{{ $property->name }}</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <a href="{{ route('mitra.rooms.index', $property->id) }}" class="hover:text-livora-primary">Kelola Kamar</a>
+                <a href="{{ route('mitra.rooms.index', $property->id) }}" class="hover:text-[#ff6900]">Kelola Kamar</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span class="text-livora-primary font-medium">Tambah Kamar</span>
+                <span class="text-[#ff6900] font-medium">Tambah Kamar</span>
             </div>
             <div class="flex justify-between items-center">
                 <div>
@@ -57,7 +57,7 @@
                 <!-- Section 1: Informasi Dasar Kamar -->
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-semibold text-livora-text flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                         </svg>
                         Informasi Dasar Kamar
@@ -74,7 +74,7 @@
                             </label>
                             <input type="text" name="name" id="name" 
                                    value="{{ old('name') }}"
-                                   class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('name') border-red-300 @enderror"
+                                   class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('name') border-red-300 @enderror"
                                    placeholder="Contoh: Kamar A1, Kamar Deluxe, Studio Premium">
                             @error('name')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -91,7 +91,7 @@
                                 <input type="number" name="price" id="price" 
                                        value="{{ old('price') }}"
                                        min="0" step="1000"
-                                       class="w-full pl-10 rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('price') border-red-300 @enderror"
+                                       class="w-full pl-10 rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('price') border-red-300 @enderror"
                                        placeholder="1500000">
                             </div>
                             @error('price')
@@ -106,7 +106,7 @@
                             </label>
                             <div class="relative">
                                 <select name="capacity" id="capacity" 
-                                        class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('capacity') border-red-300 @enderror">
+                                        class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('capacity') border-red-300 @enderror">
                                     <option value="">Pilih kapasitas</option>
                                     @for($i = 1; $i <= 10; $i++)
                                         <option value="{{ $i }}" {{ old('capacity') == $i ? 'selected' : '' }}>
@@ -129,7 +129,7 @@
                                 <input type="number" name="size" id="size" 
                                        value="{{ old('size') }}"
                                        min="0" step="0.1"
-                                       class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('size') border-red-300 @enderror"
+                                       class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('size') border-red-300 @enderror"
                                        placeholder="25.5">
                                 <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">m²</span>
                             </div>
@@ -144,7 +144,7 @@
                                 Status Ketersediaan <span class="text-red-500">*</span>
                             </label>
                             <select name="is_available" id="is_available" 
-                                    class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('is_available') border-red-300 @enderror">
+                                    class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('is_available') border-red-300 @enderror">
                                 <option value="">Pilih status</option>
                                 <option value="1" {{ old('is_available') == '1' ? 'selected' : '' }}>Tersedia</option>
                                 <option value="0" {{ old('is_available') == '0' ? 'selected' : '' }}>Terisi</option>
@@ -161,7 +161,7 @@
                             Deskripsi Kamar
                         </label>
                         <textarea name="description" id="description" rows="4" 
-                                  class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('description') border-red-300 @enderror"
+                                  class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('description') border-red-300 @enderror"
                                   placeholder="Deskripsikan fasilitas kamar, kondisi, dan keunggulannya...">{{ old('description') }}</textarea>
                         @error('description')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -173,7 +173,7 @@
                 <!-- Section 1.5: Fasilitas Kamar -->
                 <div class="px-6 py-4 border-t border-b border-gray-200 bg-gray-50">
                     <h3 class="text-lg font-semibold text-livora-text flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         Fasilitas Kamar
@@ -193,12 +193,12 @@
                                            name="facilities[]" 
                                            value="{{ $facility->id }}"
                                            {{ in_array($facility->id, old('facilities', [])) ? 'checked' : '' }}
-                                           class="h-4 w-4 text-livora-accent border-gray-300 rounded focus:ring-livora-accent">
+                                           class="h-4 w-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500">
                                     <span class="ml-3 text-sm">
                                         @if($facility->icon)
                                             <span class="mr-1">{!! $facility->icon !!}</span>
                                         @endif
-                                        <span class="font-medium text-gray-700 group-hover:text-livora-accent">{{ $facility->name }}</span>
+                                        <span class="font-medium text-gray-700 group-hover:text-orange-600">{{ $facility->name }}</span>
                                     </span>
                                 </label>
                             @empty
@@ -221,7 +221,7 @@
                 <!-- Section 2: Foto Kamar -->
                 <div class="px-6 py-4 border-t border-b border-gray-200 bg-gray-50">
                     <h3 class="text-lg font-semibold text-livora-text flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                         Foto Kamar
@@ -234,13 +234,13 @@
                         <label for="images" class="block text-sm font-medium text-gray-700 mb-2">
                             Upload Foto Kamar
                         </label>
-                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-livora-accent transition-colors">
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-[#ff6900] transition-colors">
                             <div class="space-y-1 text-center">
                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <div class="flex text-sm text-gray-600">
-                                    <label for="images" class="relative cursor-pointer bg-white rounded-md font-medium text-livora-accent hover:text-livora-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-livora-accent">
+                                    <label for="images" class="relative cursor-pointer bg-white rounded-md font-medium text-orange-600 hover:text-orange-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-orange-500">
                                         <span>Upload foto</span>
                                         <input id="images" name="images[]" type="file" class="sr-only" multiple accept="image/*" onchange="previewImages(this)">
                                     </label>
@@ -271,7 +271,7 @@
                         Batal
                     </a>
                     <button type="submit" 
-                            class="inline-flex items-center px-6 py-2 bg-livora-accent border border-transparent rounded-md font-semibold text-white hover:bg-livora-primary active:bg-livora-primary focus:outline-none focus:border-livora-primary focus:ring ring-livora-accent transition ease-in-out duration-150">
+                            class="btn btn-primary">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>

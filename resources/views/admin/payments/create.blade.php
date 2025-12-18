@@ -26,7 +26,7 @@
                     <div>
                         <label for="booking_id" class="block text-sm font-medium text-gray-700 mb-2">Booking *</label>
                         <select name="booking_id" id="booking_id" required
-                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('booking_id') border-red-500 @enderror">
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('booking_id') border-red-500 @enderror">
                             <option value="">Select Booking</option>
                             @foreach(App\Models\Booking::with(['user', 'room.boardingHouse'])->get() as $booking)
                                 <option value="{{ $booking->id }}" 
@@ -44,7 +44,7 @@
                     <div>
                         <label for="amount" class="block text-sm font-medium text-gray-700 mb-2">Payment Amount (Rp) *</label>
                         <input type="number" name="amount" id="amount" value="{{ old('amount') }}" required min="0" step="1000"
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('amount') border-red-500 @enderror">
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('amount') border-red-500 @enderror">
                         @error('amount')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -56,7 +56,7 @@
                     <div>
                         <label for="payment_method" class="block text-sm font-medium text-gray-700 mb-2">Payment Method *</label>
                         <select name="payment_method" id="payment_method" required
-                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('payment_method') border-red-500 @enderror">
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('payment_method') border-red-500 @enderror">
                             <option value="">Select Method</option>
                             <option value="bank_transfer" {{ old('payment_method') == 'bank_transfer' ? 'selected' : '' }}>Bank Transfer</option>
                             <option value="cash" {{ old('payment_method') == 'cash' ? 'selected' : '' }}>Cash</option>
@@ -72,7 +72,7 @@
                     <div>
                         <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Payment Status *</label>
                         <select name="status" id="status" required
-                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('status') border-red-500 @enderror">
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('status') border-red-500 @enderror">
                             <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
                             <option value="verified" {{ old('status') == 'verified' ? 'selected' : '' }}>Verified</option>
                             <option value="rejected" {{ old('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
@@ -85,7 +85,7 @@
                     <div>
                         <label for="paid_at" class="block text-sm font-medium text-gray-700 mb-2">Payment Date *</label>
                         <input type="datetime-local" name="paid_at" id="paid_at" value="{{ old('paid_at', now()->format('Y-m-d\TH:i')) }}" required
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('paid_at') border-red-500 @enderror">
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('paid_at') border-red-500 @enderror">
                         @error('paid_at')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -97,13 +97,13 @@
                     <div>
                         <label for="bank_name" class="block text-sm font-medium text-gray-700 mb-2">Bank Name</label>
                         <input type="text" name="bank_name" id="bank_name" value="{{ old('bank_name') }}"
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     </div>
 
                     <div>
                         <label for="account_number" class="block text-sm font-medium text-gray-700 mb-2">Account Number</label>
                         <input type="text" name="account_number" id="account_number" value="{{ old('account_number') }}"
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     </div>
                 </div>
 
@@ -111,14 +111,14 @@
                 <div id="ewallet_details" class="hidden">
                     <label for="ewallet_number" class="block text-sm font-medium text-gray-700 mb-2">E-Wallet Number/ID</label>
                     <input type="text" name="ewallet_number" id="ewallet_number" value="{{ old('ewallet_number') }}"
-                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                 </div>
 
                 <!-- Transaction Reference -->
                 <div>
                     <label for="transaction_id" class="block text-sm font-medium text-gray-700 mb-2">Transaction ID/Reference</label>
                     <input type="text" name="transaction_id" id="transaction_id" value="{{ old('transaction_id') }}"
-                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('transaction_id') border-red-500 @enderror">
+                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('transaction_id') border-red-500 @enderror">
                     @error('transaction_id')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -128,7 +128,7 @@
                 <div>
                     <label for="proof_image" class="block text-sm font-medium text-gray-700 mb-2">Payment Proof</label>
                     <input type="file" name="proof_image" id="proof_image" accept="image/*"
-                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('proof_image') border-red-500 @enderror">
+                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('proof_image') border-red-500 @enderror">
                     <p class="mt-1 text-sm text-gray-500">Upload payment receipt or transfer proof (JPG, PNG, GIF). Maximum 5MB.</p>
                     @error('proof_image')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -139,7 +139,7 @@
                 <div>
                     <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Payment Notes</label>
                     <textarea name="notes" id="notes" rows="3"
-                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('notes') border-red-500 @enderror">{{ old('notes') }}</textarea>
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('notes') border-red-500 @enderror">{{ old('notes') }}</textarea>
                     @error('notes')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -159,7 +159,7 @@
                         <div>
                             <label for="verification_notes" class="block text-sm font-medium text-gray-700 mb-2">Verification Notes</label>
                             <textarea name="verification_notes" id="verification_notes" rows="3"
-                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">{{ old('verification_notes') }}</textarea>
+                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">{{ old('verification_notes') }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -169,7 +169,7 @@
                     <a href="{{ route('admin.payments.index') }}" class="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
                         Cancel
                     </a>
-                    <button type="submit" class="bg-livora-primary text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                    <button type="submit" class="btn btn-primary">
                         Create Payment
                     </button>
                 </div>

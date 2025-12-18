@@ -8,19 +8,19 @@
     <div class="bg-white shadow-sm border-b">
         <div class="px-6 py-4">
             <div class="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                <a href="{{ route('mitra.properties.index') }}" class="hover:text-livora-primary">Properti Saya</a>
+                <a href="{{ route('mitra.properties.index') }}" class="hover:text-[#ff6900]">Properti Saya</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <a href="{{ route('mitra.properties.show', $property->id) }}" class="hover:text-livora-primary">{{ $property->name }}</a>
+                <a href="{{ route('mitra.properties.show', $property->id) }}" class="hover:text-[#ff6900]">{{ $property->name }}</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <a href="{{ route('mitra.rooms.index', $property->id) }}" class="hover:text-livora-primary">Kelola Kamar</a>
+                <a href="{{ route('mitra.rooms.index', $property->id) }}" class="hover:text-[#ff6900]">Kelola Kamar</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span class="text-livora-primary font-medium">{{ $room->name }}</span>
+                <span class="text-[#ff6900] font-medium">{{ $room->name }}</span>
             </div>
             <div class="flex justify-between items-center">
                 <div>
@@ -30,7 +30,7 @@
                             {{ $room->is_available ? 'Tersedia' : 'Terisi' }}
                         </span>
                         <span class="mx-2 text-gray-400">•</span>
-                        <span class="font-semibold text-livora-primary">Rp {{ number_format($room->price, 0, ',', '.') }}/bulan</span>
+                        <span class="font-semibold text-[#ff6900]">Rp {{ number_format($room->price, 0, ',', '.') }}/bulan</span>
                     </p>
                 </div>
                 <div class="flex space-x-3">
@@ -50,7 +50,7 @@
                         </button>
                     </form>
                     <a href="{{ route('mitra.rooms.edit', ['property' => $property->id, 'room' => $room->id]) }}" 
-                       class="inline-flex items-center px-4 py-2 border border-livora-primary text-livora-primary rounded-md hover:bg-livora-primary hover:text-white transition-colors">
+                       class="btn btn-outline">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                         </svg>
@@ -165,7 +165,7 @@
                     <dl class="space-y-3">
                         <div>
                             <dt class="text-sm font-medium text-gray-500">Harga per Bulan</dt>
-                            <dd class="mt-1 text-lg font-semibold text-livora-primary">Rp {{ number_format($room->price, 0, ',', '.') }}</dd>
+                            <dd class="mt-1 text-lg font-semibold text-[#ff6900]">Rp {{ number_format($room->price, 0, ',', '.') }}</dd>
                         </div>
                         
                         <div>
@@ -236,7 +236,7 @@
                         
                         <div class="flex justify-between">
                             <span class="text-sm text-gray-500">Total Pendapatan</span>
-                            <span class="text-sm font-medium text-livora-accent">
+                            <span class="text-sm font-medium text-orange-600">
                                 Rp {{ number_format($room->bookings->where('status', '!=', 'cancelled')->sum('total_amount'), 0, ',', '.') }}
                             </span>
                         </div>
@@ -249,7 +249,7 @@
                     
                     <div class="space-y-3">
                         <a href="{{ route('mitra.rooms.edit', ['property' => $property->id, 'room' => $room->id]) }}" 
-                           class="w-full inline-flex items-center justify-center px-3 py-2 border border-livora-accent text-livora-accent rounded hover:bg-livora-accent hover:text-white transition-colors text-sm">
+                           class="w-full btn btn-outline text-sm">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                             </svg>

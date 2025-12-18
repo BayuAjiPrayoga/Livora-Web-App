@@ -8,18 +8,18 @@
     <div class="bg-white shadow-sm border-b">
         <div class="px-6 py-4">
             <div class="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                <a href="{{ route('tenant.dashboard') }}" class="hover:text-livora-primary">Dashboard</a>
+                <a href="{{ route('tenant.dashboard') }}" class="hover:text-[#ff6900]">Dashboard</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <a href="{{ route('tenant.tickets.index') }}" class="hover:text-livora-primary">Tiket Saya</a>
+                <a href="{{ route('tenant.tickets.index') }}" class="hover:text-[#ff6900]">Tiket Saya</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span class="text-livora-primary font-medium">Buat Tiket Baru</span>
+                <span class="text-[#ff6900] font-medium">Buat Tiket Baru</span>
             </div>
             <h1 class="text-2xl font-bold text-livora-text flex items-center">
-                <svg class="w-6 h-6 mr-2 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
                 Buat Tiket Baru
@@ -50,7 +50,7 @@
                             Kamar <span class="text-red-500">*</span>
                         </label>
                         <select name="room_id" id="room_id" 
-                                class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('room_id') border-red-500 @enderror"
+                                class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('room_id') border-red-500 @enderror"
                                 required>
                             <option value="">Pilih kamar</option>
                             @foreach($bookings as $booking)
@@ -72,7 +72,7 @@
                         </label>
                         <input type="text" name="subject" id="subject" 
                                value="{{ old('subject') }}"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('subject') border-red-500 @enderror"
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('subject') border-red-500 @enderror"
                                placeholder="Contoh: AC tidak dingin"
                                maxlength="255"
                                required>
@@ -87,7 +87,7 @@
                             Tingkat Prioritas <span class="text-red-500">*</span>
                         </label>
                         <select name="priority" id="priority" 
-                                class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('priority') border-red-500 @enderror"
+                                class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('priority') border-red-500 @enderror"
                                 required>
                             <option value="">Pilih tingkat prioritas</option>
                             <option value="low" {{ old('priority') == 'low' ? 'selected' : '' }}>Rendah - Tidak mendesak</option>
@@ -106,7 +106,7 @@
                             Pesan Keluhan/Permintaan <span class="text-red-500">*</span>
                         </label>
                         <textarea name="message" id="message" rows="6"
-                                  class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent @error('message') border-red-500 @enderror"
+                                  class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent @error('message') border-red-500 @enderror"
                                   placeholder="Jelaskan keluhan atau permintaan Anda secara detail..."
                                   maxlength="1000"
                                   required>{{ old('message') }}</textarea>
@@ -144,7 +144,7 @@
                             Kembali
                         </a>
                         <button type="submit" 
-                                class="inline-flex items-center px-6 py-2 bg-livora-primary border border-transparent rounded-md font-semibold text-white hover:bg-blue-800 transition-colors">
+                                class="inline-flex items-center px-6 py-2 bg-[#ff6900] border border-transparent rounded-md font-semibold text-white hover:bg-blue-800 transition-colors">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>

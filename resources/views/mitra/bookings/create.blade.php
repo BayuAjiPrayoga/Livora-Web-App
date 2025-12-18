@@ -9,7 +9,7 @@
         <div class="px-6 py-4">
             <div class="flex items-center space-x-4">
                 <a href="{{ route('mitra.bookings.index') }}" 
-                   class="text-livora-accent hover:text-livora-primary">
+                   class="text-orange-600 hover:text-[#ff6900]">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
@@ -45,7 +45,7 @@
                     <div>
                         <label for="boarding_house_id" class="block text-sm font-medium text-gray-700 mb-2">Properti <span class="text-red-500">*</span></label>
                         <select name="boarding_house_id" id="boarding_house_id" required 
-                                class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                                class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                             <option value="">Pilih Properti</option>
                             @foreach($boardingHouses as $property)
                                 <option value="{{ $property->id }}" {{ old('boarding_house_id') == $property->id ? 'selected' : '' }}>
@@ -61,7 +61,7 @@
                     <div>
                         <label for="room_id" class="block text-sm font-medium text-gray-700 mb-2">Kamar <span class="text-red-500">*</span></label>
                         <select name="room_id" id="room_id" required 
-                                class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                                class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                             <option value="">Pilih properti terlebih dahulu</option>
                         </select>
                         <div id="room_info" class="mt-2 p-3 bg-gray-50 rounded-lg hidden">
@@ -99,7 +99,7 @@
                     <div>
                         <label for="booking_type" class="block text-sm font-medium text-gray-700 mb-2">Tipe Booking <span class="text-red-500">*</span></label>
                         <select name="booking_type" id="booking_type" required 
-                                class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                                class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                             <option value="">Pilih Tipe Booking</option>
                             <option value="daily" {{ old('booking_type') == 'daily' ? 'selected' : '' }}>Harian</option>
                             <option value="monthly" {{ old('booking_type') == 'monthly' ? 'selected' : '' }}>Bulanan</option>
@@ -115,7 +115,7 @@
                         <input type="date" name="check_in_date" id="check_in_date" required
                                value="{{ old('check_in_date') }}"
                                min="{{ date('Y-m-d') }}"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('check_in_date')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -126,7 +126,7 @@
                         <input type="date" name="check_out_date" id="check_out_date" required
                                value="{{ old('check_out_date') }}"
                                min="{{ date('Y-m-d', strtotime('+1 day')) }}"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('check_out_date')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -151,7 +151,7 @@
                         <input type="text" name="tenant_name" id="tenant_name" required
                                value="{{ old('tenant_name') }}"
                                placeholder="Masukkan nama lengkap penyewa"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('tenant_name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -162,7 +162,7 @@
                         <input type="tel" name="tenant_phone" id="tenant_phone" required
                                value="{{ old('tenant_phone') }}"
                                placeholder="Contoh: 08123456789"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('tenant_phone')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -173,7 +173,7 @@
                         <input type="email" name="tenant_email" id="tenant_email" required
                                value="{{ old('tenant_email') }}"
                                placeholder="contoh@email.com"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('tenant_email')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -185,7 +185,7 @@
                                value="{{ old('tenant_identity_number') }}"
                                placeholder="Masukkan 16 digit nomor KTP"
                                maxlength="16"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('tenant_identity_number')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -195,7 +195,7 @@
                         <label for="tenant_address" class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap <span class="text-red-500">*</span></label>
                         <textarea name="tenant_address" id="tenant_address" required rows="3"
                                   placeholder="Masukkan alamat lengkap penyewa"
-                                  class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">{{ old('tenant_address') }}</textarea>
+                                  class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">{{ old('tenant_address') }}</textarea>
                         @error('tenant_address')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -213,7 +213,7 @@
                         <input type="text" name="emergency_contact_name" id="emergency_contact_name"
                                value="{{ old('emergency_contact_name') }}"
                                placeholder="Nama keluarga/kerabat terdekat"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('emergency_contact_name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -224,7 +224,7 @@
                         <input type="tel" name="emergency_contact_phone" id="emergency_contact_phone"
                                value="{{ old('emergency_contact_phone') }}"
                                placeholder="Contoh: 08123456789"
-                               class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                               class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         @error('emergency_contact_phone')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -233,7 +233,7 @@
                     <div>
                         <label for="emergency_contact_relation" class="block text-sm font-medium text-gray-700 mb-2">Hubungan</label>
                         <select name="emergency_contact_relation" id="emergency_contact_relation"
-                                class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                                class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                             <option value="">Pilih hubungan</option>
                             <option value="Orang Tua" {{ old('emergency_contact_relation') == 'Orang Tua' ? 'selected' : '' }}>Orang Tua</option>
                             <option value="Saudara" {{ old('emergency_contact_relation') == 'Saudara' ? 'selected' : '' }}>Saudara</option>
@@ -269,7 +269,7 @@
                         <hr>
                         <div class="flex justify-between font-semibold text-lg">
                             <span>Total Pembayaran:</span>
-                            <span id="final_total" class="text-livora-accent">Rp 0</span>
+                            <span id="final_total" class="text-orange-600">Rp 0</span>
                         </div>
                     </div>
                 </div>
@@ -287,7 +287,7 @@
                     <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Catatan Tambahan</label>
                     <textarea name="notes" id="notes" rows="4"
                               placeholder="Catatan khusus untuk booking ini (opsional)"
-                              class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">{{ old('notes') }}</textarea>
+                              class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">{{ old('notes') }}</textarea>
                     @error('notes')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -302,7 +302,7 @@
                         Batal
                     </a>
                     <button type="submit" 
-                            class="px-6 py-2 bg-livora-accent text-white rounded-lg hover:bg-livora-primary transition-colors">
+                            class="btn btn-primary">
                         Simpan Booking
                     </button>
                 </div>

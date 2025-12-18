@@ -8,16 +8,16 @@
     <div class="bg-white shadow-sm border-b">
         <div class="px-6 py-4">
             <div class="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                <a href="{{ route('mitra.dashboard') }}" class="hover:text-livora-primary">Dashboard</a>
+                <a href="{{ route('mitra.dashboard') }}" class="hover:text-[#ff6900]">Dashboard</a>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <span class="text-livora-primary font-medium">Kelola Tiket</span>
+                <span class="text-[#ff6900] font-medium">Kelola Tiket</span>
             </div>
             <div class="flex justify-between items-center">
                 <div>
                     <h1 class="text-2xl font-bold text-livora-text flex items-center">
-                        <svg class="w-6 h-6 mr-2 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
                         </svg>
                         Kelola Tiket
@@ -96,14 +96,14 @@
                     <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Cari Tiket</label>
                     <input type="text" name="search" id="search" 
                            value="{{ request('search') }}"
-                           class="w-full rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent"
+                           class="w-full rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent"
                            placeholder="Cari berdasarkan subjek, pesan, atau nama penyewa...">
                 </div>
 
                 <!-- Status Filter -->
                 <div>
                     <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                    <select name="status" id="status" class="rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                    <select name="status" id="status" class="rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         <option value="all" {{ request('status', 'all') == 'all' ? 'selected' : '' }}>Semua Status</option>
                         <option value="open" {{ request('status') == 'open' ? 'selected' : '' }}>Belum Diproses</option>
                         <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>Sedang Diproses</option>
@@ -114,7 +114,7 @@
                 <!-- Priority Filter -->
                 <div>
                     <label for="priority" class="block text-sm font-medium text-gray-700 mb-1">Prioritas</label>
-                    <select name="priority" id="priority" class="rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                    <select name="priority" id="priority" class="rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         <option value="all" {{ request('priority', 'all') == 'all' ? 'selected' : '' }}>Semua Prioritas</option>
                         <option value="urgent" {{ request('priority') == 'urgent' ? 'selected' : '' }}>Urgent</option>
                         <option value="high" {{ request('priority') == 'high' ? 'selected' : '' }}>Tinggi</option>
@@ -126,7 +126,7 @@
                 <!-- Property Filter -->
                 <div>
                     <label for="property" class="block text-sm font-medium text-gray-700 mb-1">Properti</label>
-                    <select name="property" id="property" class="rounded-lg border-gray-300 focus:border-livora-accent focus:ring-livora-accent">
+                    <select name="property" id="property" class="rounded-lg border-gray-300 focus:border-[#ff6900] focus:ring-livora-accent">
                         <option value="all" {{ request('property', 'all') == 'all' ? 'selected' : '' }}>Semua Properti</option>
                         @foreach($properties as $property)
                             <option value="{{ $property->id }}" {{ request('property') == $property->id ? 'selected' : '' }}>
@@ -138,7 +138,7 @@
 
                 <!-- Filter Buttons -->
                 <div class="flex space-x-2">
-                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-livora-primary border border-transparent rounded-md font-semibold text-white hover:bg-blue-800 transition-colors">
+                    <button type="submit" class="btn btn-primary">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
@@ -233,7 +233,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <a href="{{ route('mitra.tickets.show', $ticket) }}" 
-                                       class="text-livora-primary hover:text-livora-secondary">
+                                       class="text-[#ff6900] hover:text-livora-secondary">
                                         Detail
                                     </a>
                                 </td>
@@ -262,8 +262,7 @@
                     </p>
                     @if(request()->hasAny(['search', 'status', 'priority', 'property']))
                         <div class="mt-6">
-                            <a href="{{ route('mitra.tickets.index') }}" 
-                               class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-livora-primary bg-livora-accent hover:bg-blue-50">
+                            <a href="{{ route('mitra.tickets.index') }}" class="btn btn-secondary">
                                 Reset Filter
                             </a>
                         </div>

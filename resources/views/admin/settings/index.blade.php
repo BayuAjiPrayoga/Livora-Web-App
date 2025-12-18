@@ -12,7 +12,7 @@
             <p class="text-sm text-gray-600 mt-1">Konfigurasi dan pengaturan sistem LIVORA</p>
         </div>
         <div class="flex space-x-3">
-            <button type="submit" form="settings-form" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+            <button type="submit" form="settings-form" class="btn btn-primary">
                 Save Changes
             </button>
         </div>
@@ -52,39 +52,39 @@
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
                     <nav class="space-y-2">
-                        <a href="#general" class="settings-tab active block px-3 py-2 text-sm font-medium text-livora-primary bg-blue-50 rounded-md">
+                        <a href="#general" class="settings-tab active block px-3 py-2 text-sm font-medium text-[#ff6900] bg-blue-50 rounded-md">
                             <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
                             General Settings
                         </a>
-                        <a href="#email" class="settings-tab block px-3 py-2 text-sm font-medium text-gray-700 hover:text-livora-primary hover:bg-gray-50 rounded-md">
+                        <a href="#email" class="settings-tab block px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#ff6900] hover:bg-gray-50 rounded-md">
                             <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                             </svg>
                             Email Configuration
                         </a>
-                        <a href="#payment" class="settings-tab block px-3 py-2 text-sm font-medium text-gray-700 hover:text-livora-primary hover:bg-gray-50 rounded-md">
+                        <a href="#payment" class="settings-tab block px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#ff6900] hover:bg-gray-50 rounded-md">
                             <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
                             Payment Settings
                         </a>
-                        <a href="#notifications" class="settings-tab block px-3 py-2 text-sm font-medium text-gray-700 hover:text-livora-primary hover:bg-gray-50 rounded-md">
+                        <a href="#notifications" class="settings-tab block px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#ff6900] hover:bg-gray-50 rounded-md">
                             <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM11 17H7l-5 5v-5z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 3L8 21l5-7 5 7-5-18z"></path>
                             </svg>
                             Notifications
                         </a>
-                        <a href="#security" class="settings-tab block px-3 py-2 text-sm font-medium text-gray-700 hover:text-livora-primary hover:bg-gray-50 rounded-md">
+                        <a href="#security" class="settings-tab block px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#ff6900] hover:bg-gray-50 rounded-md">
                             <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                             </svg>
                             Security
                         </a>
-                        <a href="#maintenance" class="settings-tab block px-3 py-2 text-sm font-medium text-gray-700 hover:text-livora-primary hover:bg-gray-50 rounded-md">
+                        <a href="#maintenance" class="settings-tab block px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#ff6900] hover:bg-gray-50 rounded-md">
                             <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -109,19 +109,19 @@
                             <div>
                                 <label for="app_name" class="block text-sm font-medium text-gray-700 mb-2">Application Name</label>
                                 <input type="text" name="app_name" id="app_name" value="{{ $settings['app_name'] ?? 'LIVORA' }}" 
-                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             </div>
                             <div>
                                 <label for="app_url" class="block text-sm font-medium text-gray-700 mb-2">Application URL</label>
                                 <input type="url" name="app_url" id="app_url" value="{{ $settings['app_url'] ?? url('/') }}" 
-                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             </div>
                         </div>
 
                         <div>
                             <label for="app_description" class="block text-sm font-medium text-gray-700 mb-2">Application Description</label>
                             <textarea name="app_description" id="app_description" rows="3" 
-                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">{{ $settings['app_description'] ?? 'Platform manajemen kos modern dan terpercaya' }}</textarea>
+                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">{{ $settings['app_description'] ?? 'Platform manajemen kos modern dan terpercaya' }}</textarea>
                         </div>
 
                         <div>
@@ -137,14 +137,14 @@
                                     </div>
                                 @endif
                                 <input type="file" name="app_logo" id="app_logo" accept="image/*" 
-                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-livora-primary file:text-white hover:file:bg-blue-700">
+                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-[#ff6900] file:text-white hover:file:bg-[#e55a00]">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
                                 <label for="timezone" class="block text-sm font-medium text-gray-700 mb-2">Timezone</label>
-                                <select name="timezone" id="timezone" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                <select name="timezone" id="timezone" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                     <option value="Asia/Jakarta" {{ ($settings['timezone'] ?? '') == 'Asia/Jakarta' ? 'selected' : '' }}>Asia/Jakarta (WIB)</option>
                                     <option value="Asia/Makassar" {{ ($settings['timezone'] ?? '') == 'Asia/Makassar' ? 'selected' : '' }}>Asia/Makassar (WITA)</option>
                                     <option value="Asia/Jayapura" {{ ($settings['timezone'] ?? '') == 'Asia/Jayapura' ? 'selected' : '' }}>Asia/Jayapura (WIT)</option>
@@ -152,7 +152,7 @@
                             </div>
                             <div>
                                 <label for="currency" class="block text-sm font-medium text-gray-700 mb-2">Currency</label>
-                                <select name="currency" id="currency" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                <select name="currency" id="currency" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                     <option value="IDR" {{ ($settings['currency'] ?? '') == 'IDR' ? 'selected' : '' }}>Indonesian Rupiah (IDR)</option>
                                     <option value="USD" {{ ($settings['currency'] ?? '') == 'USD' ? 'selected' : '' }}>US Dollar (USD)</option>
                                 </select>
@@ -172,7 +172,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
                                 <label for="mail_driver" class="block text-sm font-medium text-gray-700 mb-2">Mail Driver</label>
-                                <select name="mail_driver" id="mail_driver" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                <select name="mail_driver" id="mail_driver" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                     <option value="smtp" {{ ($settings['mail_driver'] ?? '') == 'smtp' ? 'selected' : '' }}>SMTP</option>
                                     <option value="mailgun" {{ ($settings['mail_driver'] ?? '') == 'mailgun' ? 'selected' : '' }}>Mailgun</option>
                                     <option value="ses" {{ ($settings['mail_driver'] ?? '') == 'ses' ? 'selected' : '' }}>Amazon SES</option>
@@ -182,7 +182,7 @@
                                 <label for="mail_from_address" class="block text-sm font-medium text-gray-700 mb-2">From Email</label>
                                 <input type="email" name="mail_from_address" id="mail_from_address" 
                                        value="{{ $settings['mail_from_address'] ?? 'noreply@livora.com' }}" 
-                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             </div>
                         </div>
 
@@ -190,12 +190,12 @@
                             <div>
                                 <label for="mail_host" class="block text-sm font-medium text-gray-700 mb-2">SMTP Host</label>
                                 <input type="text" name="mail_host" id="mail_host" value="{{ $settings['mail_host'] ?? '' }}" 
-                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             </div>
                             <div>
                                 <label for="mail_port" class="block text-sm font-medium text-gray-700 mb-2">SMTP Port</label>
                                 <input type="number" name="mail_port" id="mail_port" value="{{ $settings['mail_port'] ?? '587' }}" 
-                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             </div>
                         </div>
 
@@ -203,12 +203,12 @@
                             <div>
                                 <label for="mail_username" class="block text-sm font-medium text-gray-700 mb-2">SMTP Username</label>
                                 <input type="text" name="mail_username" id="mail_username" value="{{ $settings['mail_username'] ?? '' }}" 
-                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             </div>
                             <div>
                                 <label for="mail_password" class="block text-sm font-medium text-gray-700 mb-2">SMTP Password</label>
                                 <input type="password" name="mail_password" id="mail_password" value="{{ $settings['mail_password'] ?? '' }}" 
-                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                             </div>
                         </div>
 
@@ -233,7 +233,7 @@
                             <label class="flex items-center">
                                 <input type="checkbox" name="payment_auto_verify" value="1" 
                                        {{ ($settings['payment_auto_verify'] ?? false) ? 'checked' : '' }}
-                                       class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                                       class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                                 <span class="ml-2 text-sm text-gray-700">Auto-verify payments under certain amount</span>
                             </label>
                         </div>
@@ -242,14 +242,14 @@
                             <label for="auto_verify_limit" class="block text-sm font-medium text-gray-700 mb-2">Auto Verify Limit (IDR)</label>
                             <input type="number" name="auto_verify_limit" id="auto_verify_limit" 
                                    value="{{ $settings['auto_verify_limit'] ?? 1000000 }}" 
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                         </div>
 
                         <div>
                             <label for="commission_rate" class="block text-sm font-medium text-gray-700 mb-2">Platform Commission Rate (%)</label>
                             <input type="number" step="0.01" name="commission_rate" id="commission_rate" 
                                    value="{{ $settings['commission_rate'] ?? 5.0 }}" 
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                         </div>
 
                         <div>
@@ -263,7 +263,7 @@
                                 <label class="flex items-center">
                                     <input type="checkbox" name="payment_methods[]" value="{{ $method }}" 
                                            {{ in_array($method, $selectedMethods) ? 'checked' : '' }}
-                                           class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                                           class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                                     <span class="ml-2 text-sm text-gray-700">{{ $method }}</span>
                                 </label>
                                 @endforeach
@@ -286,19 +286,19 @@
                                 <label class="flex items-center">
                                     <input type="checkbox" name="notify_new_booking" value="1" 
                                            {{ ($settings['notify_new_booking'] ?? true) ? 'checked' : '' }}
-                                           class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                                           class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                                     <span class="ml-2 text-sm text-gray-700">New booking notifications</span>
                                 </label>
                                 <label class="flex items-center">
                                     <input type="checkbox" name="notify_payment_received" value="1" 
                                            {{ ($settings['notify_payment_received'] ?? true) ? 'checked' : '' }}
-                                           class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                                           class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                                     <span class="ml-2 text-gray-700">Payment received notifications</span>
                                 </label>
                                 <label class="flex items-center">
                                     <input type="checkbox" name="notify_ticket_created" value="1" 
                                            {{ ($settings['notify_ticket_created'] ?? true) ? 'checked' : '' }}
-                                           class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                                           class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                                     <span class="ml-2 text-sm text-gray-700">New ticket notifications</span>
                                 </label>
                             </div>
@@ -310,13 +310,13 @@
                                 <label class="flex items-center">
                                     <input type="checkbox" name="notify_system_updates" value="1" 
                                            {{ ($settings['notify_system_updates'] ?? false) ? 'checked' : '' }}
-                                           class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                                           class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                                     <span class="ml-2 text-sm text-gray-700">System update notifications</span>
                                 </label>
                                 <label class="flex items-center">
                                     <input type="checkbox" name="notify_maintenance" value="1" 
                                            {{ ($settings['notify_maintenance'] ?? true) ? 'checked' : '' }}
-                                           class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                                           class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                                     <span class="ml-2 text-sm text-gray-700">Maintenance notifications</span>
                                 </label>
                             </div>
@@ -336,14 +336,14 @@
                             <label for="session_timeout" class="block text-sm font-medium text-gray-700 mb-2">Session Timeout (minutes)</label>
                             <input type="number" name="session_timeout" id="session_timeout" 
                                    value="{{ $settings['session_timeout'] ?? 120 }}" 
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                         </div>
 
                         <div>
                             <label class="flex items-center">
                                 <input type="checkbox" name="force_https" value="1" 
                                        {{ ($settings['force_https'] ?? false) ? 'checked' : '' }}
-                                       class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                                       class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                                 <span class="ml-2 text-sm text-gray-700">Force HTTPS connections</span>
                             </label>
                         </div>
@@ -352,7 +352,7 @@
                             <label class="flex items-center">
                                 <input type="checkbox" name="two_factor_auth" value="1" 
                                        {{ ($settings['two_factor_auth'] ?? false) ? 'checked' : '' }}
-                                       class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                                       class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                                 <span class="ml-2 text-sm text-gray-700">Enable two-factor authentication</span>
                             </label>
                         </div>
@@ -361,7 +361,7 @@
                             <label for="max_login_attempts" class="block text-sm font-medium text-gray-700 mb-2">Max Login Attempts</label>
                             <input type="number" name="max_login_attempts" id="max_login_attempts" 
                                    value="{{ $settings['max_login_attempts'] ?? 5 }}" 
-                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                         </div>
                     </div>
                 </div>
@@ -390,7 +390,7 @@
                             <label class="flex items-center">
                                 <input type="checkbox" name="maintenance_mode" value="1" 
                                        {{ ($settings['maintenance_mode'] ?? false) ? 'checked' : '' }}
-                                       class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                                       class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                                 <span class="ml-2 text-sm text-gray-700">Enable maintenance mode</span>
                             </label>
                         </div>
@@ -398,7 +398,7 @@
                         <div>
                             <label for="maintenance_message" class="block text-sm font-medium text-gray-700 mb-2">Maintenance Message</label>
                             <textarea name="maintenance_message" id="maintenance_message" rows="3" 
-                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">{{ $settings['maintenance_message'] ?? 'We are currently performing scheduled maintenance. Please try again later.' }}</textarea>
+                                      class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">{{ $settings['maintenance_message'] ?? 'We are currently performing scheduled maintenance. Please try again later.' }}</textarea>
                         </div>
 
                         <div class="flex space-x-4">
@@ -426,12 +426,12 @@
                 
                 // Remove active classes
                 document.querySelectorAll('.settings-tab').forEach(t => {
-                    t.classList.remove('active', 'text-livora-primary', 'bg-blue-50');
+                    t.classList.remove('active', 'text-[#ff6900]', 'bg-blue-50');
                     t.classList.add('text-gray-700');
                 });
                 
                 // Add active class to clicked tab
-                this.classList.add('active', 'text-livora-primary', 'bg-blue-50');
+                this.classList.add('active', 'text-[#ff6900]', 'bg-blue-50');
                 this.classList.remove('text-gray-700');
                 
                 // Hide all sections

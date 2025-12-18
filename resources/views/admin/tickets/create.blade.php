@@ -26,7 +26,7 @@
                     <div>
                         <label for="user_id" class="block text-sm font-medium text-gray-700 mb-2">User *</label>
                         <select name="user_id" id="user_id" required
-                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('user_id') border-red-500 @enderror">
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('user_id') border-red-500 @enderror">
                             <option value="">Select User</option>
                             @foreach(App\Models\User::whereIn('role', ['tenant', 'owner'])->get() as $user)
                                 <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
@@ -42,7 +42,7 @@
                     <div>
                         <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
                         <select name="category" id="category" required
-                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('category') border-red-500 @enderror">
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('category') border-red-500 @enderror">
                             <option value="">Select Category</option>
                             <option value="booking" {{ old('category') == 'booking' ? 'selected' : '' }}>Booking Issues</option>
                             <option value="payment" {{ old('category') == 'payment' ? 'selected' : '' }}>Payment Issues</option>
@@ -64,7 +64,7 @@
                     <div>
                         <label for="priority" class="block text-sm font-medium text-gray-700 mb-2">Priority *</label>
                         <select name="priority" id="priority" required
-                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('priority') border-red-500 @enderror">
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('priority') border-red-500 @enderror">
                             <option value="low" {{ old('priority') == 'low' ? 'selected' : '' }}>Low</option>
                             <option value="medium" {{ old('priority', 'medium') == 'medium' ? 'selected' : '' }}>Medium</option>
                             <option value="high" {{ old('priority') == 'high' ? 'selected' : '' }}>High</option>
@@ -78,7 +78,7 @@
                     <div>
                         <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status *</label>
                         <select name="status" id="status" required
-                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('status') border-red-500 @enderror">
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('status') border-red-500 @enderror">
                             <option value="open" {{ old('status', 'open') == 'open' ? 'selected' : '' }}>Open</option>
                             <option value="in_progress" {{ old('status') == 'in_progress' ? 'selected' : '' }}>In Progress</option>
                             <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
@@ -93,7 +93,7 @@
                     <div>
                         <label for="assigned_to" class="block text-sm font-medium text-gray-700 mb-2">Assign To</label>
                         <select name="assigned_to" id="assigned_to"
-                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('assigned_to') border-red-500 @enderror">
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('assigned_to') border-red-500 @enderror">
                             <option value="">Unassigned</option>
                             @foreach(App\Models\User::where('role', 'admin')->get() as $admin)
                                 <option value="{{ $admin->id }}" {{ old('assigned_to') == $admin->id ? 'selected' : '' }}>
@@ -111,7 +111,7 @@
                 <div>
                     <label for="booking_id" class="block text-sm font-medium text-gray-700 mb-2">Related Booking (Optional)</label>
                     <select name="booking_id" id="booking_id"
-                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('booking_id') border-red-500 @enderror">
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('booking_id') border-red-500 @enderror">
                         <option value="">No related booking</option>
                         @foreach(App\Models\Booking::with(['user', 'room.boardingHouse'])->latest()->take(50)->get() as $booking)
                             <option value="{{ $booking->id }}" {{ old('booking_id') == $booking->id ? 'selected' : '' }}>
@@ -128,7 +128,7 @@
                 <div>
                     <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
                     <input type="text" name="subject" id="subject" value="{{ old('subject') }}" required
-                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('subject') border-red-500 @enderror">
+                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('subject') border-red-500 @enderror">
                     @error('subject')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -138,7 +138,7 @@
                 <div>
                     <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
                     <textarea name="description" id="description" rows="6" required
-                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('description') border-red-500 @enderror">{{ old('description') }}</textarea>
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('description') border-red-500 @enderror">{{ old('description') }}</textarea>
                     @error('description')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -148,7 +148,7 @@
                 <div>
                     <label for="attachments" class="block text-sm font-medium text-gray-700 mb-2">Attachments</label>
                     <input type="file" name="attachments[]" id="attachments" multiple accept="image/*,.pdf,.doc,.docx,.txt"
-                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('attachments') border-red-500 @enderror">
+                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('attachments') border-red-500 @enderror">
                     <p class="mt-1 text-sm text-gray-500">Upload relevant files (images, documents). Maximum 5MB per file.</p>
                     @error('attachments')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -162,7 +162,7 @@
                     <div>
                         <label for="admin_notes" class="block text-sm font-medium text-gray-700 mb-2">Internal Notes</label>
                         <textarea name="admin_notes" id="admin_notes" rows="4"
-                                  class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('admin_notes') border-red-500 @enderror">{{ old('admin_notes') }}</textarea>
+                                  class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('admin_notes') border-red-500 @enderror">{{ old('admin_notes') }}</textarea>
                         <p class="mt-1 text-sm text-gray-500">Internal notes visible only to admin staff.</p>
                         @error('admin_notes')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -176,7 +176,7 @@
                         <label for="due_date" class="block text-sm font-medium text-gray-700 mb-2">Due Date (Optional)</label>
                         <input type="datetime-local" name="due_date" id="due_date" value="{{ old('due_date') }}"
                                min="{{ now()->format('Y-m-d\TH:i') }}"
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary @error('due_date') border-red-500 @enderror">
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900] @error('due_date') border-red-500 @enderror">
                         @error('due_date')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -185,7 +185,7 @@
                     <div class="flex items-center space-x-4">
                         <label class="flex items-center">
                             <input type="checkbox" name="send_notification" value="1" {{ old('send_notification', 1) ? 'checked' : '' }}
-                                   class="h-4 w-4 text-livora-primary focus:ring-livora-primary border-gray-300 rounded">
+                                   class="h-4 w-4 text-[#ff6900] focus:ring-livora-primary border-gray-300 rounded">
                             <span class="ml-2 text-sm text-gray-700">Send notification to user</span>
                         </label>
                     </div>
@@ -196,7 +196,7 @@
                     <a href="{{ route('admin.tickets.index') }}" class="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
                         Cancel
                     </a>
-                    <button type="submit" class="bg-livora-primary text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                    <button type="submit" class="btn btn-primary">
                         Create Ticket
                     </button>
                 </div>
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         
         // Reset classes
-        this.className = 'block w-full px-3 py-2 border rounded-lg focus:ring-livora-primary focus:border-livora-primary';
+        this.className = 'block w-full px-3 py-2 border rounded-lg focus:ring-livora-primary focus:border-[#ff6900]';
         
         // Add priority-specific classes
         if (colors[priority]) {

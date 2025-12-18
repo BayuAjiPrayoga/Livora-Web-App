@@ -104,7 +104,7 @@
                 <div class="relative">
                     <input type="text" name="search" id="search" value="{{ request('search') }}" 
                            placeholder="Cari nama user atau ID booking..."
-                           class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                           class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -116,7 +116,7 @@
             <!-- Status Filter -->
             <div>
                 <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                <select name="status" id="status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                <select name="status" id="status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     <option value="">Semua Status</option>
                     <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
                     <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
@@ -129,7 +129,7 @@
             <!-- Boarding House Filter -->
             <div>
                 <label for="boarding_house_id" class="block text-sm font-medium text-gray-700 mb-2">Boarding House</label>
-                <select name="boarding_house_id" id="boarding_house_id" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                <select name="boarding_house_id" id="boarding_house_id" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     <option value="">Semua Properti</option>
                     @foreach($boardingHouses as $house)
                         <option value="{{ $house->id }}" {{ request('boarding_house_id') == $house->id ? 'selected' : '' }}>
@@ -143,12 +143,12 @@
             <div>
                 <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
                 <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}" 
-                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
             </div>
 
             <!-- Actions -->
             <div class="flex items-end space-x-2">
-                <button type="submit" class="flex-1 bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                <button type="submit" class="btn btn-primary">
                     Filter
                 </button>
                 <a href="{{ route('admin.bookings.index') }}" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors">
@@ -165,7 +165,7 @@
             <div class="px-6 py-3 border-b border-gray-200 bg-gray-50">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <input type="checkbox" id="selectAll" class="rounded border-gray-300 text-livora-primary focus:ring-livora-primary">
+                        <input type="checkbox" id="selectAll" class="rounded border-gray-300 text-[#ff6900] focus:ring-livora-primary">
                         <label for="selectAll" class="ml-2 text-sm font-medium text-gray-700">Select All</label>
                     </div>
                     <div class="hidden" id="bulkActions">
@@ -219,7 +219,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="h-10 w-10 flex-shrink-0">
-                                        <div class="h-10 w-10 bg-livora-primary rounded-full flex items-center justify-center">
+                                        <div class="h- w- bg-gradient-to-br from-[#ff6900] to-[#ff8533] rounded-full flex items-center justify-center">
                                             <span class="text-sm font-medium text-white">
                                                 {{ substr($booking->user->name, 0, 1) }}
                                             </span>
@@ -256,7 +256,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <div class="flex items-center space-x-2">
-                                    <a href="{{ route('admin.bookings.show', $booking) }}" class="text-livora-primary hover:text-blue-700">
+                                    <a href="{{ route('admin.bookings.show', $booking) }}" class="text-[#ff6900] hover:text-blue-700">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>

@@ -24,13 +24,13 @@
                 <div>
                     <label for="city" class="block text-sm font-medium text-gray-700 mb-2">City</label>
                     <input type="text" id="city" name="city" placeholder="Enter city name"
-                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                 </div>
 
                 <div>
                     <label for="max_price" class="block text-sm font-medium text-gray-700 mb-2">Max Price (Monthly)</label>
                     <select id="max_price" name="max_price"
-                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                         <option value="">Any price</option>
                         <option value="500000">Up to Rp 500K</option>
                         <option value="1000000">Up to Rp 1M</option>
@@ -43,11 +43,11 @@
                 <div>
                     <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Check-in Date</label>
                     <input type="date" id="start_date" name="start_date" min="{{ date('Y-m-d') }}"
-                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                 </div>
 
                 <div class="flex items-end">
-                    <button type="button" id="search-btn" class="w-full bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                    <button type="button" id="search-btn" class="w-full bg-[#ff6900] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
                         Search Properties
                     </button>
                 </div>
@@ -69,7 +69,7 @@
                         <h3 class="mt-2 text-sm font-medium text-gray-900">No properties found</h3>
                         <p class="mt-1 text-sm text-gray-500">Try adjusting your search criteria or browse all available properties.</p>
                         <div class="mt-6">
-                            <button type="button" id="show-all-btn" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                            <button type="button" id="show-all-btn" class="bg-[#ff6900] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
                                 Show All Properties
                             </button>
                         </div>
@@ -193,13 +193,13 @@
                                     <div>
                                         <label for="booking_start_date" class="block text-sm font-medium text-gray-700 mb-2">Check-in Date *</label>
                                         <input type="date" name="start_date" id="booking_start_date" required min="{{ date('Y-m-d') }}"
-                                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                     </div>
 
                                     <div>
                                         <label for="booking_end_date" class="block text-sm font-medium text-gray-700 mb-2">Check-out Date *</label>
                                         <input type="date" name="end_date" id="booking_end_date" required
-                                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                                     </div>
                                 </div>
 
@@ -207,7 +207,7 @@
                                     <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Special Requests (Optional)</label>
                                     <textarea name="notes" id="notes" rows="3"
                                               placeholder="Any special requests or notes for the property owner..."
-                                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary"></textarea>
+                                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]"></textarea>
                                 </div>
 
                                 <!-- Price Calculation -->
@@ -232,7 +232,7 @@
                                         </div>
                                         <div class="border-t border-gray-200 pt-2 flex justify-between font-medium">
                                             <span>Total Amount:</span>
-                                            <span id="total-amount" class="text-livora-primary">-</span>
+                                            <span id="total-amount" class="text-[#ff6900]">-</span>
                                         </div>
                                     </div>
                                 </div>
@@ -242,7 +242,7 @@
                         </div>
 
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-livora-primary text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-livora-primary sm:ml-3 sm:w-auto sm:text-sm">
+                            <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#ff6900] text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-livora-primary sm:ml-3 sm:w-auto sm:text-sm">
                                 Confirm Booking
                             </button>
                             <button type="button" id="cancel-booking" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-livora-primary sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">

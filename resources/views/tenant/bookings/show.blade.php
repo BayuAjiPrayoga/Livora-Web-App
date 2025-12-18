@@ -164,7 +164,7 @@
                             <h2 class="text-lg font-semibold text-gray-900">Riwayat Pembayaran</h2>
                             @if($booking->status === 'confirmed' && $booking->payments->where('status', 'verified')->isEmpty())
                                 <a href="{{ route('tenant.payments.create', ['booking_id' => $booking->id]) }}" 
-                                   class="inline-flex items-center px-4 py-2 bg-livora-primary border border-transparent rounded-lg font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                                   class="inline-flex items-center px-4 py-2 bg-[#ff6900] border border-transparent rounded-lg font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                     </svg>
@@ -233,7 +233,7 @@
 
                                             <div class="ml-4">
                                                 <a href="{{ route('tenant.payments.show', $payment) }}" 
-                                                   class="text-livora-primary hover:text-blue-700 text-sm font-medium">
+                                                   class="text-[#ff6900] hover:text-blue-700 text-sm font-medium">
                                                     Lihat Detail
                                                 </a>
                                             </div>
@@ -281,7 +281,7 @@
                             <div class="border-t border-gray-200 pt-4">
                                 <div class="flex justify-between">
                                     <span class="text-lg font-semibold text-gray-900">Total</span>
-                                    <span class="text-lg font-bold text-livora-primary">Rp {{ number_format($booking->final_amount, 0, ',', '.') }}</span>
+                                    <span class="text-lg font-bold text-[#ff6900]">Rp {{ number_format($booking->final_amount, 0, ',', '.') }}</span>
                                 </div>
                             </div>
 
@@ -325,7 +325,7 @@
 
                             @if($booking->status === 'confirmed' && $remaining > 0)
                                 <a href="{{ route('tenant.payments.create', ['booking_id' => $booking->id]) }}" 
-                                   class="w-full inline-flex items-center justify-center px-4 py-2 bg-livora-primary border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                                   class="w-full inline-flex items-center justify-center px-4 py-2 bg-[#ff6900] border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                     </svg>

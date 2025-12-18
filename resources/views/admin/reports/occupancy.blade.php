@@ -12,7 +12,7 @@
             <p class="text-sm text-gray-600 mt-1">Analisis tingkat hunian dan utilisasi properti</p>
         </div>
         <div class="flex space-x-3">
-            <button onclick="exportReport()" class="bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+            <button onclick="exportReport()" class="btn btn-primary">
                 Export Report
             </button>
         </div>
@@ -88,7 +88,7 @@
         <form method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
                 <label for="period" class="block text-sm font-medium text-gray-700 mb-2">Time Period</label>
-                <select name="period" id="period" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                <select name="period" id="period" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     <option value="current" {{ request('period') == 'current' ? 'selected' : '' }}>Current Month</option>
                     <option value="last_month" {{ request('period') == 'last_month' ? 'selected' : '' }}>Last Month</option>
                     <option value="3months" {{ request('period') == '3months' ? 'selected' : '' }}>Last 3 Months</option>
@@ -99,7 +99,7 @@
 
             <div>
                 <label for="city" class="block text-sm font-medium text-gray-700 mb-2">City</label>
-                <select name="city" id="city" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                <select name="city" id="city" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     <option value="">All Cities</option>
                     @if(isset($cities))
                         @foreach($cities as $city)
@@ -111,7 +111,7 @@
 
             <div>
                 <label for="property_type" class="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
-                <select name="property_type" id="property_type" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                <select name="property_type" id="property_type" class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
                     <option value="">All Types</option>
                     <option value="kos_putra" {{ request('property_type') == 'kos_putra' ? 'selected' : '' }}>Kos Putra</option>
                     <option value="kos_putri" {{ request('property_type') == 'kos_putri' ? 'selected' : '' }}>Kos Putri</option>
@@ -123,11 +123,11 @@
                 <label for="min_occupancy" class="block text-sm font-medium text-gray-700 mb-2">Min. Occupancy (%)</label>
                 <input type="number" name="min_occupancy" id="min_occupancy" min="0" max="100" 
                        value="{{ request('min_occupancy') }}" placeholder="0"
-                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
+                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
             </div>
 
             <div class="flex items-end">
-                <button type="submit" class="w-full bg-livora-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                <button type="submit" class="btn btn-primary">
                     Apply Filters
                 </button>
             </div>
