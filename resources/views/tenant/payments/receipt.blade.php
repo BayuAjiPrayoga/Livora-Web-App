@@ -304,7 +304,7 @@
         <div class="amount-section">
             <div class="amount-row">
                 <span class="info-label">Total Harga Booking</span>
-                <span class="info-value">Rp {{ number_format($payment->booking->total_price, 0, ',', '.') }}</span>
+                <span class="info-value">Rp {{ number_format($payment->booking->final_amount, 0, ',', '.') }}</span>
             </div>
             
             <div class="amount-row total-amount">

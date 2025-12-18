@@ -177,12 +177,12 @@
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-medium text-gray-500 mb-1">Total Harga Booking</label>
                                 <div class="text-2xl font-bold text-blue-600">
-                                    Rp {{ number_format($payment->booking->total_price, 0, ',', '.') }}
+                                    Rp {{ number_format($payment->booking->final_amount, 0, ',', '.') }}
                                 </div>
                             </div>
                         </div>
 
-                        @if($payment->amount < $payment->booking->total_price)
+                        @if($payment->amount < $payment->booking->final_amount)
                         <div class="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                             <div class="flex items-start">
                                 <svg class="w-5 h-5 mr-2 text-yellow-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -190,12 +190,12 @@
                                 </svg>
                                 <div class="text-sm text-yellow-800">
                                     <strong>Catatan:</strong> Pembayaran Anda (Rp {{ number_format($payment->amount, 0, ',', '.') }}) 
-                                    kurang dari total harga booking (Rp {{ number_format($payment->booking->total_price, 0, ',', '.') }}). 
-                                    Sisa yang harus dibayar: <strong>Rp {{ number_format($payment->booking->total_price - $payment->amount, 0, ',', '.') }}</strong>
+                                    kurang dari total harga booking (Rp {{ number_format($payment->booking->final_amount, 0, ',', '.') }}). 
+                                    Sisa yang harus dibayar: <strong>Rp {{ number_format($payment->booking->final_amount - $payment->amount, 0, ',', '.') }}</strong>
                                 </div>
                             </div>
                         </div>
-                        @elseif($payment->amount > $payment->booking->total_price)
+                        @elseif($payment->amount > $payment->booking->final_amount)
                         <div class="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
                             <div class="flex items-start">
                                 <svg class="w-5 h-5 mr-2 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -203,8 +203,8 @@
                                 </svg>
                                 <div class="text-sm text-blue-800">
                                     <strong>Catatan:</strong> Pembayaran Anda (Rp {{ number_format($payment->amount, 0, ',', '.') }}) 
-                                    lebih dari total harga booking (Rp {{ number_format($payment->booking->total_price, 0, ',', '.') }}). 
-                                    Kelebihan: <strong>Rp {{ number_format($payment->amount - $payment->booking->total_price, 0, ',', '.') }}</strong>
+                                    lebih dari total harga booking (Rp {{ number_format($payment->booking->final_amount, 0, ',', '.') }}). 
+                                    Kelebihan: <strong>Rp {{ number_format($payment->amount - $payment->booking->final_amount, 0, ',', '.') }}</strong>
                                 </div>
                             </div>
                         </div>

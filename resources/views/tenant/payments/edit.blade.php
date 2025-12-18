@@ -74,7 +74,7 @@
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-medium text-gray-500 mb-1">Total Harga Booking</label>
                                 <div class="text-2xl font-bold text-livora-primary">
-                                    Rp {{ number_format($payment->booking->total_price, 0, ',', '.') }}
+                                    Rp {{ number_format($payment->booking->final_amount, 0, ',', '.') }}
                                 </div>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                                 <p class="mt-2 text-sm text-gray-600">
-                                    💡 Total harga booking: <span class="font-semibold text-livora-primary">Rp {{ number_format($payment->booking->total_price, 0, ',', '.') }}</span>
+                                    💡 Total harga booking: <span class="font-semibold text-livora-primary">Rp {{ number_format($payment->booking->final_amount, 0, ',', '.') }}</span>
                                 </p>
                             </div>
 
