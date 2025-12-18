@@ -145,11 +145,11 @@
                             <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <div>
                                     <dt class="text-xs font-medium text-gray-500">Check-in</dt>
-                                    <dd class="text-sm text-gray-900">{{ $payment->booking->start_date->format('M d, Y') }}</dd>
+                                    <dd class="text-sm text-gray-900">{{ $payment->booking->check_in_date->format('M d, Y') }}</dd>
                                 </div>
                                 <div>
                                     <dt class="text-xs font-medium text-gray-500">Check-out</dt>
-                                    <dd class="text-sm text-gray-900">{{ $payment->booking->end_date->format('M d, Y') }}</dd>
+                                    <dd class="text-sm text-gray-900">{{ $payment->booking->check_out_date->format('M d, Y') }}</dd>
                                 </div>
                                 <div>
                                     <dt class="text-xs font-medium text-gray-500">Status</dt>
@@ -320,11 +320,11 @@
                     <div class="border-t pt-3">
                         <div class="flex justify-between">
                             <span class="text-sm text-gray-500">Booking Total</span>
-                            <span class="text-sm font-medium text-gray-900">Rp {{ number_format($payment->booking->total_amount, 0, ',', '.') }}</span>
+                            <span class="text-sm font-medium text-gray-900">Rp {{ number_format($payment->booking->final_amount, 0, ',', '.') }}</span>
                         </div>
                         @php
                             $totalPaid = $payment->booking->payments->where('status', 'verified')->sum('amount');
-                            $remaining = $payment->booking->total_amount - $totalPaid;
+                            $remaining = $payment->booking->final_amount - $totalPaid;
                         @endphp
                         <div class="flex justify-between">
                             <span class="text-sm text-gray-500">Total Paid</span>

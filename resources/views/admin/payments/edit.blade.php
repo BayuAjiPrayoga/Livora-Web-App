@@ -237,7 +237,7 @@
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-500">Total Amount:</span>
-                                <span class="text-gray-900">Rp {{ number_format($payment->booking->total_amount ?? 0, 0, ',', '.') }}</span>
+                                <span class="text-gray-900">Rp {{ number_format($payment->booking->final_amount ?? 0, 0, ',', '.') }}</span>
                             </div>
                         </div>
                     </div>
