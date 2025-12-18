@@ -18,11 +18,11 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        // Check if user is owner
-        if ($user->role !== 'owner') {
+        // Check if user is mitra (owner)
+        if ($user->role !== 'mitra') {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized. Only owners can access this endpoint.',
+                'message' => 'Unauthorized. Only property owners can access this endpoint.',
                 'data' => null
             ], 403);
         }
@@ -129,8 +129,8 @@ class DashboardController extends Controller
                             'boarding_house_name' => $booking->room->boardingHouse->name ?? 'N/A',
                             'room_name' => $booking->room->name ?? 'N/A',
                             'status' => $booking->status,
-                            'total_price' => $booking->total_amount,
-                            'total_price_formatted' => 'Rp ' . number_format($booking->total_amount, 0, ',', '.'),
+                            'total_price' => $booking->final_amount,
+                            'total_price_formatted' => 'Rp ' . number_format($booking->final_amount, 0, ',', '.'),
                             'start_date' => $booking->check_in_date,
                             'created_at' => $booking->created_at,
                         ];
