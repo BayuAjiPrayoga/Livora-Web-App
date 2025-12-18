@@ -168,18 +168,18 @@
                             <div class="grid grid-cols-2 gap-4 text-sm">
                                 <div>
                                     <p class="text-gray-600">Check-in:</p>
-                                    <p class="font-medium text-gray-900">{{ $booking->start_date->format('d M Y') }}</p>
+                                    <p class="font-medium text-gray-900">{{ $booking->check_in_date->format('d M Y') }}</p>
                                 </div>
                                 <div>
                                     <p class="text-gray-600">Check-out:</p>
-                                    <p class="font-medium text-gray-900">{{ $booking->end_date->format('d M Y') }}</p>
+                                    <p class="font-medium text-gray-900">{{ $booking->check_out_date->format('d M Y') }}</p>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-2 gap-4 text-sm">
                                 <div>
                                     <p class="text-gray-600">Durasi:</p>
-                                    <p class="font-medium text-gray-900">{{ $booking->duration }} {{ ucfirst($booking->duration_type) }}</p>
+                                    <p class="font-medium text-gray-900">{{ $booking->duration_months }} bulan</p>
                                 </div>
                                 <div>
                                     <p class="text-gray-600">Total Bayar:</p>

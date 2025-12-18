@@ -270,12 +270,12 @@
                             
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Durasi</span>
-                                <span class="font-medium text-gray-900">{{ $booking->duration }} bulan</span>
+                                <span class="font-medium text-gray-900">{{ $booking->duration_months }} bulan</span>
                             </div>
                             
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Subtotal</span>
-                                <span class="font-medium text-gray-900">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</span>
+                                <span class="font-medium text-gray-900">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</span>
                             </div>
                             
                             <div class="border-t border-gray-200 pt-4">
