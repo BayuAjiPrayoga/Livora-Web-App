@@ -108,22 +108,49 @@ server {
     listen 8080;
     server_name _;
     root /app/public;
-    index index.php;
+    index index.php index.html;
+
+    access_log /dev/stdout;
+    error_log /dev/stderr;
+
+    # Increase buffer sizes
+    client_max_body_size 20M;
 
     location / {
         try_files \$uri \$uri/ /index.php?\$query_string;
     }
 
     location ~ \.php$ {
+        try_files \$uri =404;
         fastcgi_pass 127.0.0.1:9000;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+        fastcgi_param PATH_INFO \$fastcgi_path_info;
+        fastcgi_param QUERY_STRING \$query_string;
         include fastcgi_params;
+        fastcgi_buffering off;
     }
 
-    location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$ {
+    # Static files from build directory
+    location ~* ^/build/.*\.(css|js|map)$ {
+        access_log off;
         expires 1y;
         add_header Cache-Control "public, immutable";
+        add_header X-Content-Type-Options "nosniff";
+        try_files \$uri =404;
+    }
+
+    # Other static assets
+    location ~* \.(jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot|webp)$ {
+        access_log off;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        try_files \$uri =404;
+    }
+
+    # Deny access to hidden files
+    location ~ /\. {
+        deny all;
     }
 }
 EOF
