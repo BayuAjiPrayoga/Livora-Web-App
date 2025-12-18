@@ -79,16 +79,27 @@ class BookingController extends Controller
         // Calculate total amount (monthly rate)
         $totalAmount = $duration * $room->price;
 
+        // Generate booking code
+        $bookingCode = 'BK' . date('Ymd') . strtoupper(substr(uniqid(), -6));
+
         // Create booking
         $booking = Booking::create([
             'user_id' => Auth::id(),
             'room_id' => $request->room_id,
+            'boarding_house_id' => $room->boarding_house_id,
+            'booking_code' => $bookingCode,
             'check_in_date' => $startDate,
             'check_out_date' => $endDate,
             'duration_months' => $duration,
+            'duration_days' => 0,
+            'monthly_price' => $room->price,
             'total_amount' => $totalAmount,
+            'deposit_amount' => 0,
+            'admin_fee' => 0,
+            'discount_amount' => 0,
             'final_amount' => $totalAmount,
             'status' => 'pending',
+            'booking_type' => 'monthly',
             'tenant_identity_number' => $request->tenant_identity_number,
             'ktp_image' => $ktpPath,
             'notes' => $request->notes
