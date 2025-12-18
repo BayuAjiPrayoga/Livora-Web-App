@@ -1,6 +1,6 @@
 FROM php:8.3-cli
 
-# Install system dependencies
+# Install system dependencies including Node 20
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -11,8 +11,18 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     zip \
     unzip \
-    nodejs \
-    npm
+    ca-certificates \
+    gnupg
+
+# Install Node.js 20.x
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && \
+    apt-get install -y nodejs
+
+# Verify Node and npm versions
+RUN node --version && npm --version
 
 # Install PHP extensions
 RUN docker-php-ext-configure intl && \
@@ -36,17 +46,24 @@ RUN npm ci --verbose
 # Copy all source files
 COPY . .
 
-# Build assets with detailed logging
-RUN echo "Starting Vite build..." && \
-    npm run build -- --debug && \
-    echo "Build completed. Checking output..." && \
-    ls -la /app/public/ && \
-    ls -la /app/public/build/ || echo "Build directory not created" && \
+# Build assets with Vite - with proper error handling
+RUN echo "========================================" && \
+    echo "Building Vite assets..." && \
+    echo "========================================" && \
+    npm run build 2>&1 | tee build.log && \
+    echo "========================================" && \
+    echo "Checking build output..." && \
+    echo "========================================" && \
+    ls -lah /app/public/build/ || echo "ERROR: Build directory not found!" && \
     if [ -f /app/public/build/manifest.json ]; then \
-        echo "SUCCESS: Manifest found!"; \
-        cat /app/public/build/manifest.json; \
+        echo "✓ SUCCESS: Manifest generated!"; \
+        echo "Manifest contents:"; \
+        cat /app/public/build/manifest.json | head -20; \
     else \
-        echo "ERROR: Manifest file not found!"; \
+        echo "✗ ERROR: Manifest not found!"; \
+        echo "Build log:"; \
+        cat build.log; \
+        exit 1; \
     fi
 
 # Install composer dependencies after npm build
