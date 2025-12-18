@@ -27,18 +27,30 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /app
 
-# Copy existing application directory
+# Copy package files first for better caching
+COPY package*.json ./
+
+# Install npm dependencies
+RUN npm ci --verbose
+
+# Copy all source files
 COPY . .
 
-# Install dependencies
-RUN composer install --optimize-autoloader --no-dev --no-scripts --no-interaction
+# Build assets with detailed logging
+RUN echo "Starting Vite build..." && \
+    npm run build -- --debug && \
+    echo "Build completed. Checking output..." && \
+    ls -la /app/public/ && \
+    ls -la /app/public/build/ || echo "Build directory not created" && \
+    if [ -f /app/public/build/manifest.json ]; then \
+        echo "SUCCESS: Manifest found!"; \
+        cat /app/public/build/manifest.json; \
+    else \
+        echo "ERROR: Manifest file not found!"; \
+    fi
 
-# Install npm dependencies and build assets with verbose output
-ENV NODE_ENV=production
-RUN npm ci && \
-    npm run build && \
-    ls -la /app/public/build || echo "Build directory not found" && \
-    test -f /app/public/build/manifest.json && echo "Manifest found!" || echo "ERROR: Manifest not generated!"
+# Install composer dependencies after npm build
+RUN composer install --optimize-autoloader --no-dev --no-scripts --no-interaction
 
 # Ensure build directory exists and has correct permissions
 RUN mkdir -p /app/public/build && \

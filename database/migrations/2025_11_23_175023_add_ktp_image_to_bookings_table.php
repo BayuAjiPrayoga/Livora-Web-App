@@ -12,9 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('bookings', function (Blueprint $table) {
-            // Add KTP image path and tenant identity number
-            $table->string('tenant_identity_number', 20)->nullable();
-            $table->string('ktp_image')->nullable();
+            // Check if columns don't already exist before adding
+            if (!Schema::hasColumn('bookings', 'tenant_identity_number')) {
+                $table->string('tenant_identity_number', 20)->nullable();
+            }
+            if (!Schema::hasColumn('bookings', 'ktp_image')) {
+                $table->string('ktp_image')->nullable();
+            }
         });
     }
 
