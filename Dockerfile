@@ -85,6 +85,7 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     nginx \
     supervisor \
+    default-mysql-client \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
