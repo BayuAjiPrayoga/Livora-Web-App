@@ -76,11 +76,11 @@
                         </div>
                         <div>
                             <span class="text-gray-600">Check-in:</span>
-                            <span class="font-medium text-gray-900">{{ $booking->start_date->format('d M Y') }}</span>
+                            <span class="font-medium text-gray-900">{{ $booking->check_in_date->format('d M Y') }}</span>
                         </div>
                         <div>
                             <span class="text-gray-600">Check-out:</span>
-                            <span class="font-medium text-gray-900">{{ $booking->end_date->format('d M Y') }}</span>
+                            <span class="font-medium text-gray-900">{{ $booking->check_out_date->format('d M Y') }}</span>
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                         </label>
                         <input type="date" name="start_date" id="start_date" required 
                                min="{{ date('Y-m-d') }}"
-                               value="{{ old('start_date', $booking->start_date->format('Y-m-d')) }}"
+                               value="{{ old('start_date', $booking->check_in_date->format('Y-m-d')) }}"
                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
                     </div>
 
@@ -134,7 +134,7 @@
                             Tanggal Check-out *
                         </label>
                         <input type="date" name="end_date" id="end_date" required
-                               value="{{ old('end_date', $booking->end_date->format('Y-m-d')) }}"
+                               value="{{ old('end_date', $booking->check_out_date->format('Y-m-d')) }}"
                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-livora-primary">
                     </div>
                 </div>

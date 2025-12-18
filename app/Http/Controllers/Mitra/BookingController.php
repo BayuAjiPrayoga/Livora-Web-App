@@ -359,7 +359,15 @@ class BookingController extends Controller
             
             $validatedData['check_in_date'] = $checkIn->format('Y-m-d');
             $validatedData['check_out_date'] = $checkOut->format('Y-m-d');
-            $validatedData['duration'] = $duration;
+            
+            // Set duration based on booking type
+            if ($bookingType === 'daily') {
+                $validatedData['duration_days'] = $duration;
+                $validatedData['duration_months'] = 0;
+            } else {
+                $validatedData['duration_months'] = $duration;
+                $validatedData['duration_days'] = 0;
+            }
             
             // Recalculate total price
             $basePrice = $booking->room->price * $duration;
@@ -367,7 +375,7 @@ class BookingController extends Controller
             $depositAmount = $validatedData['deposit_amount'] ?? $booking->deposit_amount ?? 0;
             $discountAmount = $validatedData['discount_amount'] ?? $booking->discount_amount ?? 0;
             
-            $validatedData['total_price'] = $basePrice + $adminFee + $depositAmount - $discountAmount;
+            $validatedData['final_amount'] = $basePrice + $adminFee + $depositAmount - $discountAmount;
         }
 
         $booking->update($validatedData);

@@ -275,7 +275,7 @@
                             
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Subtotal</span>
-                                <span class="font-medium text-gray-900">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</span>
+                                <span class="font-medium text-gray-900">Rp {{ number_format($booking->final_amount, 0, ',', '.') }}</span>
                             </div>
                             
                             <div class="border-t border-gray-200 pt-4">

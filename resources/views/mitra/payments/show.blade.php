@@ -164,7 +164,7 @@
                     </div>
                     <div class="flex items-center justify-between py-3 border-b border-gray-100">
                         <span class="text-sm font-medium text-gray-500">Check In</span>
-                        <span class="text-base text-gray-900">{{ \Carbon\Carbon::parse($payment->booking->start_date)->format('d F Y') }}</span>
+                        <span class="text-base text-gray-900">{{ \Carbon\Carbon::parse($payment->booking->check_in_date)->format('d F Y') }}</span>
                     </div>
                     <div class="flex items-center justify-between py-3 border-b border-gray-100">
                         <span class="text-sm font-medium text-gray-500">Check Out</span>
@@ -172,7 +172,7 @@
                     </div>
                     <div class="flex items-center justify-between py-3">
                         <span class="text-sm font-medium text-gray-500">Total Harga Booking</span>
-                        <span class="text-lg font-bold text-orange-600">Rp {{ number_format($payment->booking->total_price, 0, ',', '.') }}</span>
+                        <span class="text-lg font-bold text-orange-600">Rp {{ number_format($payment->booking->final_amount, 0, ',', '.') }}</span>
                     </div>
                 </div>
                 <div class="mt-6">

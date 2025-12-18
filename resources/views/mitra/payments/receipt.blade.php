@@ -289,10 +289,10 @@
             <div class="info-row">
                 <div class="info-label">Periode Sewa:</div>
                 <div class="info-value">
-                    {{ \Carbon\Carbon::parse($payment->booking->start_date)->format('d M Y') }} 
+                    {{ \Carbon\Carbon::parse($payment->booking->check_in_date)->format('d M Y') }} 
                     - 
                     {{ \Carbon\Carbon::parse($payment->booking->check_out_date)->format('d M Y') }}
-                    ({{ \Carbon\Carbon::parse($payment->booking->start_date)->diffInDays(\Carbon\Carbon::parse($payment->booking->end_date)) }} hari)
+                    ({{ \Carbon\Carbon::parse($payment->booking->check_in_date)->diffInDays(\Carbon\Carbon::parse($payment->booking->check_out_date)) }} hari)
                 </div>
             </div>
             <div class="info-row">
