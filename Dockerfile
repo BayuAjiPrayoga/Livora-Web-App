@@ -55,12 +55,16 @@ RUN echo "========================================" && \
     echo "Checking build output..." && \
     echo "========================================" && \
     ls -lah /app/public/build/ || echo "ERROR: Build directory not found!" && \
+    ls -lah /app/public/build/.vite/ 2>/dev/null || true && \
     if [ -f /app/public/build/manifest.json ]; then \
-        echo "✓ SUCCESS: Manifest generated!"; \
-        echo "Manifest contents:"; \
+        echo "✓ SUCCESS: Manifest at correct location!"; \
         cat /app/public/build/manifest.json | head -20; \
+    elif [ -f /app/public/build/.vite/manifest.json ]; then \
+        echo "⚠ Manifest in .vite folder, copying to root..."; \
+        cp /app/public/build/.vite/manifest.json /app/public/build/manifest.json && \
+        echo "✓ Manifest copied successfully!"; \
     else \
-        echo "✗ ERROR: Manifest not found!"; \
+        echo "✗ ERROR: Manifest not found anywhere!"; \
         echo "Build log:"; \
         cat build.log; \
         exit 1; \
