@@ -85,9 +85,7 @@
                 <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
                     <div class="flex-shrink-0 w-full group block">
                         <div class="flex items-center">
-                            <div class="h-10 w-10 bg-gradient-to-br from-tiket-primary to-tiket-secondary rounded-tiket flex items-center justify-center shadow-tiket">
-                                <span class="text-sm font-semibold text-white">{{ substr(Auth::user()->name ?? 'U', 0, 1) }}</span>
-                            </div>1 w-11 bg-gradient-to-br from-[#ff6900] to-[#ff8533] rounded-xl flex items-center justify-center shadow-glow-orange">
+                            <div class="h-11 w-11 bg-gradient-to-br from-[#ff6900] to-[#ff8533] rounded-xl flex items-center justify-center shadow-glow-orange">
                                 <span class="text-sm font-bold text-white">{{ substr(Auth::user()->name ?? 'U', 0, 1) }}</span>
                             </div>
                             <div class="ml-3 flex-1">
@@ -103,13 +101,18 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                                     </svg>
                                     <span>Logout</span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Main Contentopnav">
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden md:ml-64">
+            <!-- Top Navigation -->
+            <div class="topnav">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex items-center">
