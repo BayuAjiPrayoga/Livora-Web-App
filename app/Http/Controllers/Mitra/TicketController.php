@@ -59,10 +59,10 @@ class TicketController extends Controller
         });
 
         $stats = [
-            'total' => $baseQuery->count(),
-            'open' => $baseQuery->where('status', 'open')->count(),
-            'in_progress' => $baseQuery->where('status', 'in_progress')->count(),
-            'resolved' => $baseQuery->where('status', 'resolved')->count(),
+            'total' => (clone $baseQuery)->count(),
+            'open' => (clone $baseQuery)->where('status', 'open')->count(),
+            'in_progress' => (clone $baseQuery)->where('status', 'in_progress')->count(),
+            'resolved' => (clone $baseQuery)->where('status', 'resolved')->count(),
         ];
 
         return view('mitra.tickets.index', compact('tickets', 'properties', 'stats'));

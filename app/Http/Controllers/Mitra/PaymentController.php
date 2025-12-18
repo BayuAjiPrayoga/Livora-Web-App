@@ -64,12 +64,12 @@ class PaymentController extends Controller
         });
 
         $statistics = [
-            'total_payments' => $baseQuery->count(),
-            'pending_payments' => $baseQuery->where('status', Payment::STATUS_PENDING)->count(),
-            'verified_payments' => $baseQuery->where('status', Payment::STATUS_VERIFIED)->count(),
-            'rejected_payments' => $baseQuery->where('status', Payment::STATUS_REJECTED)->count(),
-            'total_amount' => $baseQuery->where('status', Payment::STATUS_VERIFIED)->sum('amount'),
-            'pending_amount' => $baseQuery->where('status', Payment::STATUS_PENDING)->sum('amount'),
+            'total_payments' => (clone $baseQuery)->count(),
+            'pending_payments' => (clone $baseQuery)->where('status', Payment::STATUS_PENDING)->count(),
+            'verified_payments' => (clone $baseQuery)->where('status', Payment::STATUS_VERIFIED)->count(),
+            'rejected_payments' => (clone $baseQuery)->where('status', Payment::STATUS_REJECTED)->count(),
+            'total_amount' => (clone $baseQuery)->where('status', Payment::STATUS_VERIFIED)->sum('amount'),
+            'pending_amount' => (clone $baseQuery)->where('status', Payment::STATUS_PENDING)->sum('amount'),
         ];
 
         return view('mitra.payments.index', compact('payments', 'properties', 'statistics'));
