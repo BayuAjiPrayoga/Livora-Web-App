@@ -36,6 +36,10 @@ RUN composer install --optimize-autoloader --no-dev --no-scripts --no-interactio
 # Install npm dependencies and build assets
 RUN npm ci && npm run build
 
+# Ensure build directory exists and has correct permissions
+RUN mkdir -p /app/public/build && \
+    chmod -R 755 /app/public
+
 # Generate optimized autoload files
 RUN composer dump-autoload --optimize
 
@@ -48,4 +52,5 @@ EXPOSE 8080
 # Start application
 CMD php artisan migrate --force || true && \
     php artisan config:clear && \
+    php artisan storage:link || true && \
     php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
