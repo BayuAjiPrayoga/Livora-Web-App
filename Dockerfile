@@ -33,8 +33,12 @@ COPY . .
 # Install dependencies
 RUN composer install --optimize-autoloader --no-dev --no-scripts --no-interaction
 
-# Install npm dependencies and build assets
-RUN npm ci && npm run build
+# Install npm dependencies and build assets with verbose output
+ENV NODE_ENV=production
+RUN npm ci && \
+    npm run build && \
+    ls -la /app/public/build || echo "Build directory not found" && \
+    test -f /app/public/build/manifest.json && echo "Manifest found!" || echo "ERROR: Manifest not generated!"
 
 # Ensure build directory exists and has correct permissions
 RUN mkdir -p /app/public/build && \
