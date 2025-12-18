@@ -1,6 +1,12 @@
 # Database Setup Guide
 
-## Kredensial Database
+## Production Database
+
+**Platform:** Railway MySQL  
+**Connection:** Managed by Railway (see `.env` for credentials)  
+**Status:** Live at https://livora-web-app-production.up.railway.app
+
+## Local Development Database
 
 **Database:** `livora`  
 **User:** `root`  
@@ -13,71 +19,136 @@
 ### Admin
 
 -   **Email:** `admin@livora.com`
--   **Password:** `admin123`
--   **Role:** Admin
+-   **Password:** `password`
+-   **Role:** admin
 
-### Owner (Mitra)
+### Mitra (Property Owner)
 
--   **Email:** `owner@livora.com`
--   **Password:** `owner123`
--   **Role:** Owner
-
--   **Email:** `owner2@livora.com`
--   **Password:** `owner123`
--   **Role:** Owner
+-   **Email:** `mitra@livora.com`
+-   **Password:** `password`
+-   **Role:** mitra
 
 ### Tenant (Penyewa)
 
 -   **Email:** `tenant@livora.com`
--   **Password:** `tenant123`
--   **Role:** Tenant
+-   **Password:** `password`
+-   **Role:** tenant
 
--   **Email:** `tenant2@livora.com`
--   **Password:** `tenant123`
--   **Role:** Tenant
+**Note**: Role "owner" telah diganti menjadi "mitra" di seluruh sistem.
 
 ---
 
-## Reset Database
+## Database Schema Updates
 
-Untuk mereset database ke kondisi awal dengan data minimal:
+### Booking Table Changes
+
+Kolom-kolom berikut telah diubah namanya:
+
+| Old Column     | New Column        | Type    |
+| -------------- | ----------------- | ------- |
+| `start_date`   | `check_in_date`   | date    |
+| `end_date`     | `check_out_date`  | date    |
+| `duration`     | `duration_months` | integer |
+| -              | `duration_days`   | integer |
+| `total_price`  | `final_amount`    | decimal |
+| `total_amount` | `final_amount`    | decimal |
+
+### New Columns Added
+
+-   `boarding_house_id`: Foreign key ke boarding house
+-   `booking_code`: Unique booking code
+-   `monthly_price`: Harga per bulan
+-   `deposit_amount`: Jumlah deposit
+-   `admin_fee`: Biaya admin
+-   `discount_amount`: Diskon
+-   `booking_type`: Type (daily/monthly)
+
+---
+
+## Setup Database
+
+### Fresh Install
 
 ```bash
-# Jalankan migrasi fresh
-php artisan migrate:fresh
+# Run migrations
+php artisan migrate
 
-# Import data minimal
-mysql -u root livora < database_clean_minimal.sql
+# Seed database with sample data
+php artisan db:seed --class=LightweightDataSeeder
+
+# Recalculate booking amounts
+php artisan bookings:recalculate-amounts
 ```
 
-Atau gunakan PowerShell:
+### Reset Database
 
-```powershell
-cmd /c "mysql -u root livora < database_clean_minimal.sql"
+```bash
+# Reset database with fresh migrations and seeding
+php artisan migrate:fresh --seed --class=LightweightDataSeeder
+
+# Recalculate amounts after seeding
+php artisan bookings:recalculate-amounts
+```
+
+### Seeder Options
+
+1. **LightweightDataSeeder** - Data minimal untuk development (Recommended)
+    - 10 users, 8 properties, 40 rooms, 25 bookings
+2. **CompleteDatabaseSeeder** - Data dasar untuk testing
+    - Users, properties, rooms, bookings, payments, tickets
+3. **MassiveDataSeeder** - Data besar untuk load testing
+    - 1000+ users, 200 properties, 800 bookings
+
+---
+
+## Artisan Commands
+
+### Booking Management
+
+```bash
+# Recalculate all booking amounts (fix Rp 0 issue)
+php artisan bookings:recalculate-amounts
+
+# Update booking status (runs daily via scheduler)
+php artisan bookings:update-status
+```
+
+### Database Maintenance
+
+```bash
+# Clear all caches
+php artisan optimize:clear
+
+# Optimize application
+php artisan optimize
+
+# Create storage symlink
+php artisan storage:link
 ```
 
 ---
 
-## Data yang Tersedia
+## Data yang Tersedia (LightweightDataSeeder)
 
--   **5 Users** (1 Admin, 2 Owner, 2 Tenant)
--   **5 Boarding Houses** (Kost)
--   **5 Rooms** (Kamar)
--   **5 Bookings** dengan berbagai status
--   **5 Payments** dengan berbagai status
--   **5 Tickets** (Komplain)
--   **5 Notifications**
--   **5 Facilities**
-
----
-
-## File Database
-
--   **`database_clean_minimal.sql`** - Data minimal untuk development
--   **`database_clean_backup_[timestamp].sql`** - Backup otomatis
+-   **10 Users** (1 Admin, 3 Mitra, 6 Tenant)
+-   **8 Boarding Houses** dengan berbagai lokasi
+-   **40 Rooms** dengan fasilitas lengkap
+-   **25 Bookings** dengan berbagai status
+-   **Payments** untuk setiap booking
+-   **15 Tickets** support
+-   **10 Facilities** (WiFi, AC, Kamar Mandi, dll)
 
 ---
 
-## Catatan
+## Production Deployment (Railway)
 
-File backup database (`.sql`) tidak di-commit ke Git. Lihat `.gitignore` untuk detail.
+```bash
+# Run migrations on Railway
+railway run php artisan migrate
+
+# Seed production database
+railway run php artisan db:seed --class=LightweightDataSeeder
+
+# Recalculate amounts
+railway run php artisan bookings:recalculate-amounts
+```

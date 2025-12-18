@@ -111,9 +111,9 @@ Platform ini menyediakan solusi lengkap untuk pengelolaan kost mulai dari pencar
 
 ### Requirements
 
--   PHP >= 8.2
+-   PHP >= 8.3
 -   Composer
--   Node.js & NPM
+-   Node.js >= 18 & NPM
 -   MySQL >= 8.0
 -   Git
 
@@ -121,7 +121,7 @@ Platform ini menyediakan solusi lengkap untuk pengelolaan kost mulai dari pencar
 
 ```bash
 # 1. Clone repository
-git clone <repository-url>
+git clone https://github.com/BayuAjiPrayoga/Livora-Web-App.git
 cd Livora
 
 # 2. Install dependencies
@@ -145,14 +145,17 @@ php artisan key:generate
 # 6. Run migrations
 php artisan migrate
 
-# 7. Seed database (optional)
-php artisan db:seed
+# 7. Seed database (recommended)
+php artisan db:seed --class=LightweightDataSeeder
 
 # 8. Create storage link
 php artisan storage:link
 
 # 9. Build assets
 npm run build
+
+# 10. Recalculate booking amounts (if needed)
+php artisan bookings:recalculate-amounts
 ```
 
 ---
@@ -269,19 +272,21 @@ php artisan view:cache
 | Email             | Password | Role        |
 | ----------------- | -------- | ----------- |
 | admin@livora.com  | password | Admin       |
-| owner@livora.com  | password | Owner/Mitra |
+| mitra@livora.com  | password | Owner/Mitra |
 | tenant@livora.com | password | Tenant      |
+
+**Note**: Role "owner" telah diganti menjadi "mitra" di seluruh sistem.
 
 ---
 
 ## 👥 User Roles
 
-| Role            | Access       | Permissions                                                                                            |
-| --------------- | ------------ | ------------------------------------------------------------------------------------------------------ |
-| **Guest**       | Public pages | Browse, search, view properties                                                                        |
-| **Tenant**      | `/tenant/*`  | Booking, payment, tickets, profile                                                                     |
-| **Owner/Mitra** | `/mitra/*`   | Property management, room management, booking approval, payment verification, ticket handling, reports |
-| **Admin**       | `/admin/*`   | Full system control, user management, property verification, system settings, global reports           |
+| Role       | Access       | Permissions                                                                                            |
+| ---------- | ------------ | ------------------------------------------------------------------------------------------------------ |
+| **Guest**  | Public pages | Browse, search, view properties                                                                        |
+| **Tenant** | `/tenant/*`  | Booking, payment, tickets, profile                                                                     |
+| **Mitra**  | `/mitra/*`   | Property management, room management, booking approval, payment verification, ticket handling, reports |
+| **Admin**  | `/admin/*`   | Full system control, user management, property verification, system settings, global reports           |
 
 ### Role-Based Routing
 
@@ -293,8 +298,8 @@ Route::get('/browse', [HomeController::class, 'browse']);
 // Tenant routes (auth + role:tenant)
 Route::middleware(['auth', 'role:tenant'])->prefix('tenant')->group(...);
 
-// Mitra routes (auth + role:owner)
-Route::middleware(['auth', 'role:owner'])->prefix('mitra')->group(...);
+// Mitra routes (auth + role:mitra)
+Route::middleware(['auth', 'role:mitra'])->prefix('mitra')->group(...);
 
 // Admin routes (auth + role:admin)
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(...);
@@ -353,10 +358,17 @@ chown -R www-data:www-data storage bootstrap/cache
 php artisan migrate:fresh
 
 # With seeding
-php artisan migrate:fresh --seed
+php artisan migrate:fresh --seed --class=LightweightDataSeeder
 ```
 
-**5. Vite not building**
+**5. Booking amounts showing Rp 0**
+
+```bash
+# Recalculate all booking final amounts
+php artisan bookings:recalculate-amounts
+```
+
+**6. Vite not building**
 
 ```bash
 # Clear cache
@@ -367,26 +379,52 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
-**6. Images not showing**
+**7. Images not showing**
 
 -   Pastikan `storage:link` sudah dijalankan
 -   Cek path di `.env`: `FILESYSTEM_DISK=public`
 -   Cek permission folder `storage/app/public`
 
+**8. API authentication errors**
+
+-   Pastikan menggunakan `Bearer token` di header
+-   Token format: `Authorization: Bearer {token}`
+-   Gunakan `$request->user()` bukan `auth()->user()` di API controllers
+
+### Database Schema Changes (Important!)
+
+**Booking table columns have been renamed:**
+
+-   `start_date` → `check_in_date`
+-   `end_date` → `check_out_date`
+-   `duration` → `duration_months` / `duration_days`
+-   `total_price` / `total_amount` → `final_amount`
+
+**User roles updated:**
+
+-   `owner` → `mitra`
+
+Jika migrate dari versi lama, jalankan migration dan recalculate:
+
+```bash
+php artisan migrate
+php artisan bookings:recalculate-amounts
+```
+
 ---
 
 ## 📞 Support & Contact
 
--   **Developer**: [Your Name/Team]
--   **Email**: support@livora.com
+-   **Production**: https://livora-web-app-production.up.railway.app
+-   **Repository**: https://github.com/BayuAjiPrayoga/Livora-Web-App
 -   **Documentation**: `/docs`
--   **Issues**: [GitHub Issues]
+-   **Issues**: GitHub Issues
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
 
 ---
 
@@ -395,8 +433,10 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 -   Laravel Framework by Taylor Otwell
 -   Tailwind CSS by Tailwind Labs
 -   Icons by Heroicons
--   Community contributors
+-   Deployed on Railway.app
 
 ---
+
+**Last Updated**: December 19, 2025
 
 **LIVORA** - Live Better, Stay Better 🏠✨
