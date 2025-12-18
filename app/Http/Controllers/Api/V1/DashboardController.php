@@ -16,7 +16,16 @@ class DashboardController extends Controller
      */
     public function ownerStats(Request $request)
     {
-        $user = auth()->user();
+        $user = $request->user();
+
+        // Check if user is authenticated
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthenticated.',
+                'data' => null
+            ], 401);
+        }
 
         // Check if user is mitra (owner)
         if ($user->role !== 'mitra') {
