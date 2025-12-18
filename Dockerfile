@@ -46,8 +46,6 @@ RUN chmod -R 755 /app/storage /app/bootstrap/cache
 EXPOSE 8080
 
 # Start application
-CMD php artisan migrate --force && \
-    php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache && \
+CMD php artisan migrate --force || true && \
+    php artisan config:clear && \
     php artisan serve --host=0.0.0.0 --port=${PORT:-8080}

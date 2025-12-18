@@ -12,13 +12,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('bookings', function (Blueprint $table) {
-            // Add final_amount column - copy value from total_price initially
-            $table->decimal('final_amount', 10, 2)->after('total_price');
-        });
-        
-        // Copy existing total_price values to final_amount
-        DB::statement('UPDATE bookings SET final_amount = total_price WHERE final_amount IS NULL');
+        // Check if column already exists
+        if (!Schema::hasColumn('bookings', 'final_amount')) {
+            Schema::table('bookings', function (Blueprint $table) {
+                // Add final_amount column - copy value from total_price initially
+                $table->decimal('final_amount', 10, 2)->after('total_price');
+            });
+            
+            // Copy existing total_price values to final_amount
+            DB::statement('UPDATE bookings SET final_amount = total_price WHERE final_amount IS NULL');
+        }
     }
 
     /**
