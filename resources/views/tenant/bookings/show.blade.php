@@ -98,20 +98,20 @@
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <p class="text-sm text-gray-600">Check-in</p>
-                                        <p class="font-semibold text-gray-900">{{ $booking->start_date->format('d M Y') }}</p>
-                                        <p class="text-xs text-gray-500">{{ $booking->start_date->format('l') }}</p>
+                                        <p class="font-semibold text-gray-900">{{ $booking->check_in_date->format('d M Y') }}</p>
+                                        <p class="text-xs text-gray-500">{{ $booking->check_in_date->format('l') }}</p>
                                     </div>
                                     <div>
                                         <p class="text-sm text-gray-600">Check-out</p>
-                                        <p class="font-semibold text-gray-900">{{ $booking->end_date->format('d M Y') }}</p>
-                                        <p class="text-xs text-gray-500">{{ $booking->end_date->format('l') }}</p>
+                                        <p class="font-semibold text-gray-900">{{ $booking->check_out_date->format('d M Y') }}</p>
+                                        <p class="text-xs text-gray-500">{{ $booking->check_out_date->format('l') }}</p>
                                     </div>
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <p class="text-sm text-gray-600">Durasi</p>
-                                        <p class="font-semibold text-gray-900">{{ $booking->duration }} bulan</p>
+                                        <p class="font-semibold text-gray-900">{{ $booking->duration_months }} bulan</p>
                                     </div>
                                     <div>
                                         <p class="text-sm text-gray-600">Harga per bulan</p>
