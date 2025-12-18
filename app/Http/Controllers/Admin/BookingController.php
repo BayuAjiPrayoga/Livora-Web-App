@@ -34,11 +34,11 @@ class BookingController extends Controller
 
         // Filter by date range
         if ($request->filled('start_date')) {
-            $query->where('start_date', '>=', $request->start_date);
+            $query->where('check_in_date', '>=', $request->start_date);
         }
         
         if ($request->filled('end_date')) {
-            $query->where('start_date', '<=', $request->end_date);
+            $query->where('check_in_date', '<=', $request->end_date);
         }
 
         // Search by user name or booking ID
@@ -196,10 +196,10 @@ class BookingController extends Controller
                               return $query->where('status', $status);
                           })
                           ->when($request->start_date, function ($query, $startDate) {
-                              return $query->where('start_date', '>=', $startDate);
+                              return $query->where('check_in_date', '>=', $startDate);
                           })
                           ->when($request->end_date, function ($query, $endDate) {
-                              return $query->where('start_date', '<=', $endDate);
+                              return $query->where('check_in_date', '<=', $endDate);
                           })
                           ->get();
 
@@ -235,10 +235,10 @@ class BookingController extends Controller
                     $booking->user->email,
                     $booking->room->boardingHouse->name,
                     $booking->room->room_number,
-                    $booking->start_date,
-                    $booking->end_date,
+                    $booking->check_in_date,
+                    $booking->check_out_date,
                     $booking->duration_months,
-                    $booking->total_price,
+                    $booking->total_amount,
                     $booking->status,
                     $booking->created_at->format('Y-m-d H:i:s')
                 ]);

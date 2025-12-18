@@ -117,7 +117,7 @@ class ReportController extends Controller
                         ->count();
 
         $occupiedRooms = Booking::whereIn('status', ['active', 'confirmed'])
-                               ->whereBetween('start_date', [$startDate, $endDate])
+                               ->whereBetween('check_in_date', [$startDate, $endDate])
                                ->distinct('room_id')
                                ->count();
 
@@ -129,7 +129,7 @@ class ReportController extends Controller
                                     'boarding_houses.name',
                                     DB::raw('COUNT(DISTINCT rooms.id) as total_rooms'),
                                     DB::raw('COUNT(DISTINCT CASE WHEN bookings.status IN ("active", "confirmed") 
-                                                  AND bookings.start_date BETWEEN "' . $startDate . '" AND "' . $endDate . '" 
+                                                  AND bookings.check_in_date BETWEEN "' . $startDate . '" AND "' . $endDate . '" 
                                                   THEN bookings.room_id END) as occupied_rooms')
                                 )
                                 ->leftJoin('rooms', 'boarding_houses.id', '=', 'rooms.boarding_house_id')
@@ -255,15 +255,15 @@ class ReportController extends Controller
                         'boarding_houses.name as property_name',
                         'rooms.room_number',
                         'users.name as user_name',
-                        'bookings.start_date',
-                        'bookings.end_date',
+                        'bookings.check_in_date',
+                        'bookings.check_out_date',
                         'bookings.status'
                     )
                     ->join('rooms', 'bookings.room_id', '=', 'rooms.id')
                     ->join('boarding_houses', 'rooms.boarding_house_id', '=', 'boarding_houses.id')
                     ->join('users', 'bookings.user_id', '=', 'users.id')
-                    ->whereBetween('bookings.start_date', [$startDate, $endDate])
-                    ->orderBy('bookings.start_date', 'desc')
+                    ->whereBetween('bookings.check_in_date', [$startDate, $endDate])
+                    ->orderBy('bookings.check_in_date', 'desc')
                     ->get();
 
         return $this->generateCSV($data, 'occupancy_report', [

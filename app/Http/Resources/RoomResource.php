@@ -75,8 +75,8 @@ class RoomResource extends JsonResource
         
         $hasActiveBooking = $this->bookings()
             ->whereIn('status', ['confirmed', 'active'])
-            ->where('start_date', '<=', $now)
-            ->where('end_date', '>=', $now)
+            ->where('check_in_date', '<=', $now)
+            ->where('check_out_date', '>=', $now)
             ->exists();
             
         return !$hasActiveBooking;

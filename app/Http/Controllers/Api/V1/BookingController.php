@@ -186,13 +186,13 @@ class BookingController extends Controller
                 $conflicts = $room->bookings()
                     ->whereIn('status', ['confirmed', 'active'])
                     ->where(function($q) use ($startDate, $endDate) {
-                        $q->whereBetween('start_date', [$startDate, $endDate])
-                          ->orWhereBetween('end_date', [$startDate, $endDate])
+                        $q->whereBetween('check_in_date', [$startDate, $endDate])
+                          ->orWhereBetween('check_out_date', [$startDate, $endDate])
                           ->orWhere(function($subQ) use ($startDate, $endDate) {
-                              $subQ->where('start_date', '<=', $startDate)
-                                   ->where('end_date', '>=', $endDate);
+                              $subQ->where('check_in_date', '<=', $startDate)
+                                   ->where('check_out_date', '>=', $endDate);
                           });
-                    })->get(['id', 'status', 'start_date', 'end_date']);
+                    })->get(['id', 'status', 'check_in_date', 'check_out_date']);
                 
                 \Log::warning('Room not available', [
                     'room_id' => $room->id,
@@ -222,12 +222,20 @@ class BookingController extends Controller
             $booking = Booking::create([
                 'user_id' => $user->id,
                 'room_id' => $room->id,
-                'start_date' => $startDate,
-                'end_date' => $endDate,
-                'duration' => $duration, // Use casted integer
-                'total_price' => $totalPrice,
+                'boarding_house_id' => $room->boarding_house_id,
+                'booking_code' => 'BK' . date('Ymd') . strtoupper(substr(uniqid(), -6)),
+                'check_in_date' => $startDate,
+                'check_out_date' => $endDate,
+                'duration_months' => $duration,
+                'duration_days' => 0,
+                'monthly_price' => $room->price,
+                'total_amount' => $totalPrice,
+                'deposit_amount' => 0,
+                'admin_fee' => 0,
+                'discount_amount' => 0,
                 'final_amount' => $totalPrice,
                 'status' => 'pending',
+                'booking_type' => 'monthly',
                 'notes' => $request->notes,
                 'tenant_identity_number' => $request->tenant_identity_number,
                 'ktp_image' => $ktpImagePath,

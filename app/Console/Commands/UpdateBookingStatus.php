@@ -29,9 +29,9 @@ class UpdateBookingStatus extends Command
     {
         $today = now()->startOfDay();
         
-        // Get all confirmed bookings where start_date is today or earlier
+        // Get all confirmed bookings where check_in_date is today or earlier
         $bookings = Booking::where('status', 'confirmed')
-            ->whereDate('start_date', '<=', $today)
+            ->whereDate('check_in_date', '<=', $today)
             ->get();
 
         if ($bookings->isEmpty()) {
@@ -49,7 +49,7 @@ class UpdateBookingStatus extends Command
             $this->info("Booking #{$booking->booking_number} status changed to active.");
             Log::info("Booking #{$booking->booking_number} automatically activated.", [
                 'booking_id' => $booking->id,
-                'start_date' => $booking->start_date,
+                'check_in_date' => $booking->check_in_date,
                 'tenant' => $booking->user->name,
                 'room' => $booking->room->name,
             ]);

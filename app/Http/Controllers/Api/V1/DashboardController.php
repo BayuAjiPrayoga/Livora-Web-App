@@ -129,9 +129,9 @@ class DashboardController extends Controller
                             'boarding_house_name' => $booking->room->boardingHouse->name ?? 'N/A',
                             'room_name' => $booking->room->name ?? 'N/A',
                             'status' => $booking->status,
-                            'total_price' => $booking->total_price,
-                            'total_price_formatted' => 'Rp ' . number_format($booking->total_price, 0, ',', '.'),
-                            'start_date' => $booking->start_date,
+                            'total_price' => $booking->total_amount,
+                            'total_price_formatted' => 'Rp ' . number_format($booking->total_amount, 0, ',', '.'),
+                            'start_date' => $booking->check_in_date,
                             'created_at' => $booking->created_at,
                         ];
                     }),
