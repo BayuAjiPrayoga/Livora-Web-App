@@ -12,9 +12,8 @@
                     <h1 class="text-2xl font-bold text-livora-text">Kelola Booking</h1>
                     <p class="text-gray-600 mt-1">Kelola semua booking dan reservasi dari properti Anda</p>
                 </div>
-                <a href="{{ route('mitra.bookings.create') }}" 
-                   class="inline-flex items-center px-4 py-2 bg-livora-accent border border-transparent rounded-md font-semibold text-white hover:bg-livora-primary transition-colors">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('mitra.bookings.create') }}" class="btn btn-primary">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
                     Buat Booking Baru
@@ -41,8 +40,8 @@
             <div class="bg-white rounded-lg shadow-md p-4">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <div class="w-8 h-8 bg-livora-accent bg-opacity-20 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 text-livora-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-8 h-8 bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                             </svg>
                         </div>
@@ -147,10 +146,10 @@
                 </div>
                 
                 <div>
-                    <button type="submit" class="px-4 py-2 bg-livora-primary text-white rounded-lg hover:bg-blue-800 transition-colors">
+                    <button type="submit" class="btn btn-primary">
                         Filter
                     </button>
-                    <a href="{{ route('mitra.bookings.index') }}" class="ml-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                    <a href="{{ route('mitra.bookings.index') }}" class="btn btn-secondary ml-2">
                         Reset
                     </a>
                 </div>
@@ -268,9 +267,8 @@
             </svg>
             <h3 class="text-lg font-medium text-gray-900 mb-2">Belum Ada Booking</h3>
             <p class="text-gray-500 mb-6">Mulai terima booking dari calon penyewa untuk properti Anda</p>
-            <a href="{{ route('mitra.bookings.create') }}" 
-               class="inline-flex items-center px-6 py-3 bg-livora-accent border border-transparent rounded-md font-semibold text-white hover:bg-livora-primary transition-colors">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{{ route('mitra.bookings.create') }}" class="btn btn-primary btn-lg">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
                 Buat Booking Pertama
