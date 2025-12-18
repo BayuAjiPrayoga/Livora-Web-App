@@ -2,19 +2,76 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* Custom CSS Variables for LIVORA Theme */
+/* ============================================
+   LIVORA Modern Design System
+   ============================================ */
+
+/* CSS Variables */
 :root {
+    /* Primary Colors - Warm Orange Identity */
     --livora-primary: #ff6900;
     --livora-primary-dark: #e55a00;
+    --livora-primary-light: #ff8533;
+
+    /* Secondary Colors - Modern Depth */
     --livora-secondary: #ff8533;
     --livora-blue: #0066cc;
-    --livora-success: #00c851;
-    --livora-warning: #ffbb33;
-    --livora-error: #ff4444;
+    --livora-purple: #6366f1;
+    --livora-teal: #14b8a6;
+
+    /* Semantic Colors */
+    --livora-success: #10b981;
+    --livora-warning: #f59e0b;
+    --livora-error: #ef4444;
+    --livora-info: #3b82f6;
+
+    /* Neutral Colors */
     --livora-gray-50: #fafafa;
     --livora-gray-100: #f5f5f5;
-    --livora-gray-800: #424242;
-    --livora-gray-900: #212121;
+    --livora-gray-200: #e5e7eb;
+    --livora-gray-300: #d1d5db;
+    --livora-gray-400: #9ca3af;
+    --livora-gray-500: #6b7280;
+    --livora-gray-600: #4b5563;
+    --livora-gray-700: #374151;
+    --livora-gray-800: #1f2937;
+    --livora-gray-900: #111827;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    --shadow-glow: 0 0 20px rgba(255, 105, 0, 0.3);
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 200ms ease;
+    --transition-slow: 300ms ease;
+}
+
+/* ============================================
+   Global Resets & Base Styles
+   ============================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Fix CSS conflicts */
@@ -30,148 +87,474 @@ object {
     vertical-align: unset !important;
 }
 
-* {
-    box-sizing: border-box;
-}
-
-/* Button Base Styles */
+/* ============================================
+   Modern Button System
+   ============================================ */
 .btn {
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    transition: all 0.2s;
-    outline: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    @apply inline-flex items-center justify-center gap-2;
+    @apply px-5 py-2.5 rounded-xl;
+    @apply font-semibold text-sm;
+    @apply transition-all duration-200;
+    @apply border-none outline-none cursor-pointer;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
     text-decoration: none;
-    border: none;
 }
 
-.btn:focus {
-    box-shadow: 0 0 0 2px var(--livora-primary);
-}
-
+/* Primary Button - Orange Gradient */
 .btn-primary {
-    background-color: var(--livora-primary);
-    color: white;
+    @apply bg-gradient-to-r from-[#ff6900] to-[#ff8533];
+    @apply text-white shadow-md;
+    @apply hover:shadow-lg hover:shadow-orange-500/30;
+    @apply hover:scale-[1.02] active:scale-[0.98];
 }
 
-.btn-primary:hover {
-    background-color: var(--livora-primary-dark);
-    box-shadow: 0 4px 12px rgba(255, 105, 0, 0.3);
-}
-
+/* Secondary Button - Soft Gray */
 .btn-secondary {
-    background-color: #e5e7eb;
-    color: #374151;
+    @apply bg-gray-100 text-gray-700;
+    @apply hover:bg-gray-200 hover:shadow-md;
 }
 
-.btn-secondary:hover {
-    background-color: #d1d5db;
-}
-
+/* Outline Button */
 .btn-outline {
-    border: 2px solid var(--livora-primary);
-    background-color: transparent;
-    color: var(--livora-primary);
+    @apply bg-transparent border-2 border-[#ff6900] text-[#ff6900];
+    @apply hover:bg-[#ff6900] hover:text-white;
+    @apply hover:shadow-lg hover:shadow-orange-500/20;
 }
 
-.btn-outline:hover {
-    background-color: var(--livora-primary);
-    color: white;
+/* Success Button */
+.btn-success {
+    @apply bg-gradient-to-r from-emerald-500 to-green-500;
+    @apply text-white shadow-md;
+    @apply hover:shadow-lg hover:shadow-green-500/30;
 }
 
-/* Card Components */
+/* Danger Button */
+.btn-danger {
+    @apply bg-gradient-to-r from-red-500 to-rose-500;
+    @apply text-white shadow-md;
+    @apply hover:shadow-lg hover:shadow-red-500/30;
+}
+
+/* Small Button */
+.btn-sm {
+    @apply px-3 py-1.5 text-xs rounded-lg;
+}
+
+/* Large Button */
+.btn-lg {
+    @apply px-6 py-3 text-base rounded-2xl;
+}
+
+/* Icon Button */
+.btn-icon {
+    @apply w-10 h-10 p-0 rounded-xl;
+}
+
+/* ============================================
+   Modern Card Components
+   ============================================ */
+
+/* Base Card */
+.modern-card {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100;
+    @apply p-6 transition-all duration-300;
+}
+
+.modern-card-hover {
+    @apply hover:shadow-xl hover:shadow-gray-200/60;
+    @apply hover:-translate-y-1;
+}
+
+/* Glass Card Effect */
+.glass-card {
+    @apply bg-white/80 backdrop-blur-xl;
+    @apply rounded-2xl border border-gray-200/50;
+    @apply shadow-xl shadow-gray-300/20;
+}
+
+/* Gradient Card */
+.gradient-card {
+    @apply bg-gradient-to-br from-orange-50 to-amber-50;
+    @apply rounded-2xl border border-orange-100;
+    @apply shadow-lg shadow-orange-200/40;
+}
+
+/* Stats Card */
+.stats-card {
+    @apply bg-white rounded-2xl p-6;
+    @apply border-l-4 border-[#ff6900];
+    @apply shadow-md hover:shadow-lg;
+    @apply transition-all duration-300;
+}
+
+/* Legacy Card Support */
 .card {
-    background-color: white;
-    border-radius: 0.75rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e5e7eb;
-    padding: 1.5rem;
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6;
 }
 
 .card-hover {
-    transition: box-shadow 0.3s;
+    @apply transition-shadow duration-300;
+    @apply hover:shadow-lg;
 }
 
-.card-hover:hover {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-}
+/* ============================================
+   Form Elements - Modern Design
+   ============================================ */
 
-/* Form Elements */
+/* Input Base */
 .form-input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.5rem;
-    transition: all 0.2s;
+    @apply w-full px-4 py-3 rounded-xl;
+    @apply border border-gray-200;
+    @apply bg-white text-gray-900;
+    @apply transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-orange-500/20;
+    @apply focus:border-orange-500;
+    @apply placeholder:text-gray-400;
 }
 
-.form-input:focus {
-    outline: none;
-    border-color: var(--livora-primary);
-    box-shadow: 0 0 0 2px rgba(255, 105, 0, 0.1);
+.form-input:disabled {
+    @apply bg-gray-50 cursor-not-allowed;
 }
 
+/* Floating Label Input */
+.floating-input {
+    @apply relative;
+}
+
+.floating-input input {
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.floating-input input:focus + label,
+.floating-input input:not(:placeholder-shown) + label {
+    top: 0.5rem;
+    font-size: 0.75rem;
+    color: #ff6900;
+}
+
+.floating-input label {
+    @apply absolute left-4 text-gray-400 text-sm;
+    @apply transition-all duration-200;
+    top: 1rem;
+    pointer-events: none;
+}
+
+/* Label */
 .form-label {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #374151;
-    margin-bottom: 0.5rem;
+    @apply block text-sm font-semibold text-gray-700 mb-2;
 }
 
-/* Navigation Styles */
+/* Select Dropdown */
+.form-select {
+    @apply form-input pr-10 bg-no-repeat;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-size: 1.25rem;
+}
+
+/* Textarea */
+.form-textarea {
+    @apply form-input min-h-[120px] resize-y;
+}
+
+/* Checkbox & Radio */
+.form-checkbox,
+.form-radio {
+    @apply w-5 h-5 rounded-lg;
+    @apply border-2 border-gray-300;
+    @apply text-[#ff6900] focus:ring-2 focus:ring-orange-500/20;
+    @apply transition-colors duration-200;
+}
+
+.form-radio {
+    @apply rounded-full;
+}
+
+/* ============================================
+   Navigation Components
+   ============================================ */
+
+/* Nav Link */
 .nav-link {
-    color: #6b7280;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition: all 0.2s;
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-xl;
+    @apply text-sm font-medium text-gray-600;
+    @apply transition-all duration-200;
+    @apply hover:bg-gray-50 hover:text-gray-900;
     text-decoration: none;
 }
 
-.nav-link:hover {
-    color: var(--livora-primary);
-}
-
 .nav-link.active {
-    color: var(--livora-primary);
-    background-color: rgba(255, 105, 0, 0.1);
+    @apply bg-gradient-to-r from-orange-50 to-amber-50;
+    @apply text-[#ff6900] font-semibold;
+    @apply shadow-sm;
 }
 
-/* Status Badges */
+/* Sidebar */
+.sidebar {
+    @apply bg-white border-r border-gray-200;
+    @apply h-screen sticky top-0;
+    @apply transition-all duration-300;
+}
+
+/* Top Navigation */
+.topnav {
+    @apply bg-white border-b border-gray-200;
+    @apply sticky top-0 z-50;
+    @apply shadow-sm;
+}
+
+/* ============================================
+   Badges & Tags
+   ============================================ */
+
 .badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 500;
-}
-
-.badge-success {
-    background-color: #dcfce7;
-    color: #166534;
-}
-
-.badge-warning {
-    background-color: #fef3c7;
-    color: #92400e;
-}
-
-.badge-error {
-    background-color: #fee2e2;
-    color: #991b1b;
+    @apply inline-flex items-center gap-1.5;
+    @apply px-3 py-1 rounded-full;
+    @apply text-xs font-semibold;
+    @apply transition-all duration-200;
 }
 
 .badge-primary {
-    background-color: rgba(255, 105, 0, 0.1);
-    color: var(--livora-primary);
+    @apply bg-orange-100 text-orange-700;
 }
+
+.badge-success {
+    @apply bg-emerald-100 text-emerald-700;
+}
+
+.badge-warning {
+    @apply bg-amber-100 text-amber-700;
+}
+
+.badge-danger {
+    @apply bg-red-100 text-red-700;
+}
+
+.badge-info {
+    @apply bg-blue-100 text-blue-700;
+}
+
+.badge-gray {
+    @apply bg-gray-100 text-gray-700;
+}
+
+/* Legacy Badge Support */
+.badge-error {
+    @apply bg-red-100 text-red-700;
+}
+
+/* ============================================
+   Tables - Modern Design
+   ============================================ */
+
+.modern-table {
+    @apply w-full border-collapse;
+}
+
+.modern-table thead {
+    @apply bg-gray-50 border-b-2 border-gray-200;
+}
+
+.modern-table th {
+    @apply px-6 py-4 text-left;
+    @apply text-xs font-bold uppercase tracking-wider;
+    @apply text-gray-600;
+}
+
+.modern-table td {
+    @apply px-6 py-4;
+    @apply text-sm text-gray-900;
+    @apply border-b border-gray-100;
+}
+
+.modern-table tbody tr {
+    @apply transition-colors duration-150;
+    @apply hover:bg-gray-50;
+}
+
+/* Striped Table */
+.table-striped tbody tr:nth-child(even) {
+    @apply bg-gray-50/50;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+}
+
+.animate-slide-down {
+    animation: slideDown 0.4s ease-out;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
+}
+
+/* Loading Skeleton */
+.skeleton {
+    @apply bg-gray-200 rounded-lg animate-pulse;
+}
+
+.skeleton-text {
+    @apply h-4 bg-gray-200 rounded animate-pulse;
+}
+
+/* Divider */
+.divider {
+    @apply border-t border-gray-200 my-6;
+}
+
+.divider-vertical {
+    @apply border-l border-gray-200 mx-4;
+}
+
+/* Empty State */
+.empty-state {
+    @apply flex flex-col items-center justify-center;
+    @apply py-12 px-4 text-center;
+}
+
+.empty-state-icon {
+    @apply w-16 h-16 mb-4 text-gray-400;
+}
+
+.empty-state-title {
+    @apply text-lg font-semibold text-gray-900 mb-2;
+}
+
+.empty-state-text {
+    @apply text-gray-500 max-w-sm;
+}
+
+/* Gradient Text */
+.gradient-text {
+    @apply bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-[#ff6900] to-[#ff8533];
+}
+
+/* Glassmorphism */
+.glass {
+    @apply bg-white/80 backdrop-blur-xl;
+    @apply border border-white/20;
+}
+
+/* Smooth Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full;
+    @apply hover:bg-gray-400;
+}
+
+/* Custom Thin Scrollbar */
+.scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--livora-primary) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--livora-primary);
+    border-radius: 20px;
+}
+
+/* ============================================
+   Responsive Utilities
+   ============================================ */
+
+/* Hide scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Container */
+.container-custom {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* ============================================
+   Legacy Support
+   ============================================ */
 
 /* Text Utilities */
 .text-livora-primary {
@@ -201,21 +584,17 @@ object {
     pointer-events: none;
 }
 
-/* Custom Scrollbar */
-.scrollbar-thin {
-    scrollbar-width: thin;
-    scrollbar-color: var(--livora-primary) transparent;
-}
+/* ============================================
+   Print Styles
+   ============================================ */
 
-.scrollbar-thin::-webkit-scrollbar {
-    width: 4px;
-}
+@media print {
+    .no-print {
+        display: none !important;
+    }
 
-.scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: var(--livora-primary);
-    border-radius: 20px;
+    .print-full-width {
+        width: 100% !important;
+        max-width: none !important;
+    }
 }

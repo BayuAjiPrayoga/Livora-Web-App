@@ -15,18 +15,31 @@ export default {
                 sans: ["Inter", "Figtree", ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                // Tiket.com Inspired Theme
+                // Livora Modern Brand Colors
+                livora: {
+                    50: "#fff7ed",
+                    100: "#ffedd5",
+                    200: "#fed7aa",
+                    300: "#fdba74",
+                    400: "#fb923c",
+                    500: "#ff6900", // Primary
+                    600: "#e55a00",
+                    700: "#c2410c",
+                    800: "#9a3412",
+                    900: "#7c2d12",
+                },
+                // Legacy tiket theme (keep for backward compatibility)
                 tiket: {
-                    primary: "#FF6900", // Orange - Primary brand color
-                    secondary: "#FF8533", // Light orange - Secondary
-                    dark: "#1A1A1A", // Dark text/backgrounds
-                    blue: "#0066CC", // Accent blue
-                    success: "#00C851", // Success green
-                    warning: "#FFBB33", // Warning yellow
-                    error: "#FF4444", // Error red
-                    background: "#FAFAFA", // Light background
-                    surface: "#FFFFFF", // Card/surface white
-                    border: "#E6E6E6", // Light borders
+                    primary: "#FF6900",
+                    secondary: "#FF8533",
+                    dark: "#1A1A1A",
+                    blue: "#0066CC",
+                    success: "#00C851",
+                    warning: "#FFBB33",
+                    error: "#FF4444",
+                    background: "#FAFAFA",
+                    surface: "#FFFFFF",
+                    border: "#E6E6E6",
                 },
                 gray: {
                     50: "#FAFAFA",
@@ -46,16 +59,24 @@ export default {
                 "tiket-md": "0 4px 16px rgba(0, 0, 0, 0.1)",
                 "tiket-lg": "0 8px 32px rgba(0, 0, 0, 0.12)",
                 "tiket-hover": "0 6px 20px rgba(0, 0, 0, 0.15)",
+                "glow-orange": "0 0 20px rgba(255, 105, 0, 0.4)",
+                "glow-orange-lg": "0 0 30px rgba(255, 105, 0, 0.5)",
+                "inner-sm": "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)",
             },
             borderRadius: {
                 tiket: "12px",
                 "tiket-lg": "16px",
                 "tiket-xl": "24px",
+                "4xl": "2rem",
             },
             animation: {
-                "fade-in": "fadeIn 0.5s ease-in-out",
-                "slide-up": "slideUp 0.3s ease-out",
+                "fade-in": "fadeIn 0.3s ease-out",
+                "slide-up": "slideUp 0.4s ease-out",
+                "slide-down": "slideDown 0.4s ease-out",
+                "scale-in": "scaleIn 0.3s ease-out",
                 "bounce-subtle": "bounceSubtle 2s infinite",
+                "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+                "spin-slow": "spin 3s linear infinite",
             },
             keyframes: {
                 fadeIn: {
@@ -63,13 +84,58 @@ export default {
                     "100%": { opacity: "1" },
                 },
                 slideUp: {
-                    "0%": { transform: "translateY(20px)", opacity: "0" },
-                    "100%": { transform: "translateY(0)", opacity: "1" },
+                    "0%": {
+                        opacity: "0",
+                        transform: "translateY(10px)",
+                    },
+                    "100%": {
+                        opacity: "1",
+                        transform: "translateY(0)",
+                    },
+                },
+                slideDown: {
+                    "0%": {
+                        opacity: "0",
+                        transform: "translateY(-10px)",
+                    },
+                    "100%": {
+                        opacity: "1",
+                        transform: "translateY(0)",
+                    },
+                },
+                scaleIn: {
+                    "0%": {
+                        opacity: "0",
+                        transform: "scale(0.95)",
+                    },
+                    "100%": {
+                        opacity: "1",
+                        transform: "scale(1)",
+                    },
                 },
                 bounceSubtle: {
-                    "0%, 100%": { transform: "translateY(0)" },
-                    "50%": { transform: "translateY(-5px)" },
+                    "0%, 100%": {
+                        transform: "translateY(-5%)",
+                        animationTimingFunction: "cubic-bezier(0.8, 0, 1, 1)",
+                    },
+                    "50%": {
+                        transform: "translateY(0)",
+                        animationTimingFunction: "cubic-bezier(0, 0, 0.2, 1)",
+                    },
                 },
+            },
+            backgroundImage: {
+                "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+                "gradient-conic":
+                    "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+                "gradient-mesh":
+                    "linear-gradient(135deg, rgba(255, 105, 0, 0.1) 0%, rgba(255, 133, 51, 0.1) 100%)",
+            },
+            backdropBlur: {
+                xs: "2px",
+            },
+            transitionDuration: {
+                400: "400ms",
             },
         },
     },
