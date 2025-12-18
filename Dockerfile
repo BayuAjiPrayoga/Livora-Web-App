@@ -148,9 +148,11 @@ server {
         try_files \$uri =404;
     }
 
-    # Deny access to hidden files
-    location ~ /\. {
+    # Deny access to hidden files (files starting with dot)
+    location ~ /\..* {
         deny all;
+        access_log off;
+        log_not_found off;
     }
 }
 EOF
