@@ -51,11 +51,11 @@
                                     <option value="">-- Pilih Booking --</option>
                                     @foreach($availableBookings as $booking)
                                         <option value="{{ $booking->id }}" 
-                                                data-total-price="{{ $booking->total_price }}"
+                                                data-total-price="{{ $booking->price }}"
                                                 {{ old('booking_id') == $booking->id ? 'selected' : '' }}>
                                             #{{ $booking->id }} - {{ $booking->room->name ?? 'N/A' }} 
                                             ({{ $booking->room->boardingHouse->name ?? 'N/A' }}) 
-                                            - Rp {{ number_format($booking->total_price, 0, ',', '.') }}
+                                            - Rp {{ number_format($booking->price, 0, ',', '.') }}
                                         </option>
                                     @endforeach
                                 </select>
