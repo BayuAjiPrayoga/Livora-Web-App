@@ -244,11 +244,11 @@ class BookingController extends Controller
             $bookingData = [
                 'user_id' => $tenant->id,
                 'room_id' => $validatedData['room_id'],
-                'start_date' => $checkIn->format('Y-m-d'),
-                'end_date' => $checkOut->format('Y-m-d'),
-                'duration' => $duration,
-                'total_price' => $totalPrice,
-                'final_amount' => $totalPrice, // Same as total_price for now
+                'check_in_date' => $checkIn->format('Y-m-d'),
+                'check_out_date' => $checkOut->format('Y-m-d'),
+                'duration_months' => $duration,
+                'total_amount' => $totalPrice,
+                'final_amount' => $totalPrice, // Same as total_amount for now
                 'status' => Booking::STATUS_PENDING,
                 'notes' => implode("\n", $additionalNotes),
             ];

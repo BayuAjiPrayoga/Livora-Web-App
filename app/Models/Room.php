@@ -106,23 +106,23 @@ class Room extends Model
         $overlapping = $query->where(function ($query) use ($checkIn, $checkOut) {
             $query->where(function ($subQuery) use ($checkIn, $checkOut) {
                 // New booking starts during existing booking
-                $subQuery->where('start_date', '<=', $checkIn)
-                         ->where('end_date', '>', $checkIn);
+                $subQuery->where('check_in_date', '<=', $checkIn)
+                         ->where('check_out_date', '>', $checkIn);
             })
             ->orWhere(function ($subQuery) use ($checkIn, $checkOut) {
                 // New booking ends during existing booking  
-                $subQuery->where('start_date', '<', $checkOut)
-                         ->where('end_date', '>=', $checkOut);
+                $subQuery->where('check_in_date', '<', $checkOut)
+                         ->where('check_out_date', '>=', $checkOut);
             })
             ->orWhere(function ($subQuery) use ($checkIn, $checkOut) {
                 // New booking completely contains existing booking
-                $subQuery->where('start_date', '>=', $checkIn)
-                         ->where('end_date', '<=', $checkOut);
+                $subQuery->where('check_in_date', '>=', $checkIn)
+                         ->where('check_out_date', '<=', $checkOut);
             })
             ->orWhere(function ($subQuery) use ($checkIn, $checkOut) {
                 // Existing booking completely contains new booking
-                $subQuery->where('start_date', '<=', $checkIn)
-                         ->where('end_date', '>=', $checkOut);
+                $subQuery->where('check_in_date', '<=', $checkIn)
+                         ->where('check_out_date', '>=', $checkOut);
             });
         })->exists();
 
@@ -140,8 +140,8 @@ class Room extends Model
     {
         return $this->bookings()
             ->where('status', 'confirmed')
-            ->where('start_date', '>', now())
-            ->orderBy('start_date')
+            ->where('check_in_date', '>', now())
+            ->orderBy('check_in_date')
             ->first();
     }
 
@@ -158,7 +158,7 @@ class Room extends Model
             ->whereHas('payments', function($query) {
                 $query->where('status', 'verified');
             })
-            ->where('start_date', '>', now())
+            ->where('check_in_date', '>', now())
             ->first();
             
         if ($paidBooking) {

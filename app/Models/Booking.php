@@ -55,17 +55,26 @@ class Booking extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'room_id', 'start_date', 'duration', 'end_date', 
-        'total_price', 'final_amount', 'status', 'notes', 
-        'tenant_identity_number', 'ktp_image'
+        'user_id', 'room_id', 'boarding_house_id', 'booking_code',
+        'check_in_date', 'check_out_date', 'duration_months', 'duration_days',
+        'monthly_price', 'total_amount', 'deposit_amount', 'admin_fee', 
+        'discount_amount', 'final_amount', 'status', 'booking_type',
+        'tenant_name', 'tenant_phone', 'tenant_email', 'tenant_identity_number', 
+        'tenant_address', 'emergency_contact_name', 'emergency_contact_phone',
+        'ktp_image', 'notes'
     ];
 
     protected $casts = [
-        'start_date' => 'date',
-        'end_date' => 'date',
-        'total_price' => 'decimal:2',
+        'check_in_date' => 'date',
+        'check_out_date' => 'date',
+        'monthly_price' => 'decimal:2',
+        'total_amount' => 'decimal:2',
+        'deposit_amount' => 'decimal:2',
+        'admin_fee' => 'decimal:2',
+        'discount_amount' => 'decimal:2',
         'final_amount' => 'decimal:2',
-        'duration' => 'integer'
+        'duration_months' => 'integer',
+        'duration_days' => 'integer'
     ];
 
     // Status constants

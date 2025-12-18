@@ -83,10 +83,10 @@ class BookingController extends Controller
         $booking = Booking::create([
             'user_id' => Auth::id(),
             'room_id' => $request->room_id,
-            'start_date' => $startDate,
-            'end_date' => $endDate,
-            'duration' => $duration,
-            'total_price' => $totalAmount,
+            'check_in_date' => $startDate,
+            'check_out_date' => $endDate,
+            'duration_months' => $duration,
+            'total_amount' => $totalAmount,
             'final_amount' => $totalAmount,
             'status' => 'pending',
             'tenant_identity_number' => $request->tenant_identity_number,
@@ -216,10 +216,10 @@ class BookingController extends Controller
         // Update booking
         $booking->update([
             'room_id' => $request->room_id,
-            'start_date' => $startDate,
-            'end_date' => $endDate,
-            'duration' => $duration,
-            'total_price' => $totalAmount,
+            'check_in_date' => $startDate,
+            'check_out_date' => $endDate,
+            'duration_months' => $duration,
+            'total_amount' => $totalAmount,
             'final_amount' => $totalAmount,
             'notes' => $request->notes
         ]);
