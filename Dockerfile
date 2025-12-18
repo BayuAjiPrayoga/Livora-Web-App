@@ -96,8 +96,10 @@ WORKDIR /app
 # Copy built application from builder
 COPY --from=builder /app /app
 
-# Set permissions
-RUN chmod -R 755 /app/storage /app/bootstrap/cache /app/public
+# Create www-data user directories and set proper ownership
+RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache && \
+    chmod -R 775 /app/storage /app/bootstrap/cache && \
+    chmod -R 755 /app/public
 
 # Copy nginx config
 COPY <<EOF /etc/nginx/sites-available/default
