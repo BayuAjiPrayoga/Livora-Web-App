@@ -101,19 +101,25 @@
                         </div>
                         <div>
                             <dt class="text-sm font-medium text-gray-500">Check-in Date</dt>
-                            <dd class="mt-1 text-sm text-gray-900">{{ $booking->start_date->format('F d, Y') }}</dd>
+                            <dd class="mt-1 text-sm text-gray-900">{{ $booking->check_in_date->format('F d, Y') }}</dd>
                         </div>
                         <div>
                             <dt class="text-sm font-medium text-gray-500">Check-out Date</dt>
-                            <dd class="mt-1 text-sm text-gray-900">{{ $booking->end_date->format('F d, Y') }}</dd>
+                            <dd class="mt-1 text-sm text-gray-900">{{ $booking->check_out_date->format('F d, Y') }}</dd>
                         </div>
                         <div>
                             <dt class="text-sm font-medium text-gray-500">Duration</dt>
-                            <dd class="mt-1 text-sm text-gray-900">{{ $booking->start_date->diffInDays($booking->end_date) }} days</dd>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                @if($booking->booking_type === 'daily')
+                                    {{ $booking->duration_days }} days
+                                @else
+                                    {{ $booking->duration_months }} months
+                                @endif
+                            </dd>
                         </div>
                         <div>
                             <dt class="text-sm font-medium text-gray-500">Total Amount</dt>
-                            <dd class="mt-1 text-sm font-semibold text-gray-900">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</dd>
+                            <dd class="mt-1 text-sm font-semibold text-gray-900">Rp {{ number_format($booking->final_amount, 0, ',', '.') }}</dd>
                         </div>
                         @if($booking->notes)
                         <div class="sm:col-span-2">

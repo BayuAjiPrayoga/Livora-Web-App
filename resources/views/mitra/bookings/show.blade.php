@@ -94,15 +94,15 @@
                             <dl class="space-y-2">
                                 <div>
                                     <dt class="text-sm text-gray-500">Check-in</dt>
-                                    <dd class="text-sm font-medium text-gray-900">{{ $booking->start_date ? $booking->start_date->format('d M Y') : 'N/A' }}</dd>
+                                    <dd class="text-sm font-medium text-gray-900">{{ $booking->check_in_date ? $booking->check_in_date->format('d M Y') : 'N/A' }}</dd>
                                 </div>
                                 <div>
                                     <dt class="text-sm text-gray-500">Check-out</dt>
-                                    <dd class="text-sm font-medium text-gray-900">{{ $booking->end_date ? $booking->end_date->format('d M Y') : 'N/A' }}</dd>
+                                    <dd class="text-sm font-medium text-gray-900">{{ $booking->check_out_date ? $booking->check_out_date->format('d M Y') : 'N/A' }}</dd>
                                 </div>
                                 <div>
                                     <dt class="text-sm text-gray-500">Durasi</dt>
-                                    <dd class="text-sm font-medium text-gray-900">{{ $booking->duration }} bulan</dd>
+                                    <dd class="text-sm font-medium text-gray-900">{{ $booking->duration_months }} bulan</dd>
                                 </div>
                                 {{-- Actual dates not implemented yet
                                 @if($booking->actual_check_in_date)

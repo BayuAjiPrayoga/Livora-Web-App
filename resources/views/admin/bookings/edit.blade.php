@@ -142,7 +142,7 @@
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-sm text-gray-600">Total Amount:</span>
-                        <span class="text-sm font-medium text-gray-900">Rp {{ number_format($booking->total_amount ?? 0, 0, ',', '.') }}</span>
+                        <span class="text-sm font-medium text-gray-900">Rp {{ number_format($booking->final_amount ?? 0, 0, ',', '.') }}</span>
                     </div>
                 </div>
             </div>

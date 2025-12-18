@@ -237,8 +237,8 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm font-medium text-gray-900">{{ $booking->duration_months }} bulan</div>
-                                <div class="text-sm text-gray-500">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</div>
-                                <div class="text-xs text-gray-400">{{ $booking->start_date }} - {{ $booking->end_date }}</div>
+                                <div class="text-sm text-gray-500">Rp {{ number_format($booking->final_amount, 0, ',', '.') }}</div>
+                                <div class="text-xs text-gray-400">{{ $booking->check_in_date->format('Y-m-d') }} - {{ $booking->check_out_date->format('Y-m-d') }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @php

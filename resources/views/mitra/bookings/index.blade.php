@@ -201,9 +201,9 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div>
-                                    <div class="text-sm text-gray-900">{{ $booking->start_date ? $booking->start_date->format('d M Y') : 'N/A' }}</div>
-                                    <div class="text-sm text-gray-500">s/d {{ $booking->end_date ? $booking->end_date->format('d M Y') : 'N/A' }}</div>
-                                    <div class="text-xs text-gray-400">{{ $booking->duration }} bulan</div>
+                                    <div class="text-sm text-gray-900">{{ $booking->check_in_date ? $booking->check_in_date->format('d M Y') : 'N/A' }}</div>
+                                    <div class="text-sm text-gray-500">s/d {{ $booking->check_out_date ? $booking->check_out_date->format('d M Y') : 'N/A' }}</div>
+                                    <div class="text-xs text-gray-400">{{ $booking->duration_months }} bulan</div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
