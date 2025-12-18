@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Str;
 
+// Parse DATABASE_URL for Railway/production compatibility
+$databaseUrl = parse_url(env('DATABASE_URL', ''));
+$hasExternalDatabase = !empty($databaseUrl['host']);
+
 return [
 
     /*
@@ -16,7 +20,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', $hasExternalDatabase ? 'mysql' : 'sqlite'),
 
     /*
     |--------------------------------------------------------------------------
@@ -46,11 +50,11 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'laravel'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('DB_HOST', $databaseUrl['host'] ?? '127.0.0.1'),
+            'port' => env('DB_PORT', $databaseUrl['port'] ?? '3306'),
+            'database' => env('DB_DATABASE', isset($databaseUrl['path']) ? ltrim($databaseUrl['path'], '/') : 'laravel'),
+            'username' => env('DB_USERNAME', $databaseUrl['user'] ?? 'root'),
+            'password' => env('DB_PASSWORD', $databaseUrl['pass'] ?? ''),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => env('DB_CHARSET', 'utf8mb4'),
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
@@ -60,7 +64,7 @@ return [
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => env('MYSQL_ATTR_SSL_VERIFY_SERVER_CERT', true),
+                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => env('MYSQL_ATTR_SSL_VERIFY_SERVER_CERT', false),
                 PDO::ATTR_TIMEOUT => 30,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             ]) : [],
