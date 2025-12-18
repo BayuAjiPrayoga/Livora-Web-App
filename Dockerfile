@@ -116,6 +116,15 @@ server {
     # Increase buffer sizes
     client_max_body_size 20M;
 
+    # Deny access to sensitive files first
+    location ~ /\.env {
+        deny all;
+    }
+
+    location ~ /\.git {
+        deny all;
+    }
+
     location / {
         try_files \$uri \$uri/ /index.php?\$query_string;
     }
@@ -146,13 +155,6 @@ server {
         expires 1y;
         add_header Cache-Control "public, immutable";
         try_files \$uri =404;
-    }
-
-    # Deny access to hidden files (files starting with dot)
-    location ~ /\..* {
-        deny all;
-        access_log off;
-        log_not_found off;
     }
 }
 EOF
