@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-livora-background">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-gray-50">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,58 +24,58 @@
 
         <!-- Sidebar -->
         <div class="hidden md:flex md:w-64 md:flex-col fixed inset-y-0 z-50" id="desktop-sidebar">
-            <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-white border-r border-gray-200">
+            <div class="sidebar flex flex-col flex-grow pt-5 pb-4 overflow-y-auto scrollbar-thin">
                 <!-- Logo -->
                 <div class="flex items-center justify-between flex-shrink-0 px-4 mb-8">
                     <div class="flex items-center">
-                        <h1 class="text-2xl font-bold bg-gradient-to-r from-tiket-primary to-tiket-secondary bg-clip-text text-transparent">LIVORA</h1>
-                        <span class="ml-2 text-sm text-tiket-primary font-semibold">Tenant</span>
+                        <h1 class="text-2xl font-bold gradient-text">LIVORA</h1>
+                        <span class="ml-2 px-2.5 py-0.5 text-xs bg-gradient-to-r from-orange-50 to-amber-50 text-[#ff6900] font-semibold rounded-lg">Tenant</span>
                     </div>
                 </div>
                 
                 <!-- Navigation -->
-                <nav class="mt-5 flex-1 px-2 space-y-1">
+                <nav class="mt-5 flex-1 px-3 space-y-1">
                     <!-- Browse Kost -->
-                    <a href="{{ route('browse') }}" class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-tiket text-gray-600 hover:bg-tiket-light hover:text-tiket-primary transition-all duration-200">
-                        <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('browse') }}" class="nav-link">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
-                        Cari Kost
+                        <span>Cari Kost</span>
                     </a>
 
                     <!-- Divider -->
-                    <div class="border-t border-gray-200 my-3"></div>
+                    <hr class="divider !my-2">
 
                     <!-- Dashboard -->
-                    <a href="{{ route('tenant.dashboard') }}" class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-tiket {{ request()->routeIs('tenant.dashboard') ? 'bg-tiket-primary text-white shadow-tiket' : 'text-gray-600 hover:bg-tiket-light hover:text-tiket-primary' }} transition-all duration-200">
-                        <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.dashboard') ? 'text-white' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('tenant.dashboard') }}" class="nav-link {{ request()->routeIs('tenant.dashboard') ? 'active' : '' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                         </svg>
-                        Dashboard
+                        <span>Dashboard</span>
                     </a>
 
                     <!-- My Bookings -->
-                    <a href="{{ route('tenant.bookings.index') }}" class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-tiket {{ request()->routeIs('tenant.bookings.*') ? 'bg-tiket-primary text-white shadow-tiket' : 'text-gray-600 hover:bg-tiket-light hover:text-tiket-primary' }} transition-all duration-200">
-                        <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('tenant.bookings.index') }}" class="nav-link {{ request()->routeIs('tenant.bookings.*') ? 'active' : '' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                         </svg>
-                        Booking Saya
+                        <span>Booking Saya</span>
                     </a>
 
                     <!-- My Tickets -->
-                    <a href="{{ route('tenant.tickets.index') }}" class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-tiket {{ request()->routeIs('tenant.tickets.*') ? 'bg-tiket-primary text-white shadow-tiket' : 'text-gray-600 hover:bg-tiket-light hover:text-tiket-primary' }} transition-all duration-200">
-                        <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('tenant.tickets.index') }}" class="nav-link {{ request()->routeIs('tenant.tickets.*') ? 'active' : '' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
                         </svg>
-                        Tiket Saya
+                        <span>Tiket Saya</span>
                     </a>
 
                     <!-- Payments -->
-                    <a href="{{ route('tenant.payments.index') }}" class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-tiket {{ request()->routeIs('tenant.payments.*') ? 'bg-tiket-primary text-white shadow-tiket' : 'text-gray-600 hover:bg-tiket-light hover:text-tiket-primary' }} transition-all duration-200">
-                        <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('tenant.payments.index') }}" class="nav-link {{ request()->routeIs('tenant.payments.*') ? 'active' : '' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
-                        Pembayaran Saya
+                        <span>Pembayaran Saya</span>
                     </a>
 
                     <!-- Profile -->
