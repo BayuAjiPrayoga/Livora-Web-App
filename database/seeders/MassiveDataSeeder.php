@@ -248,12 +248,15 @@ class MassiveDataSeeder extends Seeder
                 $booking = Booking::create([
                     'user_id' => $tenant->id,
                     'room_id' => $room->id,
-                    'start_date' => $startDate->format('Y-m-d'),
-                    'duration' => $duration,
-                    'end_date' => $endDate->format('Y-m-d'),
-                    'total_price' => $totalPrice,
+                    'boarding_house_id' => $room->boarding_house_id,
+                    'check_in_date' => $startDate->format('Y-m-d'),
+                    'check_out_date' => $endDate->format('Y-m-d'),
+                    'duration_months' => $duration,
+                    'duration_days' => 0,
+                    'monthly_price' => $room->price,
                     'final_amount' => $totalPrice,
                     'status' => $status,
+                    'booking_type' => 'monthly',
                     'notes' => $status === 'cancelled' ? 'Dibatalkan karena perubahan rencana' : null,
                 ]);
                 
@@ -272,7 +275,7 @@ class MassiveDataSeeder extends Seeder
             if ($booking->status === 'pending') {
                 Payment::create([
                     'booking_id' => $booking->id,
-                    'amount' => $booking->total_price,
+                    'amount' => $booking->final_amount,
                     'status' => 'pending',
                     'proof_image' => null,
                     'notes' => null,
@@ -285,7 +288,7 @@ class MassiveDataSeeder extends Seeder
             elseif (in_array($booking->status, ['confirmed', 'active', 'completed'])) {
                 Payment::create([
                     'booking_id' => $booking->id,
-                    'amount' => $booking->total_price,
+                    'amount' => $booking->final_amount,
                     'status' => 'verified',
                     'proof_image' => rand(0, 10) > 2 ? 'proof-images/payment-' . rand(1, 100) . '.jpg' : null,
                     'notes' => 'Pembayaran telah diverifikasi',
@@ -294,9 +297,9 @@ class MassiveDataSeeder extends Seeder
                 $paymentCount++;
                 
                 // 30% chance of having installment payments
-                if (rand(0, 100) < 30 && $booking->duration > 3) {
-                    $installments = rand(2, min(4, $booking->duration));
-                    $installmentAmount = floor($booking->total_price / $installments);
+                if (rand(0, 100) < 30 && $booking->duration_months > 3) {
+                    $installments = rand(2, min(4, $booking->duration_months));
+                    $installmentAmount = floor($booking->final_amount / $installments);
                     
                     for ($p = 1; $p < $installments; $p++) {
                         Payment::create([
@@ -317,7 +320,7 @@ class MassiveDataSeeder extends Seeder
                 if (rand(0, 10) > 5) {
                     Payment::create([
                         'booking_id' => $booking->id,
-                        'amount' => $booking->total_price,
+                        'amount' => $booking->final_amount,
                         'status' => 'rejected',
                         'proof_image' => 'proof-images/payment-' . rand(1, 100) . '.jpg',
                         'notes' => 'Pembayaran dibatalkan',

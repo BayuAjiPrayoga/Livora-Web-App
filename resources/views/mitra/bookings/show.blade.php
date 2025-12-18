@@ -319,7 +319,7 @@
                         </div>
                         <div class="flex justify-between">
                             <dt class="text-sm text-gray-500">Durasi</dt>
-                            <dd class="text-sm font-medium text-gray-900">{{ $booking->duration }} bulan</dd>
+                            <dd class="text-sm font-medium text-gray-900">{{ $booking->duration_months }} bulan</dd>
                         </div>
                         {{-- Deposit not implemented yet
                         @if($booking->deposit_amount > 0)

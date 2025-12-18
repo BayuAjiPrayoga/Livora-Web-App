@@ -212,12 +212,15 @@ class LightweightDataSeeder extends Seeder
                 $booking = Booking::create([
                     'user_id' => $tenant->id,
                     'room_id' => $room->id,
-                    'start_date' => $startDate->format('Y-m-d'),
-                    'duration' => $duration,
-                    'end_date' => $endDate->format('Y-m-d'),
-                    'total_price' => $totalPrice,
+                    'boarding_house_id' => $room->boarding_house_id,
+                    'check_in_date' => $startDate->format('Y-m-d'),
+                    'check_out_date' => $endDate->format('Y-m-d'),
+                    'duration_months' => $duration,
+                    'duration_days' => 0,
+                    'monthly_price' => $room->price,
                     'final_amount' => $totalPrice,
                     'status' => $status,
+                    'booking_type' => 'monthly',
                     'notes' => $status === 'cancelled' ? 'Dibatalkan karena perubahan rencana' : null,
                 ]);
                 
@@ -234,7 +237,7 @@ class LightweightDataSeeder extends Seeder
             if ($booking->status === 'pending') {
                 Payment::create([
                     'booking_id' => $booking->id,
-                    'amount' => $booking->total_price,
+                    'amount' => $booking->final_amount,
                     'status' => 'pending',
                     'proof_image' => null,
                     'notes' => null,
@@ -245,7 +248,7 @@ class LightweightDataSeeder extends Seeder
             elseif (in_array($booking->status, ['confirmed', 'active', 'completed'])) {
                 Payment::create([
                     'booking_id' => $booking->id,
-                    'amount' => $booking->total_price,
+                    'amount' => $booking->final_amount,
                     'status' => 'verified',
                     'proof_image' => 'proof-images/payment-' . rand(1, 50) . '.jpg',
                     'notes' => 'Pembayaran telah diverifikasi',
@@ -256,7 +259,7 @@ class LightweightDataSeeder extends Seeder
             elseif ($booking->status === 'cancelled') {
                 Payment::create([
                     'booking_id' => $booking->id,
-                    'amount' => $booking->total_price,
+                    'amount' => $booking->final_amount,
                     'status' => 'rejected',
                     'proof_image' => 'proof-images/payment-' . rand(1, 50) . '.jpg',
                     'notes' => 'Pembayaran dibatalkan',
