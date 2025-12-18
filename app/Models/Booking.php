@@ -12,11 +12,28 @@ use Carbon\Carbon;
  * @property int $id
  * @property int $user_id
  * @property int $room_id
- * @property string $start_date
- * @property int $duration
- * @property string $end_date
- * @property string $total_price
+ * @property int|null $boarding_house_id
+ * @property string|null $booking_code
+ * @property string $check_in_date
+ * @property string $check_out_date
+ * @property int $duration_months
+ * @property int $duration_days
+ * @property string $monthly_price
+ * @property string $total_amount
+ * @property string $deposit_amount
+ * @property string $admin_fee
+ * @property string $discount_amount
+ * @property string $final_amount
  * @property string $status
+ * @property string $booking_type
+ * @property string|null $tenant_name
+ * @property string|null $tenant_phone
+ * @property string|null $tenant_email
+ * @property string|null $tenant_identity_number
+ * @property string|null $tenant_address
+ * @property string|null $emergency_contact_name
+ * @property string|null $emergency_contact_phone
+ * @property string|null $ktp_image
  * @property string|null $notes
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -211,7 +228,7 @@ class Booking extends Model
 
     public function canBeCheckedIn(): bool
     {
-        return $this->isConfirmed() && $this->getAttribute('start_date')->isToday();
+        return $this->isConfirmed() && $this->getAttribute('check_in_date')->isToday();
     }
 
     public function canBeCheckedOut(): bool
@@ -236,7 +253,7 @@ class Booking extends Model
 
     public function getDurationInDays(): int
     {
-        return $this->getAttribute('start_date')->diffInDays($this->getAttribute('end_date'));
+        return $this->getAttribute('check_in_date')->diffInDays($this->getAttribute('check_out_date'));
     }
 
     public function getRemainingDays(): int
@@ -245,15 +262,15 @@ class Booking extends Model
             return 0;
         }
         
-        return max(0, Carbon::now()->diffInDays($this->getAttribute('end_date'), false));
+        return max(0, Carbon::now()->diffInDays($this->getAttribute('check_out_date'), false));
     }
 
     public function getBookingTypeLabel(): string
     {
         // Simple booking type based on duration
-        if ($this->duration >= 12) {
+        if ($this->duration_months >= 12) {
             return 'Sewa Tahunan';
-        } elseif ($this->duration >= 3) {
+        } elseif ($this->duration_months >= 3) {
             return 'Sewa Bulanan';
         } else {
             return 'Sewa Harian';
