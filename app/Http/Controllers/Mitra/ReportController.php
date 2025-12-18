@@ -34,7 +34,7 @@ class ReportController extends Controller
         $currentRevenue = Payment::whereHas('booking.room.boardingHouse', function($q) use ($user) {
             $q->where('user_id', $user->id);
         })
-        ->where('status', 'paid')
+        ->where('status', Payment::STATUS_VERIFIED)
         ->whereYear('created_at', $currentMonth->year)
         ->whereMonth('created_at', $currentMonth->month)
         ->sum('amount');
@@ -42,7 +42,7 @@ class ReportController extends Controller
         $lastMonthRevenue = Payment::whereHas('booking.room.boardingHouse', function($q) use ($user) {
             $q->where('user_id', $user->id);
         })
-        ->where('status', 'paid')
+        ->where('status', Payment::STATUS_VERIFIED)
         ->whereYear('created_at', $lastMonth->year)
         ->whereMonth('created_at', $lastMonth->month)
         ->sum('amount');
@@ -89,7 +89,7 @@ class ReportController extends Controller
             $revenue = Payment::whereHas('booking.room.boardingHouse', function($q) use ($user) {
                 $q->where('user_id', $user->id);
             })
-            ->where('status', 'paid')
+            ->where('status', Payment::STATUS_VERIFIED)
             ->whereYear('created_at', $month->year)
             ->whereMonth('created_at', $month->month)
             ->sum('amount');
@@ -104,14 +104,14 @@ class ReportController extends Controller
         $topProperties = BoardingHouse::where('user_id', $user->id)
             ->withCount(['rooms as total_rooms'])
             ->with(['rooms.bookings.payments' => function($query) {
-                $query->where('status', 'paid');
+                $query->where('status', Payment::STATUS_VERIFIED);
             }])
             ->get()
             ->map(function($property) {
                 $totalRevenue = 0;
                 foreach($property->rooms as $room) {
                     foreach($room->bookings as $booking) {
-                        $totalRevenue += $booking->payments->where('status', 'paid')->sum('amount');
+                        $totalRevenue += $booking->payments->where('status', Payment::STATUS_VERIFIED)->sum('amount');
                     }
                 }
                 $property->total_revenue = $totalRevenue;
@@ -180,7 +180,7 @@ class ReportController extends Controller
                     $q->where('id', $propertyId);
                 }
             })
-            ->where('status', 'paid')
+            ->where('status', Payment::STATUS_VERIFIED)
             ->whereBetween('created_at', [$startDate, $endDate]);
             
         $payments = $query->orderByDesc('created_at')->paginate(15);
@@ -197,7 +197,7 @@ class ReportController extends Controller
                     $q->where('id', $propertyId);
                 }
             })
-            ->where('status', 'paid')
+            ->where('status', Payment::STATUS_VERIFIED)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->select(
                 DB::raw('DATE(created_at) as date'),
@@ -322,7 +322,7 @@ class ReportController extends Controller
         $currentRevenue = Payment::whereHas('booking.room.boardingHouse', function($q) use ($user) {
             $q->where('user_id', $user->id);
         })
-        ->where('status', 'paid')
+        ->where('status', Payment::STATUS_VERIFIED)
         ->whereYear('created_at', $currentMonth->year)
         ->whereMonth('created_at', $currentMonth->month)
         ->sum('amount');
@@ -330,7 +330,7 @@ class ReportController extends Controller
         $lastMonthRevenue = Payment::whereHas('booking.room.boardingHouse', function($q) use ($user) {
             $q->where('user_id', $user->id);
         })
-        ->where('status', 'paid')
+        ->where('status', Payment::STATUS_VERIFIED)
         ->whereYear('created_at', $lastMonth->year)
         ->whereMonth('created_at', $lastMonth->month)
         ->sum('amount');
@@ -370,7 +370,7 @@ class ReportController extends Controller
             $revenue = Payment::whereHas('booking.room.boardingHouse', function($q) use ($user) {
                 $q->where('user_id', $user->id);
             })
-            ->where('status', 'paid')
+            ->where('status', Payment::STATUS_VERIFIED)
             ->whereYear('created_at', $month->year)
             ->whereMonth('created_at', $month->month)
             ->sum('amount');
@@ -382,14 +382,14 @@ class ReportController extends Controller
         $topProperties = BoardingHouse::where('user_id', $user->id)
             ->withCount(['rooms as total_rooms'])
             ->with(['rooms.bookings.payments' => function($query) {
-                $query->where('status', 'paid');
+                $query->where('status', Payment::STATUS_VERIFIED);
             }])
             ->get()
             ->map(function($property) {
                 $totalRevenue = 0;
                 foreach($property->rooms as $room) {
                     foreach($room->bookings as $booking) {
-                        $totalRevenue += $booking->payments->where('status', 'paid')->sum('amount');
+                        $totalRevenue += $booking->payments->where('status', Payment::STATUS_VERIFIED)->sum('amount');
                     }
                 }
                 $property->total_revenue = $totalRevenue;
@@ -440,7 +440,7 @@ class ReportController extends Controller
         $currentRevenue = Payment::whereHas('booking.room.boardingHouse', function($q) use ($user) {
             $q->where('user_id', $user->id);
         })
-        ->where('status', 'paid')
+        ->where('status', Payment::STATUS_VERIFIED)
         ->whereYear('created_at', $currentMonth->year)
         ->whereMonth('created_at', $currentMonth->month)
         ->sum('amount');
@@ -470,14 +470,14 @@ class ReportController extends Controller
         $topProperties = BoardingHouse::where('user_id', $user->id)
             ->withCount(['rooms as total_rooms'])
             ->with(['rooms.bookings.payments' => function($query) {
-                $query->where('status', 'paid');
+                $query->where('status', Payment::STATUS_VERIFIED);
             }])
             ->get()
             ->map(function($property) {
                 $totalRevenue = 0;
                 foreach($property->rooms as $room) {
                     foreach($room->bookings as $booking) {
-                        $totalRevenue += $booking->payments->where('status', 'paid')->sum('amount');
+                        $totalRevenue += $booking->payments->where('status', Payment::STATUS_VERIFIED)->sum('amount');
                     }
                 }
                 $property->total_revenue = $totalRevenue;
