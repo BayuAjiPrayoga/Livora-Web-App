@@ -99,8 +99,17 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        // Load relationships for detailed view
-        $user->load(['boardingHouses', 'bookings.room.boardingHouse', 'payments', 'tickets']);
+        // Load relationships for detailed view with select to avoid errors
+        $user->load([
+            'boardingHouses',
+            'bookings' => function ($query) {
+                $query->with(['room' => function ($q) {
+                    $q->with('boardingHouse:id,name');
+                }]);
+            },
+            'payments',
+            'tickets'
+        ]);
 
         // Get user statistics
         $stats = [
@@ -111,7 +120,7 @@ class UserController extends Controller
             'open_tickets' => $user->tickets()->where('status', 'open')->count(),
         ];
 
-        if ($user->role === 'owner') {
+        if ($user->role === 'mitra') {
             $stats['total_properties'] = $user->boardingHouses()->count();
             $stats['total_rooms'] = $user->boardingHouses()->withCount('rooms')->get()->sum('rooms_count');
             $stats['occupied_rooms'] = $user->boardingHouses()
