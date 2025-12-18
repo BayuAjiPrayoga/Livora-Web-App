@@ -7,11 +7,14 @@ use App\Models\Booking;
 use App\Models\Room;
 use App\Models\BoardingHouse;
 use App\Services\BookingService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * BookingService instance
      */
