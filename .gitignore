@@ -1,0 +1,46 @@
+*.log
+.DS_Store
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+/.fleet
+/.idea
+/.nova
+/.phpunit.cache
+/.vscode
+/.zed
+/auth.json
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/vendor
+Homestead.json
+Homestead.yaml
+Thumbs.db
+
+# Database backups & dumps
+database_backup_*.sql
+database_dump_*.sql
+*.sql.gz
+*.sql.zip
+
+# Temporary files
+create_users.php
+backup_database.ps1
+restore_database.ps1
+*_AUDIT_REPORT.md
+*_DEBUGGING_REPORT.md
+*_DUMMY_GUIDE.md
+
+# IDE helpers
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+
+# Mobile app
+/livora_mobile

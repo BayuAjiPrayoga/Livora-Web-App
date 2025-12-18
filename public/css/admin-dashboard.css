@@ -1,0 +1,60 @@
+/* Admin Dashboard Additional Styles */
+
+/* Progress bars for system health */
+.progress-bar {
+    transition: width 0.3s ease-in-out;
+}
+
+/* Chart containers */
+.chart-container {
+    position: relative;
+    min-height: 300px;
+}
+
+/* Loading state for charts */
+.chart-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+/* Status indicators */
+.status-online {
+    color: #22c55e;
+}
+
+.status-offline {
+    color: #ef4444;
+}
+
+.status-warning {
+    color: #f59e0b;
+}
+
+/* Card animations */
+.dashboard-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Chart responsiveness */
+@media (max-width: 768px) {
+    .chart-container {
+        min-height: 250px;
+    }
+}
+
+/* Dark mode support (future enhancement) */
+@media (prefers-color-scheme: dark) {
+    .chart-loading {
+        color: #9ca3af;
+    }
+}

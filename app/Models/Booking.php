@@ -1,0 +1,262 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Carbon\Carbon;
+
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property int $room_id
+ * @property string $start_date
+ * @property int $duration
+ * @property string $end_date
+ * @property string $total_price
+ * @property string $status
+ * @property string|null $notes
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\BoardingHouse|null $boardingHouse
+ * @property-read string $status_color
+ * @property-read string $status_label
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Payment> $payments
+ * @property-read int|null $payments_count
+ * @property-read \App\Models\Room $room
+ * @property-read \App\Models\User $tenant
+
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking active()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking cancelled()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking completed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking confirmed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking pending()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking whereDuration($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking whereNotes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking whereRoomId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking whereTotalPrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Booking whereUserId($value)
+ * @mixin \Eloquent
+ */
+class Booking extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id', 'room_id', 'start_date', 'duration', 'end_date', 
+        'total_price', 'final_amount', 'status', 'notes', 
+        'tenant_identity_number', 'ktp_image'
+    ];
+
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'total_price' => 'decimal:2',
+        'final_amount' => 'decimal:2',
+        'duration' => 'integer'
+    ];
+
+    // Status constants
+    const STATUS_PENDING = 'pending';
+    const STATUS_CONFIRMED = 'confirmed';
+    const STATUS_ACTIVE = 'active';
+    const STATUS_COMPLETED = 'completed';
+    const STATUS_CANCELLED = 'cancelled';
+
+
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function room(): BelongsTo
+    {
+        return $this->belongsTo(Room::class);
+    }
+
+    public function boardingHouse()
+    {
+        return $this->hasOneThrough(BoardingHouse::class, Room::class, 'id', 'id', 'room_id', 'boarding_house_id');
+    }
+
+    public function getBoardingHouseAttribute()
+    {
+        // Since bookings table doesn't have boarding_house_id, 
+        // we'll get it through the room relationship
+        return $this->room->boardingHouse ?? null;
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'room_id', 'room_id');
+    }
+
+
+
+    // Accessors & Mutators
+    public function getStatusLabelAttribute(): string
+    {
+        return match($this->status) {
+            self::STATUS_PENDING => 'Menunggu Konfirmasi',
+            self::STATUS_CONFIRMED => 'Dikonfirmasi',
+            self::STATUS_ACTIVE => 'Sedang Menginap',
+            self::STATUS_COMPLETED => 'Selesai',
+            self::STATUS_CANCELLED => 'Dibatalkan',
+            default => 'Unknown'
+        };
+    }
+
+    public function getStatusColorAttribute(): string
+    {
+        return match($this->status) {
+            self::STATUS_PENDING => 'yellow',
+            self::STATUS_CONFIRMED => 'blue',
+            self::STATUS_ACTIVE => 'green',
+            self::STATUS_COMPLETED => 'gray',
+            self::STATUS_CANCELLED => 'red',
+            default => 'gray'
+        };
+    }
+
+
+
+    // Scopes
+    public function scopePending($query)
+    {
+        return $query->where('status', self::STATUS_PENDING);
+    }
+
+    public function scopeConfirmed($query)
+    {
+        return $query->where('status', self::STATUS_CONFIRMED);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
+    }
+
+    public function scopeCompleted($query)
+    {
+        return $query->where('status', self::STATUS_COMPLETED);
+    }
+
+    public function scopeCancelled($query)
+    {
+        return $query->where('status', self::STATUS_CANCELLED);
+    }
+
+    // Helper methods
+    public function isPending(): bool
+    {
+        return $this->status === self::STATUS_PENDING;
+    }
+
+    public function isConfirmed(): bool
+    {
+        return $this->status === self::STATUS_CONFIRMED;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status === self::STATUS_ACTIVE;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->status === self::STATUS_COMPLETED;
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->status === self::STATUS_CANCELLED;
+    }
+
+    public function canBeConfirmed(): bool
+    {
+        return $this->isPending();
+    }
+
+    public function canBeCheckedIn(): bool
+    {
+        return $this->isConfirmed() && $this->getAttribute('start_date')->isToday();
+    }
+
+    public function canBeCheckedOut(): bool
+    {
+        return $this->isActive();
+    }
+
+    public function canBeCancelled(): bool
+    {
+        return in_array($this->status, [self::STATUS_PENDING, self::STATUS_CONFIRMED]);
+    }
+
+    public function canBeEdited(): bool
+    {
+        return in_array($this->status, [self::STATUS_PENDING, self::STATUS_CONFIRMED]);
+    }
+
+    public function canEditDates(): bool
+    {
+        return in_array($this->status, [self::STATUS_PENDING, self::STATUS_CONFIRMED]);
+    }
+
+    public function getDurationInDays(): int
+    {
+        return $this->getAttribute('start_date')->diffInDays($this->getAttribute('end_date'));
+    }
+
+    public function getRemainingDays(): int
+    {
+        if (!$this->isActive()) {
+            return 0;
+        }
+        
+        return max(0, Carbon::now()->diffInDays($this->getAttribute('end_date'), false));
+    }
+
+    public function getBookingTypeLabel(): string
+    {
+        // Simple booking type based on duration
+        if ($this->duration >= 12) {
+            return 'Sewa Tahunan';
+        } elseif ($this->duration >= 3) {
+            return 'Sewa Bulanan';
+        } else {
+            return 'Sewa Harian';
+        }
+    }
+
+    public function getBookingCodeAttribute(): string
+    {
+        return 'BK-' . str_pad($this->id, 6, '0', STR_PAD_LEFT);
+    }
+
+
+
+
+}
