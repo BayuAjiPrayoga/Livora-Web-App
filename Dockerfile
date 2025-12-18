@@ -189,6 +189,7 @@ EXPOSE 8080
 
 # Start script
 CMD php artisan migrate --force || true && \
+    php artisan db:seed --force || true && \
     php artisan config:clear && \
     php artisan storage:link || true && \
     /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
