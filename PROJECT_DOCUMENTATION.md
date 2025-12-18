@@ -20,7 +20,7 @@ LIVORA adalah platform manajemen kos modern yang menghubungkan pemilik kos (owne
 ### **User Roles**
 
 1. **Admin**: Mengelola seluruh sistem
-2. **Owner/Mitra**: Pemilik kos yang menyewakan properti
+2. **Mitra**: Pemilik kos yang menyewakan properti (formerly "owner")
 3. **Tenant**: Penyewa kos
 
 ---
@@ -63,7 +63,7 @@ c:\laragon\www\Livora\
 - name (varchar)
 - email (varchar, unique)
 - password (varchar)
-- role (enum: 'admin', 'owner', 'tenant')
+- role (enum: 'admin', 'mitra', 'tenant')
 - is_active (boolean)
 - phone (varchar)
 - avatar (varchar)
@@ -102,14 +102,28 @@ c:\laragon\www\Livora\
 - id (primary key)
 - user_id (foreign key -> users.id)
 - room_id (foreign key -> rooms.id)
-- start_date (date)
-- end_date (date)
+- boarding_house_id (foreign key -> boarding_houses.id)
+- booking_code (varchar, unique)
+- booking_type (enum: 'monthly', 'yearly')
+- check_in_date (date)
+- check_out_date (date)
 - duration_months (integer)
-- total_price (decimal)
+- duration_days (integer)
+- monthly_price (decimal)
+- deposit_amount (decimal)
+- admin_fee (decimal)
+- discount_amount (decimal)
+- final_amount (decimal) -- replaces total_price
 - status (enum: 'pending', 'confirmed', 'active', 'completed', 'cancelled')
 - notes (text)
 - created_at, updated_at
 ```
+
+**Note**: Migration `enhance_bookings_table_for_booking_engine` renamed:
+
+-   `start_date` → `check_in_date`
+-   `end_date` → `check_out_date`
+-   `total_price` → `final_amount`
 
 ### **Payments Table**
 
@@ -138,7 +152,7 @@ c:\laragon\www\Livora\
 - priority (enum: 'low', 'medium', 'high', 'urgent')
 - status (enum: 'open', 'in_progress', 'resolved', 'closed')
 - admin_response (text)
-- created_at, updated_at
+- created_at, updated_atmitra
 ```
 
 ---

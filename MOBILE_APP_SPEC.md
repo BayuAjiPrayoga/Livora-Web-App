@@ -4,7 +4,8 @@
 **Date:** December 15, 2025  
 **Target Platform:** Flutter (Android & iOS)  
 **Backend:** Laravel 11 + Sanctum  
-**Scope:** Tenant & Owner (Mitra) Only - Admin Dashboard EXCLUDED
+**Scope:** Tenant & Mitra Only - Admin Dashboard EXCLUDED  
+**Note:** "Mitra" is the property owner role (formerly called "owner")
 
 ---
 
@@ -86,7 +87,7 @@ POST /register
 
 **Validation:**
 
--   `role`: required, enum(`tenant`, `owner`)
+-   `role`: required, enum(`tenant`, `mitra`)
 -   `email`: unique, valid email
 -   `password`: min 8 characters
 -   `phone`: max 15 characters
@@ -141,9 +142,9 @@ GET /properties
             "is_verified": true,
             "rooms_count": 10,
             "available_rooms_count": 5,
-            "owner": {
+            "mitra": {
                 "id": 2,
-                "name": "Owner Name"
+                "name": "Mitra Name"
             }
         }
     ],
@@ -210,9 +211,9 @@ GET /properties/{slug}
                 ]
             }
         ],
-        "owner": {
+        "mitra": {
             "id": 2,
-            "name": "Owner Name"
+            "name": "Mitra Name"
         }
     }
 }
@@ -289,7 +290,7 @@ GET /bookings
 **Query Parameters:**
 
 -   `status`: enum(`pending`, `confirmed`, `active`, `completed`, `cancelled`)
--   `sort_by`: enum(`created_at`, `start_date`, `total_price`)
+-   `sort_by`: enum(`created_at`, `check_in_date`, `final_amount`)
 -   `sort_order`: enum(`asc`, `desc`)
 -   `page`: integer
 
@@ -324,10 +325,8 @@ GET /bookings
             "start_date_formatted": "01 Feb 2025",
             "end_date": "2025-05-01",
             "end_date_formatted": "01 Mei 2025",
-            "duration": 3,
+            "duration_months": 3,
             "duration_text": "3 bulan",
-            "total_price": 3000000,
-            "total_price_formatted": "Rp 3.000.000",
             "final_amount": 3000000,
             "final_amount_formatted": "Rp 3.000.000",
             "status": "pending",
@@ -386,8 +385,8 @@ POST /bookings
 ```json
 {
     "room_id": 1,
-    "start_date": "2025-02-01",
-    "duration": 3,
+    "check_in_date": "2025-02-01",
+    "duration_months": 3,
     "tenant_identity_number": "1234567890123456",
     "ktp_image": "file",
     "notes": "Optional notes"
@@ -397,7 +396,7 @@ POST /bookings
 **Validation Rules:**
 
 -   `room_id`: required, exists in rooms table
--   `start_date`: required, date, >= today
+-   `check_in_date`: required, date, >= today
 -   `duration`: required, integer, 1-12 months
 -   `tenant_identity_number`: required, string, exactly 16 digits
 -   `ktp_image`: required, image (jpeg/jpg/png), max 2MB
@@ -405,9 +404,8 @@ POST /bookings
 
 **Business Logic:**
 
--   `end_date` = `start_date` + `duration` months (auto-calculated)
--   `total_price` = `duration` \* `room.price` (auto-calculated)
--   `final_amount` = `total_price` (auto-calculated)
+-   `check_out_date` = `check_in_date` + `duration_months` months (auto-calculated)
+-   `final_amount` = `duration_months` \* `room.price` + other fees (auto-calculated)
 -   `status` = `pending` (auto-set)
 -   `user_id` = Auth user ID (auto-set)
 
@@ -520,7 +518,7 @@ POST /payments
 ```json
 {
     "success": true,
-    "message": "Payment submitted successfully. Waiting for owner verification.",
+    "message": "Payment submitted successfully. Waiting for mitra verification.",
     "data": {
         // Payment object
     }
@@ -529,14 +527,14 @@ POST /payments
 
 ---
 
-### 1.4 OWNER (Mitra) Endpoints
+### 1.4 MITRA (Property Owner) Endpoints
 
-**All owner endpoints require `role = 'owner'` in authenticated user**
+**All mitra endpoints require `role = 'mitra'` in authenticated user**
 
 #### **Dashboard Statistics**
 
 ```http
-GET /owner/dashboard
+GET /mitra/dashboard
 ```
 
 **Response:** (200)
@@ -574,10 +572,10 @@ GET /owner/dashboard
 
 ---
 
-#### **Owner's Properties**
+#### **Mitra's Properties**
 
 ```http
-GET /owner/properties
+GET /mitra/properties
 ```
 
 **Query Parameters:**
@@ -602,28 +600,28 @@ GET /owner/properties
 
 ---
 
-#### **Owner's Bookings**
+#### **Mitra's Bookings**
 
 ```http
-GET /owner/bookings
+GET /mitra/bookings
 ```
 
 **Query Parameters:**
 
 -   `status`: enum(`pending`, `confirmed`, `active`, `completed`, `cancelled`)
 -   `boarding_house_id`: integer (filter by specific property)
--   `sort_by`: enum(`created_at`, `start_date`, `total_price`)
+-   `sort_by`: enum(`created_at`, `check_in_date`, `final_amount`)
 -   `sort_order`: enum(`asc`, `desc`)
 -   `page`: integer
 
-**Response:** Same structure as tenant bookings, but includes all bookings from owner's properties
+**Response:** Same structure as tenant bookings, but includes all bookings from mitra's properties
 
 ---
 
 #### **Payment Verification**
 
 ```http
-POST /owner/bookings/{bookingId}/payments/{paymentId}/verify
+POST /mitra/bookings/{bookingId}/payments/{paymentId}/verify
 ```
 
 **Body:**
@@ -649,7 +647,7 @@ POST /owner/bookings/{bookingId}/payments/{paymentId}/verify
 ---
 
 ```http
-POST /owner/bookings/{bookingId}/payments/{paymentId}/reject
+POST /mitra/bookings/{bookingId}/payments/{paymentId}/reject
 ```
 
 **Body:**
@@ -707,8 +705,8 @@ await secureStorage.write(key: 'auth_token', value: token);
 // 4. Navigate based on role
 if (user.role == 'tenant') {
   // Navigate to Tenant Home
-} else if (user.role == 'owner') {
-  // Navigate to Owner Dashboard
+} else if (user.role == 'mitra') {
+  // Navigate to Mitra Dashboard
 }
 ```
 
@@ -782,7 +780,7 @@ class User {
   final int id;
   final String name;
   final String email;
-  final String role; // 'tenant' | 'owner'
+  final String role; // 'tenant' | 'mitra'
   final String? phone;
   final String? address;
   final String? avatar;
@@ -821,7 +819,7 @@ class User {
   }
 
   bool get isTenant => role == 'tenant';
-  bool get isOwner => role == 'owner';
+  bool get isMitra => role == 'mitra';
 }
 ```
 
@@ -847,7 +845,7 @@ class BoardingHouse {
   final int? roomsCount;
   final int? availableRoomsCount;
   final List<Room>? rooms;
-  final Owner? owner;
+  final Mitra? mitra;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -868,7 +866,7 @@ class BoardingHouse {
     this.roomsCount,
     this.availableRoomsCount,
     this.rooms,
-    this.owner,
+    this.mitra,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -893,7 +891,7 @@ class BoardingHouse {
       rooms: json['rooms'] != null
           ? (json['rooms'] as List).map((r) => Room.fromJson(r)).toList()
           : null,
-      owner: json['owner'] != null ? Owner.fromJson(json['owner']) : null,
+      mitra: json['mitra'] != null ? Mitra.fromJson(json['mitra']) : null,
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
     );
@@ -916,14 +914,14 @@ class PriceRange {
   }
 }
 
-class Owner {
+class Mitra {
   final int id;
   final String? name;
 
-  Owner({required this.id, this.name});
+  Mitra({required this.id, this.name});
 
-  factory Owner.fromJson(Map<String, dynamic> json) {
-    return Owner(
+  factory Mitra.fromJson(Map<String, dynamic> json) {
+    return Mitra(
       id: json['id'],
       name: json['name'],
     );
