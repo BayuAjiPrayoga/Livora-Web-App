@@ -336,39 +336,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (btn) {
             const price = parseFloat(btn.getAttribute('data-price'));
             currentRoomPrice = price;
-            document.getElementById('room-price').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(price);
-            calculatePrice();
         }
     });
     
     // Update calculation when dates or duration change
-    const checkInDate = document.getElementById('check_in_date');
-    const checkOutDate = document.getElementById('check_out_date');
-    const durationSelect = document.getElementById('duration');
-    
-    if (checkInDate) {
-        checkInDate.addEventListener('change', calculatePrice);
-    }
-    
-    if (checkOutDate) {
-        checkOutDate.addEventListener('change', calculatePrice);
-    }
+    const checkInDate = document.getElementById('booking_start_date');
+    const durationSelect = document.getElementById('booking_duration');
     
     if (durationSelect) {
         durationSelect.addEventListener('change', function() {
-            // Auto-calculate check-out date based on duration
-            if (checkInDate.value && durationSelect.value) {
-                const startDate = new Date(checkInDate.value);
-                const months = parseInt(durationSelect.value);
-                const endDate = new Date(startDate);
-                endDate.setMonth(endDate.getMonth() + months);
-                
-                // Format to YYYY-MM-DD
-                const formattedDate = endDate.toISOString().split('T')[0];
-                if (checkOutDate) {
-                    checkOutDate.value = formattedDate;
-                }
-            }
             calculatePrice();
         });
     }
@@ -380,19 +356,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const subtotal = currentRoomPrice * duration;
             const total = subtotal + ADMIN_FEE;
             
-            document.getElementById('duration').textContent = duration + ' month' + (duration > 1 ? 's' : '');
-            document.getElementById('subtotal').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(subtotal);
-            document.getElementById('total-amount').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(total);
-        } else {
-            resetPriceCalculation();
+            console.log('Calculated:', { duration, subtotal, total });
         }
     }
     
     function resetPriceCalculation() {
-        document.getElementById('room-price').textContent = '-';
-        document.getElementById('duration').textContent = '-';
-        document.getElementById('subtotal').textContent = '-';
-        document.getElementById('total-amount').textContent = '-';
         currentRoomPrice = 0;
     }
     
@@ -402,6 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const ktpInput = document.getElementById('ktp_image');
     const ktpPreview = document.getElementById('ktp_preview');
     const ktpPreviewImg = document.getElementById('ktp_preview_img');
+    const durationSelect = document.getElementById('booking_duration');
     
     if (ktpInput) {
         ktpInput.addEventListener('change', function(e) {
@@ -438,74 +407,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- Simple Booking Modal -->
-<div id="booking-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 hidden">
-    <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-1/2 lg:w-1/3 shadow-lg rounded-md bg-white">
-        <!-- Modal Header -->
-        <div class="flex items-center justify-between pb-3 border-b">
-            <h3 class="text-lg font-medium text-gray-900">Book Room</h3>
-            <button id="close-modal-btn" type="button" class="text-gray-400 hover:text-gray-600">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-        </div>
-        
-        <!-- Modal Body -->
-        <div class="pt-4">
-            <!-- Room Info -->
-            <div class="mb-4 p-3 bg-gray-50 rounded-lg">
-                <h4 id="modal-room-name" class="font-semibold text-gray-900">Room Name</h4>
-                <p id="modal-property-name" class="text-sm text-gray-600">Property Name</p>
-                <p id="modal-location" class="text-sm text-gray-500">Location</p>
-                <p id="modal-price" class="text-lg font-bold text-blue-600 mt-2">Price</p>
-            </div>
-            
-            <!-- Booking Form -->
-            <form id="booking-form" action="{{ route('tenant.bookings.store') }}" method="POST">
-                @csrf
-                <input type="hidden" id="room_id" name="room_id">
-                
-                <div class="space-y-4">
-                    <div>
-                        <label for="booking_start_date" class="block text-sm font-medium text-gray-700 mb-1">Check-in Date *</label>
-                        <input type="date" name="start_date" id="booking_start_date" required min="{{ date('Y-m-d') }}"
-                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    
-                    <div>
-                        <label for="booking_duration" class="block text-sm font-medium text-gray-700 mb-1">Duration (months) *</label>
-                        <select name="duration" id="booking_duration" required
-                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                            <option value="1">1 Month</option>
-                            <option value="3">3 Months</option>
-                            <option value="6">6 Months</option>
-                            <option value="12">12 Months</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label for="booking_notes" class="block text-sm font-medium text-gray-700 mb-1">Notes (Optional)</label>
-                        <textarea name="notes" id="booking_notes" rows="3" 
-                                  placeholder="Special requests or notes..."
-                                  class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
-                    </div>
-                </div>
-                
-                <!-- Modal Footer -->
-                <div class="flex justify-end space-x-3 mt-6 pt-4 border-t">
-                    <button type="button" onclick="closeBookingModal()" 
-                            class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">
-                        Cancel
-                    </button>
-                    <button type="submit" 
-                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                        Submit Booking
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 @endpush
 @endsection
