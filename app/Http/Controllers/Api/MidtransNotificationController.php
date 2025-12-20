@@ -38,11 +38,6 @@ class MidtransNotificationController extends Controller
         Config::$isProduction = config('midtrans.is_production', false);
         Config::$isSanitized = config('midtrans.is_sanitized', true);
         Config::$is3ds = config('midtrans.is_3ds', true);
-        
-        // Set Merchant ID (required for authentication)
-        if ($merchantId = config('midtrans.merchant_id')) {
-            Config::$merchantId = $merchantId;
-        }
     }
 
     /**
