@@ -40,6 +40,37 @@ Route::get('/debug/payments', function () {
     ]);
 });
 
+// Force Settlement Route (Manual Fix)
+Route::get('/debug/force-settlement/{orderId}', function ($orderId) {
+    if (!config('app.debug') && !request()->has('force')) {
+        return response()->json(['error' => 'Debug mode only'], 403);
+    }
+
+    $payment = \App\Models\Payment::with('booking')->where('order_id', $orderId)->first();
+    if (!$payment)
+        return response()->json(['error' => 'Payment not found'], 404);
+
+    // Update payment
+    $payment->update([
+        'status' => 'settlement',
+        'midtrans_status' => 'settlement',
+        'verified_at' => now(),
+        'notes' => 'Force updated via debug tool'
+    ]);
+
+    // Update booking
+    if ($payment->booking) {
+        $payment->booking->update(['status' => 'confirmed']);
+    }
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Payment and Booking updated to Settlement/Confirmed',
+        'payment' => $payment->fresh(),
+        'booking' => $payment->booking->fresh()
+    ]);
+});
+
 Route::prefix('v1')->group(function () {
     // Public routes - Authentication
     Route::post('/login', [AuthController::class, 'login']);
