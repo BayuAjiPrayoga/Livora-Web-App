@@ -317,17 +317,6 @@ class PaymentController extends Controller
     public function createMidtransCheckout(Request $request)
     {
         try {
-            // DEBUGGING: Log Midtrans Configuration
-            Log::info('=== MIDTRANS CONFIG DEBUG ===', [
-                'server_key' => config('midtrans.server_key'),
-                'server_key_prefix' => substr(config('midtrans.server_key'), 0, 10),
-                'server_key_length' => strlen(config('midtrans.server_key')),
-                'client_key' => config('midtrans.client_key'),
-                'is_production' => config('midtrans.is_production'),
-                'Config_serverKey' => Config::$serverKey,
-                'Config_isProduction' => Config::$isProduction,
-            ]);
-            
             $request->validate([
                 'booking_id' => 'required|exists:bookings,id',
                 'amount' => 'required|numeric|min:1'
