@@ -169,92 +169,6 @@
         </div>
     </div>
 </div>
-                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-lg font-medium text-gray-900" id="modal-title">Book This Room</h3>
-                                <button type="button" id="close-modal" class="text-gray-400 hover:text-gray-600">
-                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                    </svg>
-                                </button>
-                            </div>
-
-                            <!-- Selected Property Info -->
-                            <div id="selected-property" class="bg-gray-50 rounded-lg p-4 mb-6">
-                                <!-- Property details will be populated here -->
-                            </div>
-
-                            <input type="hidden" name="room_id" id="selected-room-id">
-                            <input type="hidden" name="duration_type" value="monthly">
-
-                            <!-- Booking Details -->
-                            <div class="space-y-4">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label for="booking_start_date" class="block text-sm font-medium text-gray-700 mb-2">Check-in Date *</label>
-                                        <input type="date" name="start_date" id="booking_start_date" required min="{{ date('Y-m-d') }}"
-                                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
-                                    </div>
-
-                                    <div>
-                                        <label for="booking_end_date" class="block text-sm font-medium text-gray-700 mb-2">Check-out Date *</label>
-                                        <input type="date" name="end_date" id="booking_end_date" required
-                                               class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]">
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Special Requests (Optional)</label>
-                                    <textarea name="notes" id="notes" rows="3"
-                                              placeholder="Any special requests or notes for the property owner..."
-                                              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-livora-primary focus:border-[#ff6900]"></textarea>
-                                </div>
-
-                                <!-- Price Calculation -->
-                                <div class="bg-gray-50 rounded-lg p-4">
-                                    <h4 class="text-sm font-medium text-gray-900 mb-3">Price Calculation</h4>
-                                    <div class="space-y-2 text-sm">
-                                        <div class="flex justify-between">
-                                            <span>Room price per month:</span>
-                                            <span id="room-price">-</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Duration:</span>
-                                            <span id="duration">-</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Subtotal:</span>
-                                            <span id="subtotal">-</span>
-                                        </div>
-                                        <div class="flex justify-between text-sm text-gray-600">
-                                            <span>Administrative fee:</span>
-                                            <span id="admin-fee">Rp 50,000</span>
-                                        </div>
-                                        <div class="border-t border-gray-200 pt-2 flex justify-between font-medium">
-                                            <span>Total Amount:</span>
-                                            <span id="total-amount" class="text-[#ff6900]">-</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#ff6900] text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-livora-primary sm:ml-3 sm:w-auto sm:text-sm">
-                                Confirm Booking
-                            </button>
-                            <button type="button" id="cancel-booking" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-livora-primary sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 @push('scripts')
 <script>
@@ -370,7 +284,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const ktpInput = document.getElementById('ktp_image');
     const ktpPreview = document.getElementById('ktp_preview');
     const ktpPreviewImg = document.getElementById('ktp_preview_img');
-    const durationSelect = document.getElementById('booking_duration');
     
     if (ktpInput) {
         ktpInput.addEventListener('change', function(e) {
