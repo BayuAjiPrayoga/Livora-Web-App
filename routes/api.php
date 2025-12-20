@@ -10,8 +10,10 @@ use App\Http\Controllers\Api\V1\BookingController;
 use App\Http\Controllers\Api\V1\PaymentController;
 use App\Http\Controllers\Api\V1\DashboardController;
 
+
 // Midtrans Webhook - Tidak perlu authentication karena menggunakan signature verification
-Route::post('/payment/notification', [MidtransNotificationController::class, 'handle']);
+Route::post('/payment/notification', [MidtransNotificationController::class, 'handle'])
+    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
 Route::prefix('v1')->group(function () {
     // Public routes - Authentication
