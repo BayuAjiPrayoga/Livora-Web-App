@@ -297,9 +297,9 @@ class PaymentController extends Controller
                 ], 404);
             }
 
-            // Check if there's already a pending/verified payment for this booking
+            // Check if there's already a pending/successful payment for this booking
             $existingPayment = Payment::where('booking_id', $booking->id)
-                ->whereIn('status', [Payment::STATUS_PENDING, Payment::STATUS_VERIFIED])
+                ->whereIn('status', ['pending', 'settlement', 'capture'])
                 ->first();
 
             if ($existingPayment && $existingPayment->snap_token) {
@@ -318,7 +318,7 @@ class PaymentController extends Controller
             $payment = Payment::create([
                 'booking_id' => $booking->id,
                 'amount' => $request->amount,
-                'status' => Payment::STATUS_PENDING,
+                'status' => 'pending',
                 'order_id' => $orderId
             ]);
 
