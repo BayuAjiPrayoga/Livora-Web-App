@@ -72,15 +72,15 @@ MIDTRANS_IS_3DS=true
 **Sandbox (Testing):**
 
 ```
-Server Key: SB-Mid-server-xxxxxxxxxxxxxxxxxxxxxxxx
-Client Key: SB-Mid-client-xxxxxxxxxxxxxxxxxxxxxxxx
+Server Key: SB-Mid-server-[YOUR_SANDBOX_KEY_HERE]
+Client Key: SB-Mid-client-[YOUR_SANDBOX_KEY_HERE]
 ```
 
 **Production (Live):**
 
 ```
-Server Key: Mid-server-xxxxxxxxxxxxxxxxxxxxxxxx
-Client Key: Mid-client-xxxxxxxxxxxxxxxxxxxxxxxx
+Server Key: Mid-server-[YOUR_PRODUCTION_KEY_HERE]
+Client Key: Mid-client-[YOUR_PRODUCTION_KEY_HERE]
 ```
 
 ### 6. Setelah Menambahkan Variables
