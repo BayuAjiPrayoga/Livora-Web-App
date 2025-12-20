@@ -162,7 +162,7 @@ Route::get('/debug-tool/recent-payments', function () {
         'recent_payments' => $payments,
         'recent_logs' => $logs
     ]);
-})->withoutMiddleware([\App\Http\Middleware\Authenticate::class, 'auth', \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+})->withoutMiddleware(['auth', \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
 // LIVORA Admin Routes
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
