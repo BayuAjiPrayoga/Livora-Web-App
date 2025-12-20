@@ -35,6 +35,56 @@ Route::get('/debug/midtrans-config', function() {
     ]);
 })->name('debug.midtrans');
 
+// TEMPORARY: Test direct API call to Midtrans
+Route::get('/debug/midtrans-test-api', function() {
+    $serverKey = config('midtrans.server_key');
+    $isProduction = config('midtrans.is_production');
+    
+    // Prepare minimal transaction
+    $params = [
+        'transaction_details' => [
+            'order_id' => 'TEST-' . time(),
+            'gross_amount' => 10000,
+        ],
+        'customer_details' => [
+            'first_name' => 'Test',
+            'email' => 'test@example.com',
+        ]
+    ];
+    
+    // Direct CURL test
+    $url = $isProduction 
+        ? 'https://app.midtrans.com/snap/v1/transactions'
+        : 'https://app.sandbox.midtrans.com/snap/v1/transactions';
+    
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => json_encode($params),
+        CURLOPT_HTTPHEADER => [
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'Authorization: Basic ' . base64_encode($serverKey . ':')
+        ],
+    ]);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
+    curl_close($ch);
+    
+    return response()->json([
+        'test_endpoint' => $url,
+        'http_code' => $httpCode,
+        'curl_error' => $curlError ?: 'No error',
+        'response' => json_decode($response),
+        'auth_header' => 'Basic ' . substr(base64_encode($serverKey . ':'), 0, 30) . '...',
+        'server_key_used' => substr($serverKey, 0, 20) . '...',
+    ]);
+})->name('debug.midtrans.api');
+
 Route::get('/dashboard', function () {
     if (Auth::check()) {
         $user = Auth::user();
