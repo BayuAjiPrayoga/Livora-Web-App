@@ -17,6 +17,8 @@
                     </h1>
                     <p class="text-gray-600 mt-1">Kelola dan lacak status pembayaran Anda</p>
                 </div>
+                <!-- METODE PEMBAYARAN KONVENSIONAL - DINONAKTIFKAN (MENGGUNAKAN MIDTRANS) -->
+                {{-- 
                 <a href="{{ route('tenant.payments.create') }}" 
                    class="btn btn-primary mr-2">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -24,6 +26,7 @@
                     </svg>
                     Upload Bukti Bayar
                 </a>
+                --}}
                 <a href="{{ route('tenant.payments.midtrans.create') }}" 
                    class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-semibold rounded-lg hover:from-orange-700 hover:to-orange-600 transition-all duration-200 shadow-md hover:shadow-lg">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

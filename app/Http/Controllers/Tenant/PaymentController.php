@@ -61,6 +61,8 @@ class PaymentController extends Controller
         return view('tenant.payments.index', compact('payments', 'stats'));
     }
 
+    // METODE PEMBAYARAN KONVENSIONAL - DINONAKTIFKAN (MENGGUNAKAN MIDTRANS)
+    /*
     public function create()
     {
         // Get user's active bookings that don't have pending/verified payments
@@ -79,7 +81,9 @@ class PaymentController extends Controller
 
         return view('tenant.payments.create', compact('availableBookings'));
     }
+    */
 
+    /*
     public function store(Request $request)
     {
         $request->validate([
@@ -134,6 +138,7 @@ class PaymentController extends Controller
         return redirect()->route('tenant.payments.index')
             ->with('success', 'Pembayaran berhasil disubmit. Menunggu verifikasi dari mitra.');
     }
+    */
 
     public function show(Payment $payment)
     {
@@ -147,6 +152,7 @@ class PaymentController extends Controller
         return view('tenant.payments.show', compact('payment'));
     }
 
+    /*
     public function edit(Payment $payment)
     {
         // Check authorization and payment status
@@ -164,7 +170,9 @@ class PaymentController extends Controller
 
         return view('tenant.payments.edit', compact('payment', 'booking'));
     }
+    */
 
+    /*
     public function update(Request $request, Payment $payment)
     {
         // Check authorization and payment status
@@ -207,7 +215,9 @@ class PaymentController extends Controller
         return redirect()->route('tenant.payments.show', $payment)
             ->with('success', 'Pembayaran berhasil diperbarui.');
     }
+    */
 
+    /*
     public function destroy(Payment $payment)
     {
         // Check authorization and payment status
@@ -230,6 +240,7 @@ class PaymentController extends Controller
         return redirect()->route('tenant.payments.index')
             ->with('success', 'Pembayaran berhasil dihapus.');
     }
+    */
 
     public function downloadReceipt(Payment $payment)
     {

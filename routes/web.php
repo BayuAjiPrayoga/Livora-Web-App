@@ -110,7 +110,12 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
     Route::resource('tickets', \App\Http\Controllers\Tenant\TicketController::class);
     
     // Payment Management Routes (Submit & Track Payments)
-    Route::resource('payments', \App\Http\Controllers\Tenant\PaymentController::class);
+    // METODE PEMBAYARAN KONVENSIONAL - DINONAKTIFKAN (MENGGUNAKAN MIDTRANS)
+    // Route::resource('payments', \App\Http\Controllers\Tenant\PaymentController::class);
+    
+    // Only keep index and show routes for viewing payment history
+    Route::get('/payments', [\App\Http\Controllers\Tenant\PaymentController::class, 'index'])->name('payments.index');
+    Route::get('/payments/{payment}', [\App\Http\Controllers\Tenant\PaymentController::class, 'show'])->name('payments.show');
     Route::get('/payments/{payment}/download-receipt', [\App\Http\Controllers\Tenant\PaymentController::class, 'downloadReceipt'])->name('payments.download-receipt');
     
     // Midtrans Payment Routes
