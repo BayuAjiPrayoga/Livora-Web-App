@@ -253,6 +253,12 @@ Route::get('/debug-payment', function () {
     exit;
 })->middleware('auth');
 
+// Check Midtrans payments route
+Route::get('/check-midtrans', function () {
+    require base_path('check-midtrans.php');
+    exit;
+})->middleware('auth');
+
 // Test route
 Route::get('/test-button', function () {
     return view('test-button');

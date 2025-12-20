@@ -123,7 +123,7 @@ if ($bookings->isEmpty()) {
         echo "<tr>";
         echo "<td>{$booking->id}</td>";
         echo "<td>{$booking->booking_code}</td>";
-        echo "<td>{$booking->user->name ?? 'N/A'}</td>";
+        echo "<td>" . ($booking->user ? $booking->user->name : 'N/A') . "</td>";
         echo "<td><strong>{$booking->status}</strong></td>";
         echo "<td>{$paymentInfo}</td>";
         echo "<td>" . ($canPay ? '<span class="success">✅ YES</span>' : '<span class="error">❌ NO</span>') . "</td>";
