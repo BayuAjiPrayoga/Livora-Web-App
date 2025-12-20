@@ -83,32 +83,6 @@
                 <p class="text-gray-600">Masuk ke akun Anda untuk melanjutkan</p>
             </div>
 
-            <!-- Demo Accounts Info -->
-            <div class="mb-6 bg-blue-50 border border-blue-200 rounded-xl p-4">
-                <div class="flex items-start">
-                    <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <div class="text-sm">
-                        <p class="font-semibold text-blue-900 mb-2">Akun Demo:</p>
-                        <div class="space-y-1.5 text-blue-800">
-                            <div class="flex items-center">
-                                <span class="font-medium min-w-[60px]">Admin:</span>
-                                <span class="text-xs">admin@livora.com | password</span>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="font-medium min-w-[60px]">Mitra:</span>
-                                <span class="text-xs">owner@livora.com | password</span>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="font-medium min-w-[60px]">Penyewa:</span>
-                                <span class="text-xs">tenant@livora.com | password</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
