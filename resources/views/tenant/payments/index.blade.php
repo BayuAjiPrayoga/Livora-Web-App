@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <!-- Menunggu Verifikasi -->
+            <!-- Menunggu Pembayaran -->
             <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow">
                 <div class="flex items-center">
                     <div class="p-3 bg-yellow-100 rounded-lg">
@@ -65,13 +65,13 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Menunggu Verifikasi</p>
+                        <p class="text-sm font-medium text-gray-600">Menunggu Pembayaran</p>
                         <p class="text-2xl font-bold text-yellow-600">{{ $payments->where('status', 'pending')->count() }}</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Terverifikasi -->
+            <!-- Pembayaran Berhasil -->
             <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow">
                 <div class="flex items-center">
                     <div class="p-3 bg-green-100 rounded-lg">
@@ -80,8 +80,8 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Terverifikasi</p>
-                        <p class="text-2xl font-bold text-green-600">{{ $payments->where('status', 'verified')->count() }}</p>
+                        <p class="text-sm font-medium text-gray-600">Pembayaran Berhasil</p>
+                        <p class="text-2xl font-bold text-green-600">{{ $payments->whereIn('status', ['verified', 'settlement'])->count() }}</p>
                     </div>
                 </div>
             </div>
@@ -137,19 +137,25 @@
                                 <div class="text-sm font-medium text-gray-900">Rp {{ number_format($payment->amount, 0, ',', '.') }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @if($payment->status === 'pending')
-                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                        Menunggu Verifikasi
-                                    </span>
-                                @elseif($payment->status === 'verified')
-                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                        Terverifikasi
-                                    </span>
-                                @else
-                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                        Ditolak
-                                    </span>
-                                @endif
+                                @php
+                                    $statusConfig = [
+                                        'pending' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-800', 'label' => 'Menunggu Pembayaran'],
+                                        'verified' => ['bg' => 'bg-green-100', 'text' => 'text-green-800', 'label' => 'Berhasil'],
+                                        'settlement' => ['bg' => 'bg-green-100', 'text' => 'text-green-800', 'label' => 'Berhasil'],
+                                        'rejected' => ['bg' => 'bg-red-100', 'text' => 'text-red-800', 'label' => 'Ditolak'],
+                                        'expired' => ['bg' => 'bg-gray-100', 'text' => 'text-gray-800', 'label' => 'Kadaluarsa'],
+                                        'cancelled' => ['bg' => 'bg-orange-100', 'text' => 'text-orange-800', 'label' => 'Dibatalkan'],
+                                        'failed' => ['bg' => 'bg-red-100', 'text' => 'text-red-800', 'label' => 'Gagal'],
+                                        'refund' => ['bg' => 'bg-purple-100', 'text' => 'text-purple-800', 'label' => 'Refund'],
+                                    ];
+                                    $config = $statusConfig[$payment->status] ?? ['bg' => 'bg-gray-100', 'text' => 'text-gray-800', 'label' => ucfirst($payment->status)];
+                                @endphp
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full {{ $config['bg'] }} {{ $config['text'] }}">
+                                    {{ $config['label'] }}
+                                    @if($payment->payment_type)
+                                        <span class="ml-1 opacity-75">({{ ucfirst(str_replace('_', ' ', $payment->payment_type)) }})</span>
+                                    @endif
+                                </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ $payment->created_at->format('d M Y H:i') }}
@@ -196,26 +202,34 @@
             <!-- Mobile Cards -->
             <div class="md:hidden space-y-4 p-4">
                 @foreach($payments as $payment)
+                @php
+                    $statusConfig = [
+                        'pending' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-800', 'label' => 'Pending'],
+                        'verified' => ['bg' => 'bg-green-100', 'text' => 'text-green-800', 'label' => 'Berhasil'],
+                        'settlement' => ['bg' => 'bg-green-100', 'text' => 'text-green-800', 'label' => 'Berhasil'],
+                        'rejected' => ['bg' => 'bg-red-100', 'text' => 'text-red-800', 'label' => 'Ditolak'],
+                        'expired' => ['bg' => 'bg-gray-100', 'text' => 'text-gray-800', 'label' => 'Expired'],
+                        'cancelled' => ['bg' => 'bg-orange-100', 'text' => 'text-orange-800', 'label' => 'Batal'],
+                        'failed' => ['bg' => 'bg-red-100', 'text' => 'text-red-800', 'label' => 'Gagal'],
+                        'refund' => ['bg' => 'bg-purple-100', 'text' => 'text-purple-800', 'label' => 'Refund'],
+                    ];
+                    $config = $statusConfig[$payment->status] ?? ['bg' => 'bg-gray-100', 'text' => 'text-gray-800', 'label' => ucfirst($payment->status)];
+                @endphp
                 <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start mb-3">
                         <div>
                             <h4 class="font-semibold text-gray-900">#{{ $payment->booking->id }}</h4>
                             <p class="text-sm text-gray-600">{{ $payment->booking->room->name ?? 'N/A' }}</p>
                             <p class="text-xs text-gray-500">{{ $payment->booking->room->boardingHouse->name ?? 'N/A' }}</p>
+                            @if($payment->payment_type)
+                                <p class="text-xs text-gray-500 mt-1">
+                                    <span class="font-medium">Metode:</span> {{ ucfirst(str_replace('_', ' ', $payment->payment_type)) }}
+                                </p>
+                            @endif
                         </div>
-                        @if($payment->status === 'pending')
-                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                Pending
-                            </span>
-                        @elseif($payment->status === 'verified')
-                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                Verified
-                            </span>
-                        @else
-                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                Rejected
-                            </span>
-                        @endif
+                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full {{ $config['bg'] }} {{ $config['text'] }}">
+                            {{ $config['label'] }}
+                        </span>
                     </div>
                     
                     <div class="flex justify-between items-center">

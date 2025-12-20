@@ -256,16 +256,33 @@ class MidtransNotificationController extends Controller
             case 'expire':
                 // Pembayaran expired (tidak dibayar dalam waktu yang ditentukan)
                 $payment->update([
-                    'status' => Payment::STATUS_REJECTED,
-                    'notes' => 'Pembayaran kadaluarsa'
+                    'status' => Payment::STATUS_EXPIRED,
+                    'notes' => 'Pembayaran kadaluarsa - tidak dibayar dalam waktu yang ditentukan'
                 ]);
                 break;
 
             case 'cancel':
                 // Pembayaran dibatalkan
                 $payment->update([
-                    'status' => Payment::STATUS_REJECTED,
-                    'notes' => 'Pembayaran dibatalkan'
+                    'status' => Payment::STATUS_CANCELLED,
+                    'notes' => 'Pembayaran dibatalkan oleh pelanggan'
+                ]);
+                break;
+
+            case 'refund':
+            case 'partial_refund':
+                // Pembayaran di-refund
+                $payment->update([
+                    'status' => Payment::STATUS_REFUND,
+                    'notes' => 'Pembayaran telah di-refund'
+                ]);
+                break;
+
+            case 'failure':
+                // Pembayaran gagal
+                $payment->update([
+                    'status' => Payment::STATUS_FAILED,
+                    'notes' => 'Pembayaran gagal diproses'
                 ]);
                 break;
 

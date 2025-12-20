@@ -49,10 +49,15 @@ class Payment extends Model
         'amount' => 'decimal:2'
     ];
 
-    // Status constants
-    const STATUS_PENDING = 'pending';
-    const STATUS_VERIFIED = 'verified';
-    const STATUS_REJECTED = 'rejected';
+    // Status constants - Updated for Midtrans integration
+    const STATUS_PENDING = 'pending';           // Menunggu pembayaran (manual upload atau Midtrans pending)
+    const STATUS_VERIFIED = 'verified';         // Pembayaran berhasil/terverifikasi
+    const STATUS_REJECTED = 'rejected';         // Pembayaran ditolak
+    const STATUS_SETTLEMENT = 'settlement';     // Midtrans: Pembayaran settlement (sama dengan verified)
+    const STATUS_EXPIRED = 'expired';           // Midtrans: Pembayaran expired
+    const STATUS_CANCELLED = 'cancelled';       // Pembayaran dibatalkan
+    const STATUS_FAILED = 'failed';             // Pembayaran gagal
+    const STATUS_REFUND = 'refund';            // Pembayaran di-refund
 
     public function booking(): BelongsTo
     {
