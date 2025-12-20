@@ -23,11 +23,21 @@ class MidtransNotificationController extends Controller
 {
     public function __construct()
     {
+        // Validate Midtrans Configuration
+        $serverKey = config('midtrans.server_key');
+        
+        if (empty($serverKey)) {
+            Log::error('Midtrans Server Key Missing for Webhook', [
+                'server_key_exists' => !empty($serverKey),
+                'env_file_path' => base_path('.env')
+            ]);
+        }
+        
         // Set Midtrans Configuration
-        Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = config('midtrans.is_production');
-        Config::$isSanitized = config('midtrans.is_sanitized');
-        Config::$is3ds = config('midtrans.is_3ds');
+        Config::$serverKey = $serverKey;
+        Config::$isProduction = config('midtrans.is_production', false);
+        Config::$isSanitized = config('midtrans.is_sanitized', true);
+        Config::$is3ds = config('midtrans.is_3ds', true);
     }
 
     /**

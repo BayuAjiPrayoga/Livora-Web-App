@@ -16,11 +16,26 @@ class PaymentController extends Controller
 {
     public function __construct()
     {
+        // Validate Midtrans Configuration
+        $serverKey = config('midtrans.server_key');
+        $clientKey = config('midtrans.client_key');
+        
+        if (empty($serverKey) || empty($clientKey)) {
+            Log::error('Midtrans Configuration Missing', [
+                'server_key_exists' => !empty($serverKey),
+                'client_key_exists' => !empty($clientKey),
+                'env_file_path' => base_path('.env')
+            ]);
+            
+            throw new \Exception('Konfigurasi Midtrans belum lengkap. Pastikan MIDTRANS_SERVER_KEY dan MIDTRANS_CLIENT_KEY sudah diset di environment variables.');
+        }
+        
         // Set Midtrans Configuration
-        Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = config('midtrans.is_production');
-        Config::$isSanitized = config('midtrans.is_sanitized');
-        Config::$is3ds = config('midtrans.is_3ds');
+        Config::$serverKey = $serverKey;
+        Config::$clientKey = $clientKey;
+        Config::$isProduction = config('midtrans.is_production', false);
+        Config::$isSanitized = config('midtrans.is_sanitized', true);
+        Config::$is3ds = config('midtrans.is_3ds', true);
     }
 
     public function index(Request $request)
