@@ -140,23 +140,37 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
 
     // TEMPORARY DEBUG ROUTE
     Route::get('/debug/payment-check/{orderId}', function ($orderId) {
-        $payment = \App\Models\Payment::with('booking')->where('order_id', $orderId)->first();
-        if (!$payment)
-            return response()->json(['error' => 'Payment not found', 'order_id' => $orderId], 404);
+        $parts = explode('-', $orderId);
+        $bookingId = isset($parts[1]) ? $parts[1] : null;
+
+        $targetPayment = \App\Models\Payment::with('booking')->where('order_id', $orderId)->first();
 
         // Check logs
         $logPath = storage_path('logs/laravel.log');
         $logs = [];
         if (file_exists($logPath)) {
             $lines = file($logPath);
-            $logs = array_slice($lines, -50); // Last 50 lines
+            $logs = array_slice($lines, -100); // Last 100 lines
+            $logs = array_reverse($logs); // Newest first
+        }
+
+        // Check DB Connection
+        $dbConnection = config('database.default');
+
+        // Find ANY payments for this booking (if we can parse ID)
+        $relatedPayments = [];
+        if ($bookingId) {
+            $relatedPayments = \App\Models\Payment::where('booking_id', $bookingId)->get();
         }
 
         return response()->json([
-            'payment' => $payment,
-            'booking' => $payment->booking,
+            'found' => (bool) $targetPayment,
+            'target_payment' => $targetPayment,
+            'related_payments_count' => count($relatedPayments),
+            'related_payments' => $relatedPayments,
             'server_time' => now()->toDateTimeString(),
-            'env_production' => config('midtrans.is_production'),
+            'db_connection' => $dbConnection,
+            'parsed_booking_id' => $bookingId,
             'recent_logs' => $logs
         ]);
     });
