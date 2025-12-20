@@ -1,11 +1,13 @@
 # 📱 LIVORA MOBILE APP - Technical Specification
 
-**Version:** 1.0  
-**Date:** December 15, 2025  
+**Version:** 2.0  
+**Date:** December 19, 2025  
+**Last Updated:** December 19, 2025  
 **Target Platform:** Flutter (Android & iOS)  
 **Backend:** Laravel 11 + Sanctum  
 **Scope:** Tenant & Mitra Only - Admin Dashboard EXCLUDED  
-**Note:** "Mitra" is the property owner role (formerly called "owner")
+**Note:** "Mitra" is the property owner role (formerly called "owner")  
+**Backend Status:** ✅ Fully Implemented & Tested
 
 ---
 
@@ -26,8 +28,26 @@
 ### Base URL
 
 ```
-http://192.168.1.31:8000/api/v1
+Production (Railway): https://livora-web-app-production.up.railway.app/api/v1
+Development (Local):  http://localhost:8000/api/v1
+Local Network:        http://192.168.1.31:8000/api/v1
 ```
+
+**Storage URL:**
+
+```
+Production: https://livora-web-app-production.up.railway.app/storage/
+Local:      http://localhost:8000/storage/
+```
+
+**Important Notes:**
+
+-   ✅ Backend Laravel API fully implemented and deployed to Railway
+-   ✅ MySQL database hosted on Railway
+-   ✅ All API endpoints tested and production-ready
+-   ✅ CORS configured for mobile app access
+-   ⚠️ **Use Production URL for mobile app release**
+-   💡 Use Local URLs during development/testing
 
 ### 1.1 Public Endpoints (No Auth Required)
 
@@ -87,10 +107,13 @@ POST /register
 
 **Validation:**
 
--   `role`: required, enum(`tenant`, `mitra`)
--   `email`: unique, valid email
--   `password`: min 8 characters
--   `phone`: max 15 characters
+-   `role`: optional, defaults to 'tenant', enum(`tenant`, `mitra`)
+-   `email`: required, unique, valid email
+-   `password`: required, min 8 characters, must be confirmed
+-   `password_confirmation`: required, must match password
+-   `phone`: optional, max 20 characters
+-   `address`: optional, string
+-   `name`: required, string, max 255 characters
 
 **Response:** Same as login
 
@@ -105,12 +128,13 @@ GET /properties
 **Query Parameters:**
 
 -   `search`: string (name/city/address)
--   `city`: string
--   `min_price`: integer
--   `max_price`: integer
--   `sort`: enum(`price_asc`, `price_desc`, `rating`, `newest`)
+-   `city`: string (partial match with LIKE)
+-   `min_price`: numeric (filters price_range_start)
+-   `max_price`: numeric (filters price_range_end)
+-   `sort_by`: enum(`created_at`, `name`, `price_range_start`) - default: `created_at`
+-   `sort_order`: enum(`asc`, `desc`) - default: `desc`
 -   `page`: integer (default: 1)
--   `per_page`: integer (default: 10)
+-   `per_page`: integer (default: 15)
 
 **Response:** (200)
 
@@ -142,17 +166,21 @@ GET /properties
             "is_verified": true,
             "rooms_count": 10,
             "available_rooms_count": 5,
-            "mitra": {
+            "owner": {
                 "id": 2,
                 "name": "Mitra Name"
-            }
+            },
+            "created_at": "2025-12-01T00:00:00.000000Z",
+            "updated_at": "2025-12-01T00:00:00.000000Z"
         }
     ],
     "meta": {
         "current_page": 1,
         "last_page": 5,
-        "per_page": 10,
-        "total": 50
+        "per_page": 15,
+        "total": 50,
+        "from": 1,
+        "to": 15
     }
 }
 ```
@@ -188,6 +216,10 @@ GET /properties/{slug}
         "is_verified": true,
         "rooms_count": 10,
         "available_rooms_count": 5,
+        "owner": {
+            "id": 2,
+            "name": "Mitra Name"
+        },
         "rooms": [
             {
                 "id": 1,
@@ -199,22 +231,30 @@ GET /properties/{slug}
                 "size": 12,
                 "size_formatted": "12 m²",
                 "is_available": true,
-                "thumbnail": "url",
-                "images": ["url1", "url2"],
+                "thumbnail": "http://localhost/storage/rooms/thumb.jpg",
+                "images": ["http://localhost/storage/rooms/img1.jpg"],
                 "facilities": [
                     {
                         "id": 1,
                         "name": "WiFi",
                         "icon": "wifi",
                         "description": "Internet 50 Mbps"
+                    },
+                    {
+                        "id": 2,
+                        "name": "AC",
+                        "icon": "air-conditioner",
+                        "description": "AC 1/2 PK"
                     }
-                ]
+                ],
+                "boarding_house_id": 1,
+                "bookings_count": 3,
+                "created_at": "2025-12-01T00:00:00.000000Z",
+                "updated_at": "2025-12-01T00:00:00.000000Z"
             }
         ],
-        "mitra": {
-            "id": 2,
-            "name": "Mitra Name"
-        }
+        "created_at": "2025-12-01T00:00:00.000000Z",
+        "updated_at": "2025-12-01T00:00:00.000000Z"
     }
 }
 ```
@@ -225,7 +265,7 @@ GET /properties/{slug}
 GET /rooms/{id}
 ```
 
-**Response:** Same as room object in property detail
+**Response:** Same structure as room object in property detail (200)
 
 ---
 
@@ -290,9 +330,10 @@ GET /bookings
 **Query Parameters:**
 
 -   `status`: enum(`pending`, `confirmed`, `active`, `completed`, `cancelled`)
--   `sort_by`: enum(`created_at`, `check_in_date`, `final_amount`)
--   `sort_order`: enum(`asc`, `desc`)
--   `page`: integer
+-   `sort_by`: enum(`created_at`, `check_in_date`, `final_amount`) - default: `created_at`
+-   `sort_order`: enum(`asc`, `desc`) - default: `desc`
+-   `page`: integer (default: 1)
+-   `per_page`: integer (default: 15)
 
 **Response:** (200)
 
@@ -395,19 +436,28 @@ POST /bookings
 
 **Validation Rules:**
 
--   `room_id`: required, exists in rooms table
--   `check_in_date`: required, date, >= today
--   `duration`: required, integer, 1-12 months
+-   `room_id`: required, exists in rooms table, room must be available
+-   `check_in_date`: required, date, must be >= today
+-   `duration_months`: required, integer, between 1-12
 -   `tenant_identity_number`: required, string, exactly 16 digits
--   `ktp_image`: required, image (jpeg/jpg/png), max 2MB
--   `notes`: nullable, string, max 500 characters
+-   `ktp_image`: required, file, image (jpeg/jpg/png), max 2MB
+-   `notes`: optional, string, max 1000 characters
 
 **Business Logic:**
 
 -   `check_out_date` = `check_in_date` + `duration_months` months (auto-calculated)
--   `final_amount` = `duration_months` \* `room.price` + other fees (auto-calculated)
+-   `monthly_price` = room price (auto-set from room)
+-   `deposit_amount` = room price (auto-calculated, 1 month deposit)
+-   `admin_fee` = 50,000 (auto-calculated)
+-   `discount_amount` = 0 (default, can be set by admin)
+-   `total_amount` = (`monthly_price` × `duration_months`) + `deposit_amount` + `admin_fee`
+-   `final_amount` = `total_amount` - `discount_amount`
+-   `booking_code` = auto-generated unique code (format: BK-YYYYMMDD-XXXX)
+-   `booking_type` = 'monthly' (default)
 -   `status` = `pending` (auto-set)
 -   `user_id` = Auth user ID (auto-set)
+-   `boarding_house_id` = from room relationship (auto-set)
+-   KTP image stored in `storage/bookings/` directory
 
 **Response:** (201)
 
@@ -502,25 +552,40 @@ POST /payments
     "booking_id": 1,
     "amount": 3000000,
     "proof_image": "file",
-    "notes": "Optional notes"
+    "notes": "Optional notes (e.g., bank account used)"
 }
 ```
 
-**Validation:**
+**Validation Rules:**
 
--   `booking_id`: required, exists, user must own the booking
--   `amount`: required, numeric, must match booking final_amount
--   `proof_image`: required, image (jpeg/jpg/png), max 2MB
--   `notes`: nullable, string, max 500 characters
+-   `booking_id`: required, exists in bookings table, must belong to auth user
+-   `amount`: required, numeric, min: 0, max: booking.final_amount
+-   `proof_image`: required, file, image (jpeg/jpg/png), max 5MB (5120 KB)
+-   `notes`: optional, string
+
+**Business Rules:**
+
+-   Booking must not be 'cancelled' or 'completed' status
+-   Payment amount cannot exceed booking final_amount
+-   If booking status is 'pending', it will be auto-updated to 'confirmed' after payment submission
+-   Payment status automatically set to 'pending' (waiting for mitra verification)
+-   Proof image stored in `storage/payments/` directory
 
 **Response:** (201)
 
 ```json
 {
     "success": true,
-    "message": "Payment submitted successfully. Waiting for mitra verification.",
+    "message": "Payment proof uploaded successfully. Waiting for verification.",
     "data": {
-        // Payment object
+        "id": 1,
+        "booking_id": 1,
+        "amount": 3000000,
+        "amount_formatted": "Rp 3.000.000",
+        "status": "pending",
+        "proof_image": "http://localhost/storage/payments/proof.jpg",
+        "notes": "Transfer via BCA",
+        "created_at": "2025-01-15T10:00:00.000000Z"
     }
 }
 ```
@@ -529,12 +594,16 @@ POST /payments
 
 ### 1.4 MITRA (Property Owner) Endpoints
 
-**All mitra endpoints require `role = 'mitra'` in authenticated user**
+**All mitra endpoints require:**
+
+-   Valid Sanctum token in Authorization header
+-   User role = 'mitra' (owner)
+-   Returns 403 Forbidden if user is not mitra
 
 #### **Dashboard Statistics**
 
 ```http
-GET /mitra/dashboard
+GET /owner/dashboard
 ```
 
 **Response:** (200)
@@ -544,84 +613,89 @@ GET /mitra/dashboard
     "success": true,
     "message": "Dashboard statistics retrieved successfully",
     "data": {
-        "statistics": {
-            "total_properties": 3,
-            "total_rooms": 25,
-            "available_rooms": 10,
-            "occupied_rooms": 15,
-            "total_bookings": 50,
-            "pending_bookings": 5,
-            "active_bookings": 15,
-            "completed_bookings": 28,
-            "cancelled_bookings": 2,
-            "pending_payments": 8,
-            "total_revenue": 150000000,
-            "total_revenue_formatted": "Rp 150.000.000",
-            "revenue_this_month": 25000000,
-            "revenue_this_month_formatted": "Rp 25.000.000"
+        "properties": {
+            "total": 5
+        },
+        "rooms": {
+            "total": 50,
+            "available": 30,
+            "occupied": 20
+        },
+        "bookings": {
+            "total": 120,
+            "pending": 5,
+            "active": 15,
+            "completed": 95
+        },
+        "payments": {
+            "pending_verification": 3
+        },
+        "revenue": {
+            "total": 150000000,
+            "this_month": 15000000,
+            "total_formatted": "Rp 150.000.000",
+            "this_month_formatted": "Rp 15.000.000"
         },
         "recent_bookings": [
-            // Array of booking objects (last 5)
-        ],
-        "pending_payments": [
-            // Array of payment objects that need verification
+            {
+                "id": 1,
+                "user_name": "John Doe",
+                "boarding_house_name": "Kost Melati",
+                "room_name": "Kamar A1",
+                "status": "pending",
+                "total_price": 3000000,
+                "total_price_formatted": "Rp 3.000.000",
+                "start_date": "2025-02-01",
+                "created_at": "2025-01-15T10:00:00.000000Z"
+            }
         ]
     }
 }
 ```
+
+**Note:** Revenue calculated from verified payments only. This month revenue filtered by `verified_at` date.
 
 ---
 
 #### **Mitra's Properties**
 
 ```http
-GET /mitra/properties
+GET /owner/properties
 ```
 
 **Query Parameters:**
 
--   `status`: enum(`active`, `inactive`)
--   `page`: integer
+-   `search`: string (name/city/address)
+-   `page`: integer (default: 1)
+-   `per_page`: integer (default: 15)
 
-**Response:** (200)
-
-```json
-{
-    "success": true,
-    "data": [
-        // Array of BoardingHouse objects owned by authenticated user
-    ],
-    "meta": {
-        "current_page": 1,
-        "total": 3
-    }
-}
-```
+**Response:** Same structure as public properties list
 
 ---
 
 #### **Mitra's Bookings**
 
 ```http
-GET /mitra/bookings
+GET /owner/bookings
 ```
 
 **Query Parameters:**
 
 -   `status`: enum(`pending`, `confirmed`, `active`, `completed`, `cancelled`)
 -   `boarding_house_id`: integer (filter by specific property)
--   `sort_by`: enum(`created_at`, `check_in_date`, `final_amount`)
--   `sort_order`: enum(`asc`, `desc`)
--   `page`: integer
+-   `sort_by`: enum(`created_at`, `check_in_date`, `final_amount`) - default: `created_at`
+-   `sort_order`: enum(`asc`, `desc`) - default: `desc`
+-   `page`: integer (default: 1)
+-   `per_page`: integer (default: 15)
 
-**Response:** Same structure as tenant bookings, but includes all bookings from mitra's properties
+**Response:** Same structure as tenant bookings
 
 ---
 
 #### **Payment Verification**
 
 ```http
-POST /mitra/bookings/{bookingId}/payments/{paymentId}/verify
+POST /owner/bookings/{bookingId}/payments/{paymentId}/verify
 ```
 
 **Body:**
@@ -639,15 +713,19 @@ POST /mitra/bookings/{bookingId}/payments/{paymentId}/verify
     "success": true,
     "message": "Payment verified successfully",
     "data": {
-        // Updated payment object with status = "verified"
+        "id": 1,
+        "status": "verified",
+        "verified_at": "2025-01-16T09:00:00.000000Z"
     }
 }
 ```
 
 ---
 
+#### **Payment Rejection**
+
 ```http
-POST /mitra/bookings/{bookingId}/payments/{paymentId}/reject
+POST /owner/bookings/{bookingId}/payments/{paymentId}/reject
 ```
 
 **Body:**
@@ -658,9 +736,7 @@ POST /mitra/bookings/{bookingId}/payments/{paymentId}/reject
 }
 ```
 
-**Validation:**
-
--   `notes`: required when rejecting
+**Validation:** `notes` is required when rejecting
 
 **Response:** (200)
 
@@ -669,7 +745,9 @@ POST /mitra/bookings/{bookingId}/payments/{paymentId}/reject
     "success": true,
     "message": "Payment rejected",
     "data": {
-        // Updated payment object with status = "rejected"
+        "id": 1,
+        "status": "rejected",
+        "notes": "Reason for rejection"
     }
 }
 ```
@@ -1965,15 +2043,240 @@ lib/
 
 ## 11. 🔗 Important Links & Resources
 
--   **Backend API Base URL:** `http://localhost/Livora/public/api/v1`
--   **Storage URL:** `http://localhost/storage/`
+### **Backend API URLs:**
+
+**Production (Railway):**
+
+-   Base API: `https://livora-web-app-production.up.railway.app/api/v1`
+-   Storage: `https://livora-web-app-production.up.railway.app/storage/`
+-   Web Dashboard: `https://livora-web-app-production.up.railway.app`
+
+**Development (Local):**
+
+-   Base API: `http://localhost:8000/api/v1`
+-   Storage: `http://localhost:8000/storage/`
+-   Local Network: `http://192.168.1.31:8000/api/v1`
+
+### **Project Resources:**
+
+-   **Laravel Project Path:** `c:\laragon\www\Livora`
+-   **Database:** MySQL (Railway Production / Local Laragon)
+-   **Backend Framework:** Laravel 11 with Sanctum authentication
+-   **Deployment:** Railway (Dockerfile build)
 -   **API Documentation:** This document (Section 1)
--   **Laravel Project:** `c:\laragon\www\Livora`
--   **Existing Flutter Code:** `c:\laragon\www\Livora\livora_mobile`
+
+### **Railway Configuration:**
+
+-   **Environment:** Production
+-   **Database:** MySQL (auto-provisioned by Railway)
+-   **Storage:** Public disk (Railway persistent storage)
+-   **Queue:** Database driver
+-   **Cache/Session:** Database driver
+-   **Build:** Docker (via Dockerfile and railway.json)
 
 ---
 
-## 12. 📝 Notes & Best Practices
+## 12. ✅ Backend Implementation Status
+
+### **API Controllers - Fully Implemented:**
+
+✅ **AuthController** (`App\Http\Controllers\Api\AuthController`)
+
+-   POST `/api/v1/login` - User authentication
+-   POST `/api/v1/register` - User registration
+-   GET `/api/v1/me` - Get authenticated user
+-   GET `/api/v1/user` - Get user profile (alias)
+-   POST `/api/v1/logout` - Logout and revoke token
+
+✅ **PropertyController** (`App\Http\Controllers\Api\V1\PropertyController`)
+
+-   GET `/api/v1/properties` - List all properties (with filters, search, pagination)
+-   GET `/api/v1/properties/{slug}` - Property detail with rooms
+-   GET `/api/v1/owner/properties` - Mitra's properties list
+
+✅ **RoomController** (`App\Http\Controllers\Api\V1\RoomController`)
+
+-   GET `/api/v1/rooms/{id}` - Room detail with facilities
+
+✅ **BookingController** (`App\Http\Controllers\Api\V1\BookingController`)
+
+-   GET `/api/v1/bookings` - Tenant's bookings list
+-   GET `/api/v1/bookings/{id}` - Booking detail
+-   POST `/api/v1/bookings` - Create new booking
+-   POST `/api/v1/bookings/{id}/cancel` - Cancel booking
+-   GET `/api/v1/owner/bookings` - Mitra's bookings list
+
+✅ **PaymentController** (`App\Http\Controllers\Api\V1\PaymentController`)
+
+-   GET `/api/v1/payments` - Tenant's payments list
+-   POST `/api/v1/payments` - Submit payment proof
+-   POST `/api/v1/owner/bookings/{bookingId}/payments/{paymentId}/verify` - Verify payment
+-   POST `/api/v1/owner/bookings/{bookingId}/payments/{paymentId}/reject` - Reject payment
+
+✅ **DashboardController** (`App\Http\Controllers\Api\V1\DashboardController`)
+
+-   GET `/api/v1/owner/dashboard` - Mitra dashboard statistics
+
+### **API Resources - Fully Implemented:**
+
+✅ **BoardingHouseResource** - Property data transformation  
+✅ **RoomResource** - Room data transformation with availability check  
+✅ **BookingResource** - Booking data transformation with payments
+
+### **Models - Fully Implemented:**
+
+✅ **User** - Multi-role (admin, mitra, tenant) with Sanctum authentication  
+✅ **BoardingHouse** - Properties with price_range, location, images  
+✅ **Room** - Rooms with facilities relationship, availability checks  
+✅ **Booking** - Bookings with comprehensive fields (check_in_date, check_out_date, duration_months, final_amount, etc.)  
+✅ **Payment** - Payments with verification workflow  
+✅ **Facility** - Room facilities (many-to-many relationship)
+
+### **Database Tables:**
+
+✅ users  
+✅ boarding_houses  
+✅ rooms  
+✅ facilities  
+✅ facility_room (pivot)  
+✅ bookings  
+✅ payments
+
+### **Features Implemented:**
+
+✅ Multi-role authentication (tenant & mitra)  
+✅ Property browsing with search & filters  
+✅ Room availability checking  
+✅ Booking creation with KTP upload  
+✅ Payment proof submission  
+✅ Payment verification/rejection by mitra  
+✅ Dashboard statistics for mitra  
+✅ Image storage handling  
+✅ Pagination for all list endpoints  
+✅ Proper error handling and validation
+
+### **Ready for Mobile Integration:**
+
+✅ All API endpoints are tested and working  
+✅ Laravel Sanctum authentication fully functional  
+✅ Image upload/storage configured  
+✅ CORS configured for mobile access  
+✅ Consistent JSON response format  
+✅ Proper HTTP status codes  
+✅ Comprehensive validation rules  
+✅ **Production deployed on Railway with MySQL database**  
+✅ **SSL/HTTPS enabled (Railway automatic)**  
+✅ **Auto-scaling and monitoring via Railway**
+
+---
+
+## 12.1. 🚀 Railway Deployment Information
+
+### **Production Environment:**
+
+**URL:** `https://livora-web-app-production.up.railway.app`
+
+**Database:**
+
+-   Type: MySQL (Railway-managed)
+-   Connection: Auto-configured via `DATABASE_URL` environment variable
+-   Persistent storage: Yes
+
+**Build Configuration:**
+
+-   Method: Dockerfile
+-   PHP Version: 8.3
+-   Extensions: GD, PDO, MySQL, cURL, XML, ZIP, BCMath, Intl, etc.
+-   Optimizations: Composer autoloader optimized, Laravel caches enabled
+
+**Deployment Process:**
+
+1. Code pushed to Git repository
+2. Railway auto-detects Dockerfile
+3. Builds Docker image with PHP 8.3 and dependencies
+4. Runs migrations automatically (`php artisan migrate --force`)
+5. Caches config, routes, and views for performance
+6. Serves on Railway's infrastructure
+
+**Environment Variables (Set in Railway):**
+
+-   `APP_ENV=production`
+-   `APP_DEBUG=false`
+-   `APP_URL=https://livora-web-app-production.up.railway.app`
+-   `DATABASE_URL` (auto-generated by Railway MySQL)
+-   `SESSION_DRIVER=database`
+-   `CACHE_STORE=database`
+-   `QUEUE_CONNECTION=database`
+
+**Storage:**
+
+-   Disk: `public` (Laravel storage/app/public)
+-   Image uploads stored in: `storage/app/public/`
+-   Accessible via: `/storage/` route (symlinked)
+
+**Performance:**
+
+-   Laravel optimizations enabled (config cache, route cache, view cache)
+-   OPcache enabled for PHP
+-   Database connection pooling
+-   Auto-restart on failure (max 10 retries)
+
+### **Mobile App Configuration for Railway:**
+
+**Flutter Configuration Example:**
+
+```dart
+// lib/config/api_config.dart
+class ApiConfig {
+  static const String environment = String.fromEnvironment(
+    'ENVIRONMENT',
+    defaultValue: 'production',
+  );
+
+  static String get baseUrl {
+    switch (environment) {
+      case 'production':
+        return 'https://livora-web-app-production.up.railway.app/api/v1';
+      case 'development':
+        return 'http://localhost:8000/api/v1';
+      case 'local':
+        return 'http://192.168.1.31:8000/api/v1';
+      default:
+        return 'https://livora-web-app-production.up.railway.app/api/v1';
+    }
+  }
+
+  static String get storageUrl {
+    switch (environment) {
+      case 'production':
+        return 'https://livora-web-app-production.up.railway.app/storage';
+      case 'development':
+        return 'http://localhost:8000/storage';
+      case 'local':
+        return 'http://192.168.1.31:8000/storage';
+      default:
+        return 'https://livora-web-app-production.up.railway.app/storage';
+    }
+  }
+}
+```
+
+**Build Commands:**
+
+```bash
+# Production build
+flutter build apk --release --dart-define=ENVIRONMENT=production
+
+# Development build
+flutter run --dart-define=ENVIRONMENT=development
+
+# Local network testing
+flutter run --dart-define=ENVIRONMENT=local
+```
+
+---
+
+## 13. 📝 Notes & Best Practices
 
 1. **Always use Sanctum token** in Authorization header for protected routes
 2. **Handle 401 errors** by auto-logout and redirect to login
@@ -1988,7 +2291,62 @@ lib/
 
 ---
 
-## 13. 🎯 Success Criteria
+## 13. 📝 Notes & Best Practices
+
+### API Usage:
+
+1. **Always use Sanctum token** in Authorization header: `Bearer {token}`
+2. **Handle 401 errors** by auto-logout and redirect to login
+3. **Base URL configuration:**
+    - Production: `https://livora-web-app-production.up.railway.app/api/v1`
+    - Use environment variables for easy switching
+    - Flutter: Create `lib/config/api_config.dart` with environment-based URLs
+4. **Timeout handling:** Set appropriate timeout for API requests (30 seconds recommended)
+5. **Retry logic:** Implement retry for network failures (max 3 retries)
+
+### Image Handling:
+
+6. **Compress images** before upload (KTP: max 2MB, Payment Proof: max 5MB)
+7. **Image quality:** 85% JPEG quality for optimal size/quality balance
+8. **Cache images** using CachedNetworkImage for better performance
+9. **Placeholder images:** Use shimmer effect while loading
+10. **Error images:** Show fallback image on load failure
+
+### Form Validation:
+
+11. **Client-side validation** before API call to reduce errors
+12. **KTP validation:** Exactly 16 digits, numeric only
+13. **Date validation:** check_in_date must be >= today
+14. **Duration validation:** 1-12 months only
+15. **Amount validation:** Cannot exceed booking final_amount
+
+### User Experience:
+
+16. **Loading states:** Show progress indicators during API calls
+17. **Empty states:** Meaningful messages when no data available
+18. **Error messages:** User-friendly error messages in Indonesian
+19. **Success feedback:** Confirm successful actions with snackbar/toast
+20. **Optimistic updates:** Update UI immediately, revert on failure
+
+### Mobile-Specific:
+
+21. **Offline handling:** Graceful degradation when no internet
+22. **Camera permissions:** Request and handle properly
+23. **Location permissions:** Required for maps feature
+24. **Network detection:** Check connectivity before API calls
+25. **Background handling:** Save state on app pause/resume
+
+### Security:
+
+26. **Secure storage:** Use FlutterSecureStorage for tokens
+27. **Token refresh:** Handle token expiration properly
+28. **HTTPS only:** Use HTTPS in production
+29. **Input sanitization:** Validate all user inputs
+30. **Sensitive data:** Never log tokens or passwords
+
+---
+
+## 14. 🎯 Success Criteria
 
 ### Tenant App
 
@@ -2017,9 +2375,95 @@ lib/
 -   ✅ Responsive UI on various screen sizes
 -   ✅ Smooth navigation and animations
 -   ✅ Error handling and validation
+-   ✅ **Production API deployed on Railway with SSL**
+-   ✅ **Database persistence on Railway MySQL**
+-   ✅ **Environment-based configuration (dev/prod)**
+
+---
+
+## 15. 🌐 API Testing Endpoints (Railway Production)
+
+You can test these endpoints directly:
+
+```bash
+# Health Check
+curl https://livora-web-app-production.up.railway.app
+
+# Login (Public endpoint - no auth required)
+curl -X POST https://livora-web-app-production.up.railway.app/api/v1/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "tenant@example.com", "password": "password123"}'
+
+# Get Properties (Public endpoint - no auth required)
+curl https://livora-web-app-production.up.railway.app/api/v1/properties
+
+# Get User Profile (Requires Bearer token)
+curl https://livora-web-app-production.up.railway.app/api/v1/me \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+```
+
+**Test Accounts** (if seeded in production):
+
+-   Tenant: `tenant@example.com` / `password123`
+-   Mitra: `mitra@example.com` / `password123`
+
+⚠️ **Note:** Make sure test data is seeded in production database before testing.
 
 ---
 
 **END OF SPECIFICATION**
 
-_This document should be used as the single source of truth for building the Livora Mobile App with Flutter. All features, APIs, models, and design tokens are defined here._
+---
+
+## 📌 Change Log
+
+### Version 2.0 - December 19, 2025
+
+**Major Updates:**
+
+1. ✅ **Backend Status:** All API endpoints fully implemented and tested
+2. ✅ **Railway Deployment:** Production API deployed at `livora-web-app-production.up.railway.app`
+3. ✅ **Database:** MySQL database running on Railway with persistent storage
+4. ✅ **Updated API Routes:** Changed from `/mitra/*` to `/owner/*` for consistency
+5. ✅ **Accurate Response Structures:** Updated all JSON responses based on actual Laravel Resources
+6. ✅ **Database Schema:** Documented actual table structures and relationships
+7. ✅ **Field Names Correction:**
+    - `check_in_date` / `check_out_date` (not start_date/end_date)
+    - `final_amount` (primary), `total_price` (deprecated)
+    - `duration_months` (not just duration)
+8. ✅ **Validation Rules:** Updated with actual backend validation
+9. ✅ **Payment Workflow:** Detailed payment submission and verification flow
+10. ✅ **Owner/Mitra Endpoints:** Complete documentation with actual implementation
+11. ✅ **Image Handling:** Accurate file size limits and storage paths
+12. ✅ **Backend Implementation Status:** Added comprehensive implementation checklist
+13. ✅ **Railway Configuration:** Added deployment details and environment setup
+14. ✅ **API Testing Section:** Added curl examples for testing production endpoints
+15. ✅ **Flutter Config Example:** Added environment-based URL configuration code
+
+-   ❌ Corrected incorrect enum values and validation rules
+
+**Developer Notes:**
+
+This specification now accurately reflects the actual Laravel backend implementation as of December 19, 2025. All API endpoints have been tested and are ready for mobile integration.
+
+**Production Status:**
+
+-   ✅ Backend deployed on Railway: `https://livora-web-app-production.up.railway.app`
+-   ✅ MySQL database hosted on Railway with automatic backups
+-   ✅ SSL/HTTPS enabled automatically by Railway
+-   ✅ Environment configured for production (APP_DEBUG=false)
+-   ✅ All optimizations enabled (config cache, route cache, view cache, OPcache)
+
+**For Mobile Developers:**
+
+-   Use the Railway production URL for release builds
+-   Test thoroughly with production API before release
+-   Implement proper error handling for network issues
+-   Cache API responses where appropriate
+-   Handle token expiration and refresh flows
+
+The Flutter mobile app can be developed with confidence that the backend supports all documented features and is production-ready.
+
+---
+
+_This document is the single source of truth for Livora Mobile App development. Last verified against actual codebase and Railway deployment on December 19, 2025._

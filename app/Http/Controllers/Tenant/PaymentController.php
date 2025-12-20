@@ -8,9 +8,21 @@ use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use Midtrans\Config;
+use Midtrans\Snap;
 
 class PaymentController extends Controller
 {
+    public function __construct()
+    {
+        // Set Midtrans Configuration
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = config('midtrans.is_production');
+        Config::$isSanitized = config('midtrans.is_sanitized');
+        Config::$is3ds = config('midtrans.is_3ds');
+    }
+
     public function index(Request $request)
     {
         $query = Payment::with(['booking.room.boardingHouse'])
@@ -232,5 +244,140 @@ class PaymentController extends Controller
 
         // Generate receipt view and return as PDF
         return view('tenant.payments.receipt', compact('payment'));
+    }
+
+    /**
+     * Membuat checkout dengan Midtrans Snap
+     */
+    public function createMidtransCheckout(Request $request)
+    {
+        try {
+            $request->validate([
+                'booking_id' => 'required|exists:bookings,id',
+                'amount' => 'required|numeric|min:1'
+            ]);
+
+            // Verify user owns the booking
+            $booking = Booking::with(['room.boardingHouse', 'user'])
+                ->where('id', $request->booking_id)
+                ->where('user_id', Auth::id())
+                ->whereIn('status', ['confirmed', 'pending'])
+                ->first();
+
+            if (!$booking) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Booking tidak valid atau tidak ditemukan.'
+                ], 404);
+            }
+
+            // Check if there's already a pending/verified payment for this booking
+            $existingPayment = Payment::where('booking_id', $booking->id)
+                ->whereIn('status', [Payment::STATUS_PENDING, Payment::STATUS_VERIFIED])
+                ->first();
+
+            if ($existingPayment && $existingPayment->snap_token) {
+                // Return existing snap token
+                return response()->json([
+                    'success' => true,
+                    'snap_token' => $existingPayment->snap_token,
+                    'order_id' => $existingPayment->order_id
+                ]);
+            }
+
+            // Generate unique order ID
+            $orderId = 'LIVORA-' . $booking->id . '-' . time();
+
+            // Create payment record
+            $payment = Payment::create([
+                'booking_id' => $booking->id,
+                'amount' => $request->amount,
+                'status' => Payment::STATUS_PENDING,
+                'order_id' => $orderId
+            ]);
+
+            // Prepare transaction details for Midtrans
+            $transactionDetails = [
+                'order_id' => $orderId,
+                'gross_amount' => (int) $request->amount,
+            ];
+
+            // Customer details
+            $customerDetails = [
+                'first_name' => $booking->tenant_name ?? $booking->user->name,
+                'email' => $booking->tenant_email ?? $booking->user->email,
+                'phone' => $booking->tenant_phone ?? $booking->user->phone ?? '081234567890',
+            ];
+
+            // Item details
+            $itemDetails = [
+                [
+                    'id' => 'ROOM-' . $booking->room_id,
+                    'price' => (int) $request->amount,
+                    'quantity' => 1,
+                    'name' => 'Pembayaran Sewa Kamar - ' . $booking->room->boardingHouse->name,
+                ]
+            ];
+
+            // Prepare Snap transaction parameters
+            $params = [
+                'transaction_details' => $transactionDetails,
+                'customer_details' => $customerDetails,
+                'item_details' => $itemDetails,
+                'callbacks' => [
+                    'finish' => route('tenant.payments.finish'),
+                ]
+            ];
+
+            // Get Snap Token dari Midtrans
+            $snapToken = Snap::getSnapToken($params);
+
+            // Update payment dengan snap_token
+            $payment->update(['snap_token' => $snapToken]);
+
+            Log::info('Midtrans Checkout Created', [
+                'order_id' => $orderId,
+                'amount' => $request->amount,
+                'user_id' => Auth::id()
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'snap_token' => $snapToken,
+                'order_id' => $orderId
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Midtrans Checkout Error: ' . $e->getMessage(), [
+                'user_id' => Auth::id(),
+                'booking_id' => $request->booking_id ?? null,
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat membuat pembayaran: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Halaman finish setelah pembayaran Midtrans
+     */
+    public function finishPayment(Request $request)
+    {
+        $orderId = $request->query('order_id');
+        
+        if ($orderId) {
+            $payment = Payment::where('order_id', $orderId)->first();
+            
+            if ($payment) {
+                return redirect()->route('tenant.payments.show', $payment)
+                    ->with('info', 'Pembayaran Anda sedang diproses. Harap tunggu konfirmasi.');
+            }
+        }
+
+        return redirect()->route('tenant.payments.index')
+            ->with('info', 'Terima kasih atas pembayaran Anda.');
     }
 }

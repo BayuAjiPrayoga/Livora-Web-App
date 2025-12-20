@@ -112,6 +112,20 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
     // Payment Management Routes (Submit & Track Payments)
     Route::resource('payments', \App\Http\Controllers\Tenant\PaymentController::class);
     Route::get('/payments/{payment}/download-receipt', [\App\Http\Controllers\Tenant\PaymentController::class, 'downloadReceipt'])->name('payments.download-receipt');
+    
+    // Midtrans Payment Routes
+    Route::get('/payments-midtrans/create', function() {
+        $availableBookings = \App\Models\Booking::with(['room.boardingHouse'])
+            ->where('user_id', auth()->id())
+            ->whereIn('status', ['confirmed', 'pending'])
+            ->whereDoesntHave('payments', function ($query) {
+                $query->whereIn('status', [\App\Models\Payment::STATUS_PENDING, \App\Models\Payment::STATUS_VERIFIED]);
+            })
+            ->get();
+        return view('tenant.payments.midtrans', compact('availableBookings'));
+    })->name('payments.midtrans.create');
+    Route::post('/payments/midtrans/checkout', [\App\Http\Controllers\Tenant\PaymentController::class, 'createMidtransCheckout'])->name('payments.midtrans.checkout');
+    Route::get('/payments/finish', [\App\Http\Controllers\Tenant\PaymentController::class, 'finishPayment'])->name('payments.finish');
 });
 
 // LIVORA Admin Routes

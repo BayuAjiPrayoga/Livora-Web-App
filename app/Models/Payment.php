@@ -37,11 +37,15 @@ class Payment extends Model
 
     protected $fillable = [
         'booking_id', 'amount', 'proof_image', 
-        'status', 'notes', 'verified_at'
+        'status', 'notes', 'verified_at',
+        'snap_token', 'order_id', 'transaction_id',
+        'payment_type', 'payment_method', 'midtrans_status',
+        'transaction_time', 'midtrans_response'
     ];
 
     protected $casts = [
         'verified_at' => 'datetime',
+        'transaction_time' => 'datetime',
         'amount' => 'decimal:2'
     ];
 
