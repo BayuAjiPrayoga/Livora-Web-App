@@ -123,22 +123,32 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
         $userId = auth()->id();
         
         // Get bookings that need payment (Midtrans status check)
-        $availableBookings = \App\Models\Booking::with(['room.boardingHouse'])
+        $availableBookings = \App\Models\Booking::with(['room.boardingHouse', 'payments'])
             ->where('user_id', $userId)
             ->whereIn('status', ['confirmed', 'pending']) // Only confirmed or pending bookings
             ->whereDoesntHave('payments', function ($query) {
-                // Exclude bookings with successful or pending Midtrans payments
-                $query->whereIn('status', ['pending', 'settlement', 'capture']);
+                // Exclude bookings with successful Midtrans payments only
+                $query->whereIn('status', ['settlement', 'capture']);
             })
             ->orderBy('created_at', 'desc')
             ->get();
         
-        // Debug: Log available bookings untuk troubleshooting
-        \Log::info('Available bookings for payment', [
+        // Debug: Log detailed info untuk troubleshooting
+        \Log::info('Payment page - Available bookings check', [
             'user_id' => $userId,
             'total_bookings' => \App\Models\Booking::where('user_id', $userId)->count(),
             'available_count' => $availableBookings->count(),
-            'booking_statuses' => \App\Models\Booking::where('user_id', $userId)->pluck('status', 'id')->toArray()
+            'all_bookings' => \App\Models\Booking::where('user_id', $userId)
+                ->with('payments')
+                ->get()
+                ->map(function($b) {
+                    return [
+                        'id' => $b->id,
+                        'code' => $b->booking_code,
+                        'status' => $b->status,
+                        'payments' => $b->payments->map(fn($p) => ['id' => $p->id, 'status' => $p->status])
+                    ];
+                })
         ]);
         
         return view('tenant.payments.midtrans', compact('availableBookings'));
