@@ -108,15 +108,19 @@ class DashboardController extends Controller
         
         // Recent bookings
         $recentBookings = Booking::where('user_id', $user->id)
+            ->with(['room.boardingHouse'])
             ->latest()
             ->take(5)
             ->get()
             ->map(function($booking) {
+                $roomName = $booking->room?->name ?? 'N/A';
+                $bhName = $booking->room?->boardingHouse?->name ?? 'N/A';
+                
                 return [
                     'type' => 'booking',
                     'icon' => 'calendar',
                     'title' => 'Booking ' . ($booking->status === 'pending' ? 'dibuat' : 'diupdate'),
-                    'description' => 'Kamar ' . ($booking->room->name ?? 'N/A') . ' di ' . ($booking->room->boardingHouse->name ?? 'N/A'),
+                    'description' => 'Kamar ' . $roomName . ' di ' . $bhName,
                     'time' => $booking->updated_at,
                     'status' => $booking->status,
                     'link' => '#' // Could link to booking detail
@@ -134,18 +138,23 @@ class DashboardController extends Controller
         ->map(function($payment) {
             $statusText = match($payment->status) {
                 'pending' => 'menunggu verifikasi',
-                'verified' => 'diverifikasi',
-                'rejected' => 'ditolak'
+                'verified', 'settlement' => 'diverifikasi',
+                'rejected' => 'ditolak',
+                'expired' => 'kadaluarsa',
+                'cancelled' => 'dibatalkan',
+                'failed' => 'gagal',
+                'refund' => 'refund',
+                default => 'menunggu verifikasi'
             };
             
             return [
                 'type' => 'payment',
                 'icon' => 'credit-card',
                 'title' => 'Pembayaran ' . $statusText,
-                'description' => 'Rp ' . number_format($payment->amount, 0, ',', '.') . ' untuk booking #' . $payment->booking->id,
+                'description' => 'Rp ' . number_format($payment->amount, 0, ',', '.') . ' untuk booking #' . ($payment->booking?->id ?? 'N/A'),
                 'time' => $payment->updated_at,
                 'status' => $payment->status,
-                'link' => route('tenant.payments.show', $payment)
+                'link' => $payment->booking ? route('tenant.payments.show', $payment) : '#'
             ];
         });
 
@@ -160,14 +169,15 @@ class DashboardController extends Controller
                     'open' => 'dibuka',
                     'in_progress' => 'sedang diproses',
                     'resolved' => 'diselesaikan',
-                    'closed' => 'ditutup'
+                    'closed' => 'ditutup',
+                    default => 'dibuka'
                 };
                 
                 return [
                     'type' => 'ticket',
                     'icon' => 'chat',
                     'title' => 'Tiket ' . $statusText,
-                    'description' => $ticket->title,
+                    'description' => $ticket->title ?? 'N/A',
                     'time' => $ticket->updated_at,
                     'status' => $ticket->status,
                     'link' => route('tenant.tickets.show', $ticket)
