@@ -14,6 +14,27 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'submitContact'])->name('contact.submit');
 
+// TEMPORARY DEBUG ROUTE - DELETE AFTER FIXING MIDTRANS
+Route::get('/debug/midtrans-config', function() {
+    $serverKey = config('midtrans.server_key');
+    $clientKey = config('midtrans.client_key');
+    
+    return response()->json([
+        'server_key_length' => strlen($serverKey),
+        'server_key_prefix' => substr($serverKey, 0, 20),
+        'server_key_suffix' => substr($serverKey, -10),
+        'server_key_has_whitespace' => preg_match('/\s/', $serverKey) ? 'YES' : 'NO',
+        'server_key_trimmed_length' => strlen(trim($serverKey)),
+        'server_key_trimmed_match' => $serverKey === trim($serverKey) ? 'YES' : 'NO',
+        'client_key_length' => strlen($clientKey),
+        'client_key_prefix' => substr($clientKey, 0, 20),
+        'is_production' => config('midtrans.is_production'),
+        'merchant_id' => config('midtrans.merchant_id'),
+        'base64_auth' => substr(base64_encode($serverKey . ':'), 0, 40) . '...',
+        'server_key_full' => $serverKey, // TEMPORARY - akan kita hapus setelah debug
+    ]);
+})->name('debug.midtrans');
+
 Route::get('/dashboard', function () {
     if (Auth::check()) {
         $user = Auth::user();
