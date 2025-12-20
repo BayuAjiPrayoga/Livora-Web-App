@@ -74,7 +74,7 @@ class Booking extends Model
     protected $fillable = [
         'user_id', 'room_id', 'boarding_house_id', 'booking_code',
         'check_in_date', 'check_out_date', 'duration_months', 'duration_days',
-        'monthly_price', 'deposit_amount', 'admin_fee', 
+        'monthly_price', 'total_amount', 'deposit_amount', 'admin_fee', 
         'discount_amount', 'final_amount', 'status', 'booking_type',
         'tenant_name', 'tenant_phone', 'tenant_email', 'tenant_identity_number', 
         'tenant_address', 'emergency_contact_name', 'emergency_contact_phone',
@@ -85,6 +85,7 @@ class Booking extends Model
         'check_in_date' => 'date',
         'check_out_date' => 'date',
         'monthly_price' => 'decimal:2',
+        'total_amount' => 'decimal:2',
         'deposit_amount' => 'decimal:2',
         'admin_fee' => 'decimal:2',
         'discount_amount' => 'decimal:2',
