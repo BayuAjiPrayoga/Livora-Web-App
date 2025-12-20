@@ -6,6 +6,29 @@
 <!-- Midtrans Snap JS -->
 <script type="text/javascript" src="https://app.{{ config('midtrans.is_production') ? '' : 'sandbox.' }}midtrans.com/snap/snap.js" 
         data-client-key="{{ config('midtrans.client_key') }}"></script>
+
+<!-- Debug: Log Midtrans config -->
+<script>
+    console.log('=== MIDTRANS SCRIPT CONFIG ===');
+    console.log('Script URL:', 'https://app.{{ config('midtrans.is_production') ? '' : 'sandbox.' }}midtrans.com/snap/snap.js');
+    console.log('Client Key:', '{{ config('midtrans.client_key') }}');
+    console.log('Is Production:', {{ config('midtrans.is_production') ? 'true' : 'false' }});
+    
+    // Wait for page load and check if script loaded
+    window.addEventListener('load', function() {
+        console.log('Page loaded, snap available?', typeof snap !== 'undefined');
+        if (typeof snap === 'undefined') {
+            console.error('❌ Midtrans Snap.js FAILED TO LOAD');
+            console.log('Possible causes:');
+            console.log('1. Browser extension blocking');
+            console.log('2. Corporate firewall/proxy');
+            console.log('3. Network connectivity issue');
+            console.log('4. Invalid client key');
+        } else {
+            console.log('✅ Midtrans Snap.js loaded successfully');
+        }
+    });
+</script>
 @endsection
 
 @section('content')
