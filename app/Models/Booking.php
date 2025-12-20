@@ -117,16 +117,9 @@ class Booking extends Model
         return $this->belongsTo(Room::class);
     }
 
-    public function boardingHouse()
+    public function boardingHouse(): BelongsTo
     {
-        return $this->hasOneThrough(BoardingHouse::class, Room::class, 'id', 'id', 'room_id', 'boarding_house_id');
-    }
-
-    public function getBoardingHouseAttribute()
-    {
-        // Since bookings table doesn't have boarding_house_id, 
-        // we'll get it through the room relationship
-        return $this->room->boardingHouse ?? null;
+        return $this->belongsTo(BoardingHouse::class);
     }
 
     public function payments(): HasMany
