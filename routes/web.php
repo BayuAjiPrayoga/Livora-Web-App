@@ -247,6 +247,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+// Debug route untuk troubleshoot payment flow
+Route::get('/debug-payment', function () {
+    require base_path('debug-payment.php');
+    exit;
+})->middleware('auth');
+
 // Test route
 Route::get('/test-button', function () {
     return view('test-button');
