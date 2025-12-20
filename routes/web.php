@@ -140,7 +140,7 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
 });
 
 // TEMPORARY DEBUG ROUTE (MOVED OUTSIDE AUTH GROUP)
-Route::get('/tenant/debug/payment-check/{orderId}', function ($orderId) {
+Route::get('/debug-tool/payment-check/{orderId}', function ($orderId) {
     $parts = explode('-', $orderId);
     $bookingId = isset($parts[1]) ? $parts[1] : null;
 
@@ -174,7 +174,7 @@ Route::get('/tenant/debug/payment-check/{orderId}', function ($orderId) {
         'parsed_booking_id' => $bookingId,
         'recent_logs' => $logs
     ]);
-});
+})->withoutMiddleware([\App\Http\Middleware\Authenticate::class, 'auth', \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
 // LIVORA Admin Routes
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
