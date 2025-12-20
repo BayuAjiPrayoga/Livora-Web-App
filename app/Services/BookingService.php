@@ -217,6 +217,7 @@ class BookingService
         $discountAmount = 0; // Can be configured
 
         return [
+            'total_amount' => $totalAmount,
             'deposit_amount' => $depositAmount,
             'admin_fee' => $adminFee,
             'discount_amount' => $discountAmount,
