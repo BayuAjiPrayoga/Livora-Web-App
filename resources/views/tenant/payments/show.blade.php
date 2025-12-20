@@ -226,18 +226,60 @@
 
             <!-- Right Column - Sidebar -->
             <div class="space-y-6">
-                <!-- Payment Proof Card -->
+                <!-- Payment Info Card -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-100">
                         <h3 class="text-lg font-semibold text-gray-900 flex items-center">
                             <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
-                            Bukti Pembayaran
+                            Informasi Pembayaran
                         </h3>
                     </div>
                     <div class="p-6">
-                        @if($payment->proof_image)
+                        @if($payment->payment_type)
+                            <!-- Midtrans Payment -->
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-4 bg-gradient-to-r from-orange-50 to-amber-50 rounded-lg border border-orange-200">
+                                    <div class="flex items-center">
+                                        <div class="p-2 bg-white rounded-lg shadow-sm mr-3">
+                                            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-gray-600">Metode Pembayaran</p>
+                                            <p class="font-semibold text-gray-900">{{ ucfirst(str_replace('_', ' ', $payment->payment_type)) }}</p>
+                                        </div>
+                                    </div>
+                                    <span class="px-3 py-1 bg-white text-orange-600 text-xs font-semibold rounded-full shadow-sm">
+                                        Midtrans
+                                    </span>
+                                </div>
+                                
+                                @if($payment->transaction_id)
+                                <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                    <p class="text-xs text-gray-600 mb-1">Transaction ID</p>
+                                    <p class="font-mono text-sm font-semibold text-gray-900 break-all">{{ $payment->transaction_id }}</p>
+                                </div>
+                                @endif
+                                
+                                @if($payment->order_id)
+                                <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                    <p class="text-xs text-gray-600 mb-1">Order ID</p>
+                                    <p class="font-mono text-sm font-semibold text-gray-900 break-all">{{ $payment->order_id }}</p>
+                                </div>
+                                @endif
+                                
+                                @if($payment->transaction_time)
+                                <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                    <p class="text-xs text-gray-600 mb-1">Waktu Transaksi</p>
+                                    <p class="text-sm font-semibold text-gray-900">{{ $payment->transaction_time->format('d M Y H:i:s') }}</p>
+                                </div>
+                                @endif
+                            </div>
+                        @elseif($payment->proof_image)
+                            <!-- Manual Upload (Legacy) -->
                             <div class="relative group cursor-pointer" onclick="showImageModal('{{ Storage::url($payment->proof_image) }}')">
                                 <img src="{{ Storage::url($payment->proof_image) }}" 
                                      alt="Bukti Pembayaran" 
@@ -248,12 +290,19 @@
                                     </svg>
                                 </div>
                             </div>
+                            <p class="text-xs text-gray-500 mt-2 text-center italic">Upload Manual (Metode Lama)</p>
                         @else
                             <div class="text-center py-12 bg-gray-50 rounded-lg">
                                 <svg class="w-16 h-16 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <p class="text-gray-500 mt-2">Bukti pembayaran tidak tersedia</p>
+                                <p class="text-gray-500 mt-2">Menunggu pembayaran</p>
+                                @if($payment->status === 'pending')
+                                    <a href="{{ route('tenant.payments.midtrans.create') }}" 
+                                       class="inline-flex items-center mt-4 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors text-sm font-medium">
+                                        Bayar Sekarang
+                                    </a>
+                                @endif
                             </div>
                         @endif
                     </div>
@@ -270,25 +319,24 @@
                         </h3>
                     </div>
                     <div class="p-6 space-y-3">
-                        @if($payment->status === 'verified')
-                            <button type="button" data-payment-id="{{ $payment->id }}" onclick="downloadReceipt(this.dataset.paymentId)" 
-                                    class="w-full inline-flex items-center justify-center px-4 py-3 bg-green-500 border border-transparent rounded-lg font-medium text-white hover:bg-green-600 transition-colors">
+                        @if(in_array($payment->status, ['verified', 'settlement']))
+                            <a href="{{ route('tenant.payments.download-receipt', $payment) }}" 
+                               class="w-full inline-flex items-center justify-center px-4 py-3 bg-green-500 border border-transparent rounded-lg font-medium text-white hover:bg-green-600 transition-colors">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
                                 </svg>
                                 Download Kwitansi
-                            </button>
-                        @endif
-                        
-                        @if($payment->status === 'pending')
-                            <a href="{{ route('tenant.payments.edit', $payment) }}" 
-                               class="w-full inline-flex items-center justify-center px-4 py-3 bg-yellow-500 border border-transparent rounded-lg font-medium text-white hover:bg-yellow-600 transition-colors">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                </svg>
-                                Edit Pembayaran
                             </a>
-                            <button type="button" data-payment-id="{{ $payment->id }}" onclick="deletePayment(this.dataset.paymentId)" 
+                        @elseif($payment->status === 'pending' && !$payment->payment_type)
+                            <!-- Legacy manual payment - masih bisa edit jika belum ada payment_type -->
+                            <a href="{{ route('tenant.payments.midtrans.create') }}" 
+                               class="w-full inline-flex items-center justify-center px-4 py-3 bg-orange-600 border border-transparent rounded-lg font-medium text-white hover:bg-orange-700 transition-colors">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                </svg>
+                                Bayar Sekarang
+                            </a>
+                        @endif 
                                     class="w-full inline-flex items-center justify-center px-4 py-3 bg-red-500 border border-transparent rounded-lg font-medium text-white hover:bg-red-600 transition-colors">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
