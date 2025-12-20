@@ -284,7 +284,11 @@
         })
         .then(response => response.json())
         .then(data => {
+            // DEBUG: Log response from server
+            console.log('=== MIDTRANS RESPONSE ===', data);
+            
             if (data.success && data.snap_token) {
+                console.log('Snap token received:', data.snap_token);
                 // Open Midtrans Snap popup
                 snap.pay(data.snap_token, {
                     onSuccess: function(result) {
