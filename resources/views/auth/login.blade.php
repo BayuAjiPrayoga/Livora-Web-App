@@ -133,12 +133,20 @@
                             </svg>
                         </div>
                         <input id="password" 
-                               class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-150" 
+                               class="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-150" 
                                type="password" 
                                name="password" 
                                placeholder="••••••••"
                                required 
                                autocomplete="current-password" />
+                        <button type="button" onclick="togglePassword()" tabindex="-1"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 focus:outline-none"
+                            style="background:transparent; border:none;">
+                            <svg id="eyeIcon" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path id="eyeOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-9 0a9 9 0 0118 0c-1.5 4-6 7-9 7s-7.5-3-9-7z" />
+                                <path id="eyeClosed" style="display:none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18M9.88 9.88A3 3 0 0112 9c1.66 0 3 1.34 3 3 0 .39-.08.76-.22 1.09M6.1 6.1C4.07 7.64 2.5 9.94 2.5 12c1.5 4 6 7 9 7 1.61 0 3.16-.38 4.5-1.05M17.9 17.9C19.93 16.36 21.5 14.06 21.5 12c-1.5-4-6-7-9-7-1.61 0-3.16.38-4.5 1.05" />
+                            </svg>
+                        </button>
                     </div>
                     @if($errors->get('password'))
                         <div class="mt-2">
@@ -187,6 +195,25 @@
                             Daftar sekarang
                         </a>
                     </p>
+                </div>
+            </form>
+            <script>
+                function togglePassword() {
+                    const input = document.getElementById('password');
+                    const eyeIcon = document.getElementById('eyeIcon');
+                    const eyeOpen = document.getElementById('eyeOpen');
+                    const eyeClosed = document.getElementById('eyeClosed');
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        eyeOpen.style.display = 'none';
+                        eyeClosed.style.display = '';
+                    } else {
+                        input.type = 'password';
+                        eyeOpen.style.display = '';
+                        eyeClosed.style.display = 'none';
+                    }
+                }
+            </script>
                 </div>
             </form>
         </div>
