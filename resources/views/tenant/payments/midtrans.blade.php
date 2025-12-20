@@ -222,6 +222,12 @@
 
 @push('scripts')
 <script>
+    // Check if Midtrans Snap is loaded
+    if (typeof snap === 'undefined') {
+        console.error('Midtrans Snap.js not loaded! Please disable ad-blocker or check internet connection.');
+        alert('Gagal memuat Midtrans Payment Gateway.\n\nKemungkinan penyebab:\n1. Ad-blocker memblokir script Midtrans\n2. Koneksi internet bermasalah\n\nSolusi:\n- Disable ad-blocker (uBlock, AdBlock, dll)\n- Atau gunakan Incognito/Private mode\n- Refresh halaman');
+    }
+    
     const bookingSelect = document.getElementById('booking_id');
     const payButton = document.getElementById('pay-button');
     const buttonText = document.getElementById('button-text');
@@ -289,6 +295,14 @@
             
             if (data.success && data.snap_token) {
                 console.log('Snap token received:', data.snap_token);
+                
+                // Check if snap is available
+                if (typeof snap === 'undefined') {
+                    alert('Midtrans Payment Gateway tidak dapat dimuat.\n\nSilakan:\n1. Disable ad-blocker\n2. Refresh halaman\n3. Coba lagi');
+                    resetButton();
+                    return;
+                }
+                
                 // Open Midtrans Snap popup
                 snap.pay(data.snap_token, {
                     onSuccess: function(result) {
