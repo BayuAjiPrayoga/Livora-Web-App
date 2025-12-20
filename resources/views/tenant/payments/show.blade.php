@@ -25,13 +25,13 @@
                         </svg>
                         Kembali
                     </a>
-                    @if($payment->status === 'pending')
-                        <a href="{{ route('tenant.payments.edit', $payment) }}" 
-                           class="inline-flex items-center px-4 py-2 bg-yellow-500 border border-transparent rounded-lg font-medium text-white hover:bg-yellow-600 transition-colors">
+                    @if($payment->status === 'verified' || $payment->status === 'settlement')
+                        <a href="{{ route('tenant.payments.download-receipt', $payment) }}" 
+                           class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-lg font-medium text-white hover:bg-green-700 transition-colors">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                             </svg>
-                            Edit
+                            Download Kwitansi
                         </a>
                     @endif
                 </div>
