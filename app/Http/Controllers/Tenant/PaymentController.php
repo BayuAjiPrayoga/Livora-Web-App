@@ -361,81 +361,95 @@ class PaymentController extends Controller
                 'amount' => $request->amount
             ]);
 
-            // Create payment record
-            $payment = Payment::create([
-                'booking_id' => $booking->id,
-                'amount' => $request->amount,
-                'status' => 'pending',
-                'order_id' => $orderId
-            ]);
+            // Start Transaction
+            \Illuminate\Support\Facades\DB::beginTransaction();
+            try {
+                // Create payment record
+                $payment = Payment::create([
+                    'booking_id' => $booking->id,
+                    'amount' => $request->amount,
+                    'status' => 'pending',
+                    'order_id' => $orderId
+                ]);
 
-            Log::info('Payment record created', [
-                'payment_id' => $payment->id,
-                'order_id' => $payment->order_id
-            ]);
+                // Commit transaction immediately to ensure record exists before external ID
+                \Illuminate\Support\Facades\DB::commit();
 
-            // Prepare transaction details for Midtrans
-            $transactionDetails = [
-                'order_id' => $orderId,
-                'gross_amount' => (int) $request->amount,
-            ];
+                Log::info('Payment record created and committed', [
+                    'payment_id' => $payment->id,
+                    'order_id' => $payment->order_id
+                ]);
 
-            // Customer details
-            $customerDetails = [
-                'first_name' => $booking->tenant_name ?? $booking->user->name,
-                'email' => $booking->tenant_email ?? $booking->user->email,
-                'phone' => $booking->tenant_phone ?? $booking->user->phone ?? '081234567890',
-            ];
+                // Prepare transaction details for Midtrans
+                $transactionDetails = [
+                    'order_id' => $orderId,
+                    'gross_amount' => (int) $request->amount,
+                ];
 
-            // Item details
-            $itemDetails = [
-                [
-                    'id' => 'ROOM-' . $booking->room_id,
-                    'price' => (int) $request->amount,
-                    'quantity' => 1,
-                    'name' => 'Pembayaran Sewa Kamar - ' . $booking->room->boardingHouse->name,
-                ]
-            ];
+                // Customer details
+                $customerDetails = [
+                    'first_name' => $booking->tenant_name ?? $booking->user->name,
+                    'email' => $booking->tenant_email ?? $booking->user->email,
+                    'phone' => $booking->tenant_phone ?? $booking->user->phone ?? '081234567890',
+                ];
 
-            // Prepare Snap transaction parameters
-            $params = [
-                'transaction_details' => $transactionDetails,
-                'customer_details' => $customerDetails,
-                'item_details' => $itemDetails,
-                'callbacks' => [
-                    'finish' => route('tenant.payments.finish'),
-                ]
-            ];
+                // Item details
+                $itemDetails = [
+                    [
+                        'id' => 'ROOM-' . $booking->room_id,
+                        'price' => (int) $request->amount,
+                        'quantity' => 1,
+                        'name' => 'Pembayaran Sewa Kamar - ' . $booking->room->boardingHouse->name,
+                    ]
+                ];
 
-            Log::info('Calling Midtrans Snap API', [
-                'order_id' => $orderId,
-                'gross_amount' => $transactionDetails['gross_amount'],
-                'customer_email' => $customerDetails['email']
-            ]);
+                // Prepare Snap transaction parameters
+                $params = [
+                    'transaction_details' => $transactionDetails,
+                    'customer_details' => $customerDetails,
+                    'item_details' => $itemDetails,
+                    'callbacks' => [
+                        'finish' => route('tenant.payments.finish'),
+                    ]
+                ];
 
-            // Get Snap Token dari Midtrans
-            $snapToken = Snap::getSnapToken($params);
+                Log::info('Calling Midtrans Snap API', [
+                    'order_id' => $orderId,
+                    'gross_amount' => $transactionDetails['gross_amount'],
+                    'customer_email' => $customerDetails['email']
+                ]);
 
-            Log::info('Snap token received', [
-                'order_id' => $orderId,
-                'snap_token_prefix' => substr($snapToken, 0, 20) . '...'
-            ]);
+                // Get Snap Token dari Midtrans
+                $snapToken = Snap::getSnapToken($params);
 
-            // Update payment dengan snap_token
-            $payment->update(['snap_token' => $snapToken]);
+                Log::info('Snap token received', [
+                    'order_id' => $orderId,
+                    'snap_token_prefix' => substr($snapToken, 0, 20) . '...'
+                ]);
 
-            Log::info('=== MIDTRANS CHECKOUT SUCCESS ===', [
-                'order_id' => $orderId,
-                'payment_id' => $payment->id,
-                'amount' => $request->amount,
-                'user_id' => Auth::id()
-            ]);
+                // Update payment dengan snap_token (without transaction to avoid locking)
+                $payment->update(['snap_token' => $snapToken]);
 
-            return response()->json([
-                'success' => true,
-                'snap_token' => $snapToken,
-                'order_id' => $orderId
-            ]);
+                Log::info('=== MIDTRANS CHECKOUT SUCCESS ===', [
+                    'order_id' => $orderId,
+                    'payment_id' => $payment->id,
+                    'amount' => $request->amount,
+                    'user_id' => Auth::id()
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'snap_token' => $snapToken,
+                    'order_id' => $orderId
+                ]);
+
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\DB::rollBack();
+                Log::error('Error creating payment transaction: ' . $e->getMessage(), [
+                    'trace' => $e->getTraceAsString()
+                ]);
+                throw $e;
+            }
 
         } catch (\Exception $e) {
             Log::error('=== MIDTRANS CHECKOUT ERROR ===', [
