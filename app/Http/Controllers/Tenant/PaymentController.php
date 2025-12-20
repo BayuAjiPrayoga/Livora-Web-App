@@ -35,32 +35,8 @@ class PaymentController extends Controller
         $serverKey = trim($serverKey);
         $clientKey = trim($clientKey);
         
-        // Validasi prefix untuk Sandbox
-        $isProduction = config('midtrans.is_production', false);
-        if (!$isProduction) {
-            // Sandbox harus pakai prefix SB-
-            if (!str_starts_with($serverKey, 'SB-Mid-server-')) {
-                Log::error('Midtrans Server Key Invalid for Sandbox', [
-                    'server_key_prefix' => substr($serverKey, 0, 15),
-                    'expected_prefix' => 'SB-Mid-server-',
-                    'is_production' => $isProduction
-                ]);
-                
-                throw new \Exception('Server Key tidak sesuai dengan environment Sandbox. Pastikan menggunakan key yang berawalan SB-Mid-server-');
-            }
-            
-            if (!str_starts_with($clientKey, 'SB-Mid-client-')) {
-                Log::error('Midtrans Client Key Invalid for Sandbox', [
-                    'client_key_prefix' => substr($clientKey, 0, 15),
-                    'expected_prefix' => 'SB-Mid-client-',
-                    'is_production' => $isProduction
-                ]);
-                
-                throw new \Exception('Client Key tidak sesuai dengan environment Sandbox. Pastikan menggunakan key yang berawalan SB-Mid-client-');
-            }
-        }
-        
         // Set Midtrans Configuration
+        $isProduction = config('midtrans.is_production', false);
         Config::$serverKey = $serverKey;
         Config::$clientKey = $clientKey;
         Config::$isProduction = $isProduction;

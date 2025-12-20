@@ -35,18 +35,7 @@ class MidtransNotificationController extends Controller
         
         // Trim whitespace
         $serverKey = trim($serverKey);
-        
-        // Validasi prefix untuk Sandbox
         $isProduction = config('midtrans.is_production', false);
-        if (!$isProduction && !empty($serverKey)) {
-            if (!str_starts_with($serverKey, 'SB-Mid-server-')) {
-                Log::warning('Midtrans Webhook: Server Key mismatch with Sandbox environment', [
-                    'server_key_prefix' => substr($serverKey, 0, 15),
-                    'expected_prefix' => 'SB-Mid-server-',
-                    'is_production' => $isProduction
-                ]);
-            }
-        }
         
         // Set Midtrans Configuration
         Config::$serverKey = $serverKey;
