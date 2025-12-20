@@ -137,6 +137,29 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
     Route::post('/payments', [\App\Http\Controllers\Tenant\PaymentController::class, 'store'])->name('payments.store');
     Route::get('/payments/{payment}', [\App\Http\Controllers\Tenant\PaymentController::class, 'show'])->name('payments.show');
     Route::get('/payments/{payment}/download-receipt', [\App\Http\Controllers\Tenant\PaymentController::class, 'downloadReceipt'])->name('payments.download-receipt');
+
+    // TEMPORARY DEBUG ROUTE
+    Route::get('/debug/payment-check/{orderId}', function ($orderId) {
+        $payment = \App\Models\Payment::with('booking')->where('order_id', $orderId)->first();
+        if (!$payment)
+            return response()->json(['error' => 'Payment not found', 'order_id' => $orderId], 404);
+
+        // Check logs
+        $logPath = storage_path('logs/laravel.log');
+        $logs = [];
+        if (file_exists($logPath)) {
+            $lines = file($logPath);
+            $logs = array_slice($lines, -50); // Last 50 lines
+        }
+
+        return response()->json([
+            'payment' => $payment,
+            'booking' => $payment->booking,
+            'server_time' => now()->toDateTimeString(),
+            'env_production' => config('midtrans.is_production'),
+            'recent_logs' => $logs
+        ]);
+    });
 });
 
 // LIVORA Admin Routes
