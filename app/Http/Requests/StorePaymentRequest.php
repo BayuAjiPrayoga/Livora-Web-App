@@ -67,9 +67,9 @@ class StorePaymentRequest extends FormRequest
                     return;
                 }
 
-                // Check if there's already a pending/verified payment
+                // Check if there's already a pending/successful payment
                 $existingPayment = Payment::where('booking_id', $booking->id)
-                    ->whereIn('status', [Payment::STATUS_PENDING, Payment::STATUS_VERIFIED])
+                    ->whereIn('status', ['pending', 'settlement', 'capture'])
                     ->exists();
 
                 if ($existingPayment) {

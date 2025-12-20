@@ -230,13 +230,13 @@ class MidtransNotificationController extends Controller
                 } else if ($fraudStatus == 'challenge') {
                     // Pembayaran di-challenge, masih pending
                     $payment->update([
-                        'status' => Payment::STATUS_PENDING,
+                        'status' => 'pending',
                         'notes' => 'Pembayaran sedang dalam review fraud detection'
                     ]);
                 } else {
                     // Fraud status selain accept/challenge
                     $payment->update([
-                        'status' => Payment::STATUS_REJECTED,
+                        'status' => 'deny',
                         'notes' => 'Pembayaran ditolak karena terindikasi fraud'
                     ]);
                 }
@@ -250,7 +250,7 @@ class MidtransNotificationController extends Controller
             case 'pending':
                 // Pembayaran masih menunggu (contoh: transfer bank belum dilakukan)
                 $payment->update([
-                    'status' => Payment::STATUS_PENDING,
+                    'status' => 'pending',
                     'notes' => 'Menunggu pembayaran dari pelanggan'
                 ]);
                 break;
@@ -258,7 +258,7 @@ class MidtransNotificationController extends Controller
             case 'deny':
                 // Pembayaran ditolak oleh bank/payment provider
                 $payment->update([
-                    'status' => Payment::STATUS_REJECTED,
+                    'status' => 'deny',
                     'notes' => 'Pembayaran ditolak oleh penyedia pembayaran'
                 ]);
                 break;
@@ -316,7 +316,7 @@ class MidtransNotificationController extends Controller
     {
         // Update payment status
         $payment->update([
-            'status' => Payment::STATUS_VERIFIED,
+            'status' => 'settlement',
             'verified_at' => now(),
             'notes' => 'Pembayaran berhasil diverifikasi oleh Midtrans'
         ]);

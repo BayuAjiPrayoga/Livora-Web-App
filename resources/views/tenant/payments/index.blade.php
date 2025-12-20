@@ -19,7 +19,7 @@
                 </div>
                 <!-- METODE PEMBAYARAN KONVENSIONAL - DINONAKTIFKAN (MENGGUNAKAN MIDTRANS) -->
                 {{-- 
-                <a href="{{ route('tenant.payments.create') }}" 
+                <a href="{{ route('tenant.payments.midtrans.create') }}" 
                    class="btn btn-primary mr-2">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -173,22 +173,11 @@
                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
                                             Lihat Detail
                                         </a>
-                                        @if($payment->status === 'verified')
+                                        @if(in_array($payment->status, ['settlement', 'capture']))
                                             <a href="{{ route('tenant.payments.download-receipt', $payment) }}" 
                                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
                                                 Download Kwitansi
                                             </a>
-                                        @endif
-                                        @if($payment->status === 'pending')
-                                            <div class="border-t border-gray-100 my-1"></div>
-                                            <a href="{{ route('tenant.payments.edit', $payment) }}" 
-                                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
-                                                Edit Pembayaran
-                                            </a>
-                                            <button onclick="deletePayment('{{ $payment->id }}')" 
-                                                    class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                                                Hapus
-                                            </button>
                                         @endif
                                     </div>
                                 </div>

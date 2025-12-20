@@ -18,7 +18,7 @@ class UpdatePaymentRequest extends FormRequest
         // User can only update their own payments that are still pending
         return Auth::check() && 
                $payment->booking->tenant_name === Auth::user()->name && 
-               $payment->status === Payment::STATUS_PENDING;
+               $payment->status === 'pending';
     }
 
     /**

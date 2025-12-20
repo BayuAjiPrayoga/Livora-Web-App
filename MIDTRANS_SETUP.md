@@ -30,7 +30,7 @@ Tambahkan satu per satu dengan klik **+ New Variable**:
 ```
 MIDTRANS_SERVER_KEY=SB-Mid-server-xxxxxxxxxxxxxxxxxxxxxxxx
 MIDTRANS_CLIENT_KEY=SB-Mid-client-xxxxxxxxxxxxxxxxxxxxxxxx
-MIDTRANS_MERCHANT_ID=G123456789
+**MIDTRANS_MERCHANT_ID**=G123456789
 ```
 
 #### Optional (Opsional):

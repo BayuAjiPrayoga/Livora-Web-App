@@ -67,10 +67,10 @@ class PaymentController extends Controller
 
         $stats = [
             'total' => (clone $baseQuery)->count(),
-            'pending' => (clone $baseQuery)->where('status', Payment::STATUS_PENDING)->count(),
-            'verified' => (clone $baseQuery)->where('status', Payment::STATUS_VERIFIED)->count(),
-            'rejected' => (clone $baseQuery)->where('status', Payment::STATUS_REJECTED)->count(),
-            'total_amount' => (clone $baseQuery)->sum('amount'),
+            'pending' => (clone $baseQuery)->where('status', 'pending')->count(),
+            'settlement' => (clone $baseQuery)->whereIn('status', ['settlement', 'capture'])->count(),
+            'failed' => (clone $baseQuery)->whereIn('status', ['deny', 'cancel', 'expire'])->count(),
+            'total_amount' => (clone $baseQuery)->whereIn('status', ['settlement', 'capture'])->sum('amount'),
         ];
 
         return view('tenant.payments.index', compact('payments', 'stats'));
