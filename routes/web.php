@@ -122,12 +122,13 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
     Route::get('/payments-midtrans/create', function() {
         $userId = auth()->id();
         
-        // Get bookings that need payment (more flexible status check)
+        // Get bookings that need payment (Midtrans status check)
         $availableBookings = \App\Models\Booking::with(['room.boardingHouse'])
             ->where('user_id', $userId)
-            ->whereNotIn('status', ['cancelled', 'rejected', 'completed']) // Exclude only finished/cancelled bookings
+            ->whereIn('status', ['confirmed', 'pending']) // Only confirmed or pending bookings
             ->whereDoesntHave('payments', function ($query) {
-                $query->whereIn('status', [\App\Models\Payment::STATUS_PENDING, \App\Models\Payment::STATUS_VERIFIED]);
+                // Exclude bookings with successful or pending Midtrans payments
+                $query->whereIn('status', ['pending', 'settlement', 'capture']);
             })
             ->orderBy('created_at', 'desc')
             ->get();
