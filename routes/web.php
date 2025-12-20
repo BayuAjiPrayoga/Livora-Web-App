@@ -139,31 +139,6 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
     Route::get('/payments/{payment}/download-receipt', [\App\Http\Controllers\Tenant\PaymentController::class, 'downloadReceipt'])->name('payments.download-receipt');
 });
 
-// TEMPORARY DEBUG ROUTE (MOVED OUTSIDE AUTH GROUP)
-Route::get('/debug-tool/recent-payments', function () {
-    // Get recent payments
-    $payments = \App\Models\Payment::with('booking')
-        ->orderBy('created_at', 'desc')
-        ->limit(10)
-        ->get();
-
-    // Check logs
-    $logPath = storage_path('logs/laravel.log');
-    $logs = [];
-    if (file_exists($logPath)) {
-        $lines = file($logPath);
-        $logs = array_slice($lines, -100); // Last 100 lines
-        $logs = array_reverse($logs); // Newest first
-    }
-
-    return response()->json([
-        'server_time' => now()->toDateTimeString(),
-        'db_connection' => config('database.default'),
-        'recent_payments' => $payments,
-        'recent_logs' => $logs
-    ]);
-})->withoutMiddleware(['auth', \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
-
 // LIVORA Admin Routes
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');

@@ -15,6 +15,31 @@ use App\Http\Controllers\Api\V1\DashboardController;
 Route::post('/payment/notification', [MidtransNotificationController::class, 'handle'])
     ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
+// Debug Route
+Route::get('/debug/payments', function () {
+    // Get recent payments
+    $payments = \App\Models\Payment::with('booking')
+        ->orderBy('created_at', 'desc')
+        ->limit(10)
+        ->get();
+
+    // Check logs
+    $logPath = storage_path('logs/laravel.log');
+    $logs = [];
+    if (file_exists($logPath)) {
+        $lines = file($logPath);
+        $logs = array_slice($lines, -100); // Last 100 lines
+        $logs = array_reverse($logs); // Newest first
+    }
+
+    return response()->json([
+        'server_time' => now()->toDateTimeString(),
+        'db_connection' => config('database.default'),
+        'recent_payments' => $payments,
+        'recent_logs' => $logs
+    ]);
+});
+
 Route::prefix('v1')->group(function () {
     // Public routes - Authentication
     Route::post('/login', [AuthController::class, 'login']);
