@@ -64,6 +64,34 @@
                         @endif
 
                         <div class="space-y-6">
+                            @if($availableBookings->isEmpty())
+                                <!-- No Bookings Available Alert -->
+                                <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg p-6 text-center">
+                                    <svg class="w-12 h-12 mx-auto text-yellow-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                    </svg>
+                                    <h3 class="text-lg font-semibold mb-2">Tidak Ada Booking yang Tersedia</h3>
+                                    <p class="text-sm mb-4">
+                                        Anda belum memiliki booking aktif yang perlu dibayar, atau booking Anda sudah memiliki pembayaran yang sedang diproses.
+                                    </p>
+                                    <div class="flex justify-center gap-3">
+                                        <a href="{{ route('tenant.bookings.index') }}" 
+                                           class="inline-flex items-center px-4 py-2 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                            Lihat Booking Saya
+                                        </a>
+                                        <a href="{{ route('browse') }}" 
+                                           class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                            </svg>
+                                            Cari Kost
+                                        </a>
+                                    </div>
+                                </div>
+                            @else
                             <!-- Booking Selection -->
                             <div>
                                 <label for="booking_id" class="block text-sm font-medium text-gray-700 mb-2">
@@ -86,7 +114,9 @@
                                 </select>
                                 <p class="mt-1 text-sm text-gray-500">Pilih booking yang ingin Anda bayar.</p>
                             </div>
+                            @endif
 
+                            @if(!$availableBookings->isEmpty())
                             <!-- Payment Amount Display -->
                             <div id="payment-info" class="hidden bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-lg p-4">
                                 <div class="flex items-start">
@@ -117,6 +147,7 @@
                                 </svg>
                                 <span id="button-text">Bayar Sekarang</span>
                             </button>
+                            @endif
                         </div>
                     </div>
                 </div>
