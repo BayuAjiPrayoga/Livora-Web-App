@@ -120,9 +120,11 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
     
     // Midtrans Payment Routes
     Route::get('/payments-midtrans/create', function() {
+        $userId = auth()->id();
+        
         // Get bookings that need payment (more flexible status check)
         $availableBookings = \App\Models\Booking::with(['room.boardingHouse'])
-            ->where('user_id', auth()->id())
+            ->where('user_id', $userId)
             ->whereNotIn('status', ['cancelled', 'rejected', 'completed']) // Exclude only finished/cancelled bookings
             ->whereDoesntHave('payments', function ($query) {
                 $query->whereIn('status', [\App\Models\Payment::STATUS_PENDING, \App\Models\Payment::STATUS_VERIFIED]);
@@ -132,10 +134,10 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
         
         // Debug: Log available bookings untuk troubleshooting
         \Log::info('Available bookings for payment', [
-            'user_id' => auth()->id(),
-            'total_bookings' => \App\Models\Booking::where('user_id', auth()->id())->count(),
+            'user_id' => $userId,
+            'total_bookings' => \App\Models\Booking::where('user_id', $userId)->count(),
             'available_count' => $availableBookings->count(),
-            'booking_statuses' => \App\Models\Booking::where('user_id', auth()->id())->pluck('status', 'id')->toArray()
+            'booking_statuses' => \App\Models\Booking::where('user_id', $userId)->pluck('status', 'id')->toArray()
         ]);
         
         return view('tenant.payments.midtrans', compact('availableBookings'));
