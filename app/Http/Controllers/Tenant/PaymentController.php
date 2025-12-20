@@ -19,7 +19,7 @@ class PaymentController extends Controller
         // Validate Midtrans Configuration
         $serverKey = config('midtrans.server_key');
         $clientKey = config('midtrans.client_key');
-        
+
         // Validasi format dan keberadaan key
         if (empty($serverKey) || empty($clientKey)) {
             Log::error('Midtrans Configuration Missing', [
@@ -27,14 +27,14 @@ class PaymentController extends Controller
                 'client_key_exists' => !empty($clientKey),
                 'env_file_path' => base_path('.env')
             ]);
-            
+
             throw new \Exception('Konfigurasi Midtrans belum lengkap. Pastikan MIDTRANS_SERVER_KEY dan MIDTRANS_CLIENT_KEY sudah diset di environment variables.');
         }
-        
+
         // Validasi whitespace
         $serverKey = trim($serverKey);
         $clientKey = trim($clientKey);
-        
+
         // Set Midtrans Configuration
         $isProduction = config('midtrans.is_production', false);
         Config::$serverKey = $serverKey;
@@ -42,7 +42,7 @@ class PaymentController extends Controller
         Config::$isProduction = $isProduction;
         Config::$isSanitized = config('midtrans.is_sanitized', true);
         Config::$is3ds = config('midtrans.is_3ds', true);
-        
+
         // Log successful configuration (tanpa expose full key)
         Log::info('Midtrans Configuration Loaded', [
             'server_key_prefix' => substr($serverKey, 0, 20) . '...',
@@ -236,7 +236,7 @@ class PaymentController extends Controller
             if ($payment->proof_image && Storage::disk('public')->exists($payment->proof_image)) {
                 Storage::disk('public')->delete($payment->proof_image);
             }
-            
+
             // Upload new image
             $updateData['proof_image'] = $request->file('proof_image')->store('payment-proofs', 'public');
         }
@@ -318,7 +318,7 @@ class PaymentController extends Controller
                     'booking_id' => $request->booking_id,
                     'user_id' => Auth::id()
                 ]);
-                
+
                 return response()->json([
                     'success' => false,
                     'message' => 'Booking tidak valid atau tidak ditemukan.'
@@ -343,7 +343,7 @@ class PaymentController extends Controller
                     'order_id' => $existingPayment->order_id,
                     'status' => $existingPayment->status
                 ]);
-                
+
                 // Return existing snap token
                 return response()->json([
                     'success' => true,
@@ -457,20 +457,46 @@ class PaymentController extends Controller
     /**
      * Halaman finish setelah pembayaran Midtrans
      */
+    /**
+     * Halaman finish setelah pembayaran Midtrans
+     */
     public function finishPayment(Request $request)
     {
         $orderId = $request->query('order_id');
-        
+        $statusCode = $request->query('status_code');
+        $transactionStatus = $request->query('transaction_status');
+
         if ($orderId) {
             $payment = Payment::where('order_id', $orderId)->first();
-            
+
             if ($payment) {
+                // Determine message based on transaction status
+                $message = 'Pembayaran Anda sedang diproses.';
+                $type = 'info';
+
+                if ($transactionStatus == 'capture' || $transactionStatus == 'settlement') {
+                    $message = 'Pembayaran berhasil! Terima kasih.';
+                    $type = 'success';
+                } elseif ($transactionStatus == 'pending') {
+                    $message = 'Menunggu pembayaran Anda. Silakan selesaikan pembayaran.';
+                    $type = 'info';
+                } elseif ($transactionStatus == 'deny') {
+                    $message = 'Pembayaran ditolak. Silakan coba lagi.';
+                    $type = 'error';
+                } elseif ($transactionStatus == 'expire') {
+                    $message = 'Pembayaran telah kadaluarsa. Silakan buat pembayaran ulang.';
+                    $type = 'error';
+                } elseif ($transactionStatus == 'cancel') {
+                    $message = 'Pembayaran dibatalkan.';
+                    $type = 'warning';
+                }
+
                 return redirect()->route('tenant.payments.show', $payment)
-                    ->with('info', 'Pembayaran Anda sedang diproses. Harap tunggu konfirmasi.');
+                    ->with($type, $message);
             }
         }
 
         return redirect()->route('tenant.payments.index')
-            ->with('info', 'Terima kasih atas pembayaran Anda.');
+            ->with('info', 'Status pembayaran diperbarui.');
     }
 }

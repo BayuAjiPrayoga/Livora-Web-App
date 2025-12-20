@@ -110,12 +110,6 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
     Route::resource('tickets', \App\Http\Controllers\Tenant\TicketController::class);
 
     // Payment Management Routes - SIMPLE MANUAL PAYMENT
-    Route::get('/payments', [\App\Http\Controllers\Tenant\PaymentController::class, 'index'])->name('payments.index');
-    Route::get('/payments/create', [\App\Http\Controllers\Tenant\PaymentController::class, 'create'])->name('payments.create');
-    Route::post('/payments', [\App\Http\Controllers\Tenant\PaymentController::class, 'store'])->name('payments.store');
-    Route::get('/payments/{payment}', [\App\Http\Controllers\Tenant\PaymentController::class, 'show'])->name('payments.show');
-    Route::get('/payments/{payment}/download-receipt', [\App\Http\Controllers\Tenant\PaymentController::class, 'downloadReceipt'])->name('payments.download-receipt');
-
     // Midtrans Payment Routes
     Route::get('/payments-midtrans/create', function () {
         $userId = \Illuminate\Support\Facades\Auth::id();
@@ -137,6 +131,12 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
 
     Route::get('/payments/finish', [\App\Http\Controllers\Tenant\PaymentController::class, 'finishPayment'])
         ->name('payments.finish');
+
+    Route::get('/payments', [\App\Http\Controllers\Tenant\PaymentController::class, 'index'])->name('payments.index');
+    Route::get('/payments/create', [\App\Http\Controllers\Tenant\PaymentController::class, 'create'])->name('payments.create');
+    Route::post('/payments', [\App\Http\Controllers\Tenant\PaymentController::class, 'store'])->name('payments.store');
+    Route::get('/payments/{payment}', [\App\Http\Controllers\Tenant\PaymentController::class, 'show'])->name('payments.show');
+    Route::get('/payments/{payment}/download-receipt', [\App\Http\Controllers\Tenant\PaymentController::class, 'downloadReceipt'])->name('payments.download-receipt');
 });
 
 // LIVORA Admin Routes
