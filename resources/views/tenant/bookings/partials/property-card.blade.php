@@ -13,13 +13,13 @@
         
         <!-- Status Badge -->
         <div class="absolute top-3 right-3">
-            @if($property->status === 'verified')
+            @if($property->is_verified)
                 <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                     ✓ Verified
                 </span>
             @else
                 <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                    Pending
+                    Pending Verification
                 </span>
             @endif
         </div>
