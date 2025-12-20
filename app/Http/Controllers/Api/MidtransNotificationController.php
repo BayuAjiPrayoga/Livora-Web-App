@@ -25,24 +25,24 @@ class MidtransNotificationController extends Controller
     {
         // Validate Midtrans Configuration
         $serverKey = config('midtrans.server_key');
-        
+
         if (empty($serverKey)) {
             Log::error('Midtrans Server Key Missing for Webhook', [
                 'server_key_exists' => !empty($serverKey),
                 'env_file_path' => base_path('.env')
             ]);
         }
-        
+
         // Trim whitespace
         $serverKey = trim($serverKey);
         $isProduction = config('midtrans.is_production', false);
-        
+
         // Set Midtrans Configuration
         Config::$serverKey = $serverKey;
         Config::$isProduction = $isProduction;
         Config::$isSanitized = config('midtrans.is_sanitized', true);
         Config::$is3ds = config('midtrans.is_3ds', true);
-        
+
         Log::info('Midtrans Webhook Configuration Loaded', [
             'server_key_prefix' => substr($serverKey, 0, 20) . '...',
             'is_production' => $isProduction
@@ -118,7 +118,7 @@ class MidtransNotificationController extends Controller
                     'order_id' => $orderId,
                     'available_payments' => Payment::pluck('order_id')->toArray()
                 ]);
-                
+
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Payment not found'
@@ -141,7 +141,7 @@ class MidtransNotificationController extends Controller
                     'payment_type' => $paymentType,
                     'payment_method' => $notification->payment_type ?? null,
                     'midtrans_status' => $transactionStatus,
-                    'transaction_time' => isset($notification->transaction_time) 
+                    'transaction_time' => isset($notification->transaction_time)
                         ? date('Y-m-d H:i:s', strtotime($notification->transaction_time))
                         : now(),
                     'midtrans_response' => json_encode($request->all())
@@ -297,7 +297,7 @@ class MidtransNotificationController extends Controller
             case 'expire':
                 // Pembayaran expired (tidak dibayar dalam waktu yang ditentukan)
                 $payment->update([
-                    'status' => Payment::STATUS_EXPIRED,
+                    'status' => 'expired',
                     'notes' => 'Pembayaran kadaluarsa - tidak dibayar dalam waktu yang ditentukan'
                 ]);
                 break;
@@ -305,7 +305,7 @@ class MidtransNotificationController extends Controller
             case 'cancel':
                 // Pembayaran dibatalkan
                 $payment->update([
-                    'status' => Payment::STATUS_CANCELLED,
+                    'status' => 'cancelled',
                     'notes' => 'Pembayaran dibatalkan oleh pelanggan'
                 ]);
                 break;
@@ -314,7 +314,7 @@ class MidtransNotificationController extends Controller
             case 'partial_refund':
                 // Pembayaran di-refund
                 $payment->update([
-                    'status' => Payment::STATUS_REFUND,
+                    'status' => 'refund',
                     'notes' => 'Pembayaran telah di-refund'
                 ]);
                 break;
@@ -322,7 +322,7 @@ class MidtransNotificationController extends Controller
             case 'failure':
                 // Pembayaran gagal
                 $payment->update([
-                    'status' => Payment::STATUS_FAILED,
+                    'status' => 'failed',
                     'notes' => 'Pembayaran gagal diproses'
                 ]);
                 break;
