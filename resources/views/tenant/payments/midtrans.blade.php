@@ -4,14 +4,20 @@
 
 @section('head')
 <!-- Midtrans Snap JS -->
-<script type="text/javascript" src="https://app.{{ config('midtrans.is_production') ? '' : 'sandbox.' }}midtrans.com/snap/snap.js" 
-        data-client-key="{{ config('midtrans.client_key') }}"></script>
+@php
+    $snapUrl = config('midtrans.is_production') 
+        ? 'https://app.midtrans.com/snap/snap.js' 
+        : 'https://app.sandbox.midtrans.com/snap/snap.js';
+    $clientKey = config('midtrans.client_key');
+@endphp
+<script type="text/javascript" src="{{ $snapUrl }}" 
+        data-client-key="{{ $clientKey }}"></script>
 
 <!-- Debug: Log Midtrans config -->
 <script>
     console.log('=== MIDTRANS SCRIPT CONFIG ===');
-    console.log('Script URL:', 'https://app.{{ config('midtrans.is_production') ? '' : 'sandbox.' }}midtrans.com/snap/snap.js');
-    console.log('Client Key:', '{{ config('midtrans.client_key') }}');
+    console.log('Script URL:', '{{ $snapUrl }}');
+    console.log('Client Key:', '{{ $clientKey }}');
     console.log('Is Production:', {{ config('midtrans.is_production') ? 'true' : 'false' }});
     
     // Wait for page load and check if script loaded
@@ -28,6 +34,7 @@
             console.log('✅ Midtrans Snap.js loaded successfully');
         }
     });
+
 </script>
 @endsection
 
