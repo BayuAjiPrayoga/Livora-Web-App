@@ -20,6 +20,7 @@ class PaymentController extends Controller
         $serverKey = config('midtrans.server_key');
         $clientKey = config('midtrans.client_key');
         
+        // Validasi format dan keberadaan key
         if (empty($serverKey) || empty($clientKey)) {
             Log::error('Midtrans Configuration Missing', [
                 'server_key_exists' => !empty($serverKey),
@@ -30,12 +31,50 @@ class PaymentController extends Controller
             throw new \Exception('Konfigurasi Midtrans belum lengkap. Pastikan MIDTRANS_SERVER_KEY dan MIDTRANS_CLIENT_KEY sudah diset di environment variables.');
         }
         
+        // Validasi whitespace
+        $serverKey = trim($serverKey);
+        $clientKey = trim($clientKey);
+        
+        // Validasi prefix untuk Sandbox
+        $isProduction = config('midtrans.is_production', false);
+        if (!$isProduction) {
+            // Sandbox harus pakai prefix SB-
+            if (!str_starts_with($serverKey, 'SB-Mid-server-')) {
+                Log::error('Midtrans Server Key Invalid for Sandbox', [
+                    'server_key_prefix' => substr($serverKey, 0, 15),
+                    'expected_prefix' => 'SB-Mid-server-',
+                    'is_production' => $isProduction
+                ]);
+                
+                throw new \Exception('Server Key tidak sesuai dengan environment Sandbox. Pastikan menggunakan key yang berawalan SB-Mid-server-');
+            }
+            
+            if (!str_starts_with($clientKey, 'SB-Mid-client-')) {
+                Log::error('Midtrans Client Key Invalid for Sandbox', [
+                    'client_key_prefix' => substr($clientKey, 0, 15),
+                    'expected_prefix' => 'SB-Mid-client-',
+                    'is_production' => $isProduction
+                ]);
+                
+                throw new \Exception('Client Key tidak sesuai dengan environment Sandbox. Pastikan menggunakan key yang berawalan SB-Mid-client-');
+            }
+        }
+        
         // Set Midtrans Configuration
         Config::$serverKey = $serverKey;
         Config::$clientKey = $clientKey;
-        Config::$isProduction = config('midtrans.is_production', false);
+        Config::$isProduction = $isProduction;
         Config::$isSanitized = config('midtrans.is_sanitized', true);
         Config::$is3ds = config('midtrans.is_3ds', true);
+        
+        // Log successful configuration (tanpa expose full key)
+        Log::info('Midtrans Configuration Loaded', [
+            'server_key_prefix' => substr($serverKey, 0, 20) . '...',
+            'client_key_prefix' => substr($clientKey, 0, 20) . '...',
+            'is_production' => $isProduction,
+            'is_3ds' => Config::$is3ds,
+            'is_sanitized' => Config::$isSanitized
+        ]);
     }
 
     public function index(Request $request)
@@ -278,6 +317,17 @@ class PaymentController extends Controller
     public function createMidtransCheckout(Request $request)
     {
         try {
+            // DEBUGGING: Log Midtrans Configuration
+            Log::info('=== MIDTRANS CONFIG DEBUG ===', [
+                'server_key' => config('midtrans.server_key'),
+                'server_key_prefix' => substr(config('midtrans.server_key'), 0, 10),
+                'server_key_length' => strlen(config('midtrans.server_key')),
+                'client_key' => config('midtrans.client_key'),
+                'is_production' => config('midtrans.is_production'),
+                'Config_serverKey' => Config::$serverKey,
+                'Config_isProduction' => Config::$isProduction,
+            ]);
+            
             $request->validate([
                 'booking_id' => 'required|exists:bookings,id',
                 'amount' => 'required|numeric|min:1'
