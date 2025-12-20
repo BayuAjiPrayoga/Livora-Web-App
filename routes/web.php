@@ -109,52 +109,12 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
     // Ticket Management Routes for Tenants
     Route::resource('tickets', \App\Http\Controllers\Tenant\TicketController::class);
     
-    // Payment Management Routes (Submit & Track Payments)
-    // METODE PEMBAYARAN KONVENSIONAL - DINONAKTIFKAN (MENGGUNAKAN MIDTRANS)
-    // Route::resource('payments', \App\Http\Controllers\Tenant\PaymentController::class);
-    
-    // Only keep index and show routes for viewing payment history
+    // Payment Management Routes - SIMPLE MANUAL PAYMENT
     Route::get('/payments', [\App\Http\Controllers\Tenant\PaymentController::class, 'index'])->name('payments.index');
+    Route::get('/payments/create', [\App\Http\Controllers\Tenant\PaymentController::class, 'create'])->name('payments.create');
+    Route::post('/payments', [\App\Http\Controllers\Tenant\PaymentController::class, 'store'])->name('payments.store');
     Route::get('/payments/{payment}', [\App\Http\Controllers\Tenant\PaymentController::class, 'show'])->name('payments.show');
     Route::get('/payments/{payment}/download-receipt', [\App\Http\Controllers\Tenant\PaymentController::class, 'downloadReceipt'])->name('payments.download-receipt');
-    
-    // Midtrans Payment Routes
-    Route::get('/payments-midtrans/create', function() {
-        $userId = \Illuminate\Support\Facades\Auth::id();
-        
-        // Get bookings that need payment (Midtrans status check)
-        $availableBookings = \App\Models\Booking::with(['room.boardingHouse', 'payments'])
-            ->where('user_id', $userId)
-            ->whereIn('status', ['confirmed', 'pending']) // Only confirmed or pending bookings
-            ->whereDoesntHave('payments', function ($query) {
-                // Exclude bookings with successful Midtrans payments only
-                $query->whereIn('status', ['settlement', 'capture']);
-            })
-            ->orderBy('created_at', 'desc')
-            ->get();
-        
-        // Debug: Log detailed info untuk troubleshooting
-        \Log::info('Payment page - Available bookings check', [
-            'user_id' => $userId,
-            'total_bookings' => \App\Models\Booking::where('user_id', $userId)->count(),
-            'available_count' => $availableBookings->count(),
-            'all_bookings' => \App\Models\Booking::where('user_id', $userId)
-                ->with('payments')
-                ->get()
-                ->map(function($b) {
-                    return [
-                        'id' => $b->id,
-                        'code' => $b->booking_code,
-                        'status' => $b->status,
-                        'payments' => $b->payments->map(fn($p) => ['id' => $p->id, 'status' => $p->status])
-                    ];
-                })
-        ]);
-        
-        return view('tenant.payments.midtrans', compact('availableBookings'));
-    })->name('payments.midtrans.create');
-    Route::post('/payments/midtrans/checkout', [\App\Http\Controllers\Tenant\PaymentController::class, 'createMidtransCheckout'])->name('payments.midtrans.checkout');
-    Route::get('/payments/finish', [\App\Http\Controllers\Tenant\PaymentController::class, 'finishPayment'])->name('payments.finish');
 });
 
 // LIVORA Admin Routes

@@ -91,16 +91,17 @@ class PaymentController extends Controller
         return view('tenant.payments.index', compact('payments', 'stats'));
     }
 
-    // METODE PEMBAYARAN KONVENSIONAL - DINONAKTIFKAN (MENGGUNAKAN MIDTRANS)
-    /*
+    /**
+     * Show form untuk create payment baru (Upload bukti transfer)
+     */
     public function create()
     {
-        // Get user's active bookings that don't have pending/verified payments
+        // Get user's active bookings that don't have verified payments
         $availableBookings = Booking::with(['room.boardingHouse'])
             ->where('user_id', Auth::id())
             ->whereIn('status', ['confirmed', 'pending'])
             ->whereDoesntHave('payments', function ($query) {
-                $query->whereIn('status', [Payment::STATUS_PENDING, Payment::STATUS_VERIFIED]);
+                $query->where('status', 'verified');
             })
             ->get();
 
@@ -111,9 +112,10 @@ class PaymentController extends Controller
 
         return view('tenant.payments.create', compact('availableBookings'));
     }
-    */
 
-    /*
+    /**
+     * Store payment baru (Upload bukti transfer)
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -144,14 +146,14 @@ class PaymentController extends Controller
                 ->withInput();
         }
 
-        // Check if there's already a pending/verified payment for this booking
+        // Check if there's already a verified payment for this booking
         $existingPayment = Payment::where('booking_id', $booking->id)
-            ->whereIn('status', [Payment::STATUS_PENDING, Payment::STATUS_VERIFIED])
+            ->where('status', 'verified')
             ->exists();
 
         if ($existingPayment) {
             return redirect()->back()
-                ->withErrors(['booking_id' => 'Booking ini sudah memiliki pembayaran yang sedang diproses atau telah diverifikasi.'])
+                ->withErrors(['booking_id' => 'Booking ini sudah memiliki pembayaran yang telah diverifikasi.'])
                 ->withInput();
         }
 
@@ -162,13 +164,12 @@ class PaymentController extends Controller
             'booking_id' => $booking->id,
             'amount' => $request->amount,
             'proof_image' => $proofPath,
-            'status' => Payment::STATUS_PENDING
+            'status' => 'pending'
         ]);
 
         return redirect()->route('tenant.payments.index')
-            ->with('success', 'Pembayaran berhasil disubmit. Menunggu verifikasi dari mitra.');
+            ->with('success', 'Pembayaran berhasil disubmit! Menunggu verifikasi dari mitra.');
     }
-    */
 
     public function show(Payment $payment)
     {
