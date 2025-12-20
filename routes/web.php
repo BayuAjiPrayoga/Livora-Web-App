@@ -140,11 +140,12 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
 });
 
 // TEMPORARY DEBUG ROUTE (MOVED OUTSIDE AUTH GROUP)
-Route::get('/debug-tool/payment-check/{orderId}', function ($orderId) {
-    $parts = explode('-', $orderId);
-    $bookingId = isset($parts[1]) ? $parts[1] : null;
-
-    $targetPayment = \App\Models\Payment::with('booking')->where('order_id', $orderId)->first();
+Route::get('/debug-tool/recent-payments', function () {
+    // Get recent payments
+    $payments = \App\Models\Payment::with('booking')
+        ->orderBy('created_at', 'desc')
+        ->limit(10)
+        ->get();
 
     // Check logs
     $logPath = storage_path('logs/laravel.log');
@@ -155,23 +156,10 @@ Route::get('/debug-tool/payment-check/{orderId}', function ($orderId) {
         $logs = array_reverse($logs); // Newest first
     }
 
-    // Check DB Connection
-    $dbConnection = config('database.default');
-
-    // Find ANY payments for this booking (if we can parse ID)
-    $relatedPayments = [];
-    if ($bookingId) {
-        $relatedPayments = \App\Models\Payment::where('booking_id', $bookingId)->get();
-    }
-
     return response()->json([
-        'found' => (bool) $targetPayment,
-        'target_payment' => $targetPayment,
-        'related_payments_count' => count($relatedPayments),
-        'related_payments' => $relatedPayments,
         'server_time' => now()->toDateTimeString(),
-        'db_connection' => $dbConnection,
-        'parsed_booking_id' => $bookingId,
+        'db_connection' => config('database.default'),
+        'recent_payments' => $payments,
         'recent_logs' => $logs
     ]);
 })->withoutMiddleware([\App\Http\Middleware\Authenticate::class, 'auth', \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
