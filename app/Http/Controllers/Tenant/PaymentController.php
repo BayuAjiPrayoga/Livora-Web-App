@@ -292,6 +292,13 @@ class PaymentController extends Controller
      */
     public function createMidtransCheckout(Request $request)
     {
+        Log::info('=== MIDTRANS CHECKOUT START ===', [
+            'user_id' => Auth::id(),
+            'request_data' => $request->all(),
+            'server_key_prefix' => substr(Config::$serverKey, 0, 15) . '...',
+            'is_production' => Config::$isProduction
+        ]);
+
         try {
             $request->validate([
                 'booking_id' => 'required|exists:bookings,id',
@@ -306,11 +313,23 @@ class PaymentController extends Controller
                 ->first();
 
             if (!$booking) {
+                Log::warning('Booking tidak ditemukan', [
+                    'booking_id' => $request->booking_id,
+                    'user_id' => Auth::id()
+                ]);
+                
                 return response()->json([
                     'success' => false,
                     'message' => 'Booking tidak valid atau tidak ditemukan.'
                 ], 404);
             }
+
+            Log::info('Booking found', [
+                'booking_id' => $booking->id,
+                'booking_code' => $booking->booking_code,
+                'booking_status' => $booking->status,
+                'room_name' => $booking->room->boardingHouse->name
+            ]);
 
             // Check if there's already a pending/successful payment for this booking
             $existingPayment = Payment::where('booking_id', $booking->id)
@@ -318,6 +337,12 @@ class PaymentController extends Controller
                 ->first();
 
             if ($existingPayment && $existingPayment->snap_token) {
+                Log::info('Using existing payment', [
+                    'payment_id' => $existingPayment->id,
+                    'order_id' => $existingPayment->order_id,
+                    'status' => $existingPayment->status
+                ]);
+                
                 // Return existing snap token
                 return response()->json([
                     'success' => true,
@@ -329,12 +354,23 @@ class PaymentController extends Controller
             // Generate unique order ID
             $orderId = 'LIVORA-' . $booking->id . '-' . time();
 
+            Log::info('Creating new payment record', [
+                'order_id' => $orderId,
+                'booking_id' => $booking->id,
+                'amount' => $request->amount
+            ]);
+
             // Create payment record
             $payment = Payment::create([
                 'booking_id' => $booking->id,
                 'amount' => $request->amount,
                 'status' => 'pending',
                 'order_id' => $orderId
+            ]);
+
+            Log::info('Payment record created', [
+                'payment_id' => $payment->id,
+                'order_id' => $payment->order_id
             ]);
 
             // Prepare transaction details for Midtrans
@@ -370,14 +406,26 @@ class PaymentController extends Controller
                 ]
             ];
 
+            Log::info('Calling Midtrans Snap API', [
+                'order_id' => $orderId,
+                'gross_amount' => $transactionDetails['gross_amount'],
+                'customer_email' => $customerDetails['email']
+            ]);
+
             // Get Snap Token dari Midtrans
             $snapToken = Snap::getSnapToken($params);
+
+            Log::info('Snap token received', [
+                'order_id' => $orderId,
+                'snap_token_prefix' => substr($snapToken, 0, 20) . '...'
+            ]);
 
             // Update payment dengan snap_token
             $payment->update(['snap_token' => $snapToken]);
 
-            Log::info('Midtrans Checkout Created', [
+            Log::info('=== MIDTRANS CHECKOUT SUCCESS ===', [
                 'order_id' => $orderId,
+                'payment_id' => $payment->id,
                 'amount' => $request->amount,
                 'user_id' => Auth::id()
             ]);
@@ -389,9 +437,12 @@ class PaymentController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            Log::error('Midtrans Checkout Error: ' . $e->getMessage(), [
+            Log::error('=== MIDTRANS CHECKOUT ERROR ===', [
+                'error_message' => $e->getMessage(),
                 'user_id' => Auth::id(),
                 'booking_id' => $request->booking_id ?? null,
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
                 'trace' => $e->getTraceAsString()
             ]);
 

@@ -63,17 +63,18 @@ class MidtransNotificationController extends Controller
     {
         try {
             // Log incoming notification untuk audit trail
-            Log::info('Midtrans Notification Received', [
+            Log::info('=== MIDTRANS WEBHOOK RECEIVED ===', [
                 'ip' => $request->ip(),
+                'timestamp' => now()->toDateTimeString(),
                 'payload' => $request->all(),
-                'headers' => $request->headers->all()
+                'user_agent' => $request->userAgent()
             ]);
 
             // ============================================
             // SECURITY LAYER 1: Signature Verification
             // ============================================
             if (!$this->verifySignature($request)) {
-                Log::warning('Midtrans Signature Verification Failed', [
+                Log::warning('=== SIGNATURE VERIFICATION FAILED ===', [
                     'ip' => $request->ip(),
                     'order_id' => $request->input('order_id'),
                     'payload' => $request->all()
@@ -84,6 +85,8 @@ class MidtransNotificationController extends Controller
                     'message' => 'Invalid signature'
                 ], 403);
             }
+
+            Log::info('Signature verified successfully');
 
             // ============================================
             // SECURITY LAYER 2: Midtrans SDK Validation
@@ -97,24 +100,36 @@ class MidtransNotificationController extends Controller
             $transactionId = $notification->transaction_id;
             $paymentType = $notification->payment_type;
 
-            Log::info('Midtrans Notification Verified', [
+            Log::info('=== MIDTRANS NOTIFICATION PARSED ===', [
                 'order_id' => $orderId,
                 'transaction_status' => $transactionStatus,
                 'fraud_status' => $fraudStatus,
                 'transaction_id' => $transactionId,
-                'payment_type' => $paymentType
+                'payment_type' => $paymentType,
+                'settlement_time' => $notification->settlement_time ?? null,
+                'gross_amount' => $notification->gross_amount ?? null
             ]);
 
             // Find payment record
             $payment = Payment::where('order_id', $orderId)->first();
 
             if (!$payment) {
-                Log::warning('Payment not found for order_id: ' . $orderId);
+                Log::error('=== PAYMENT NOT FOUND ===', [
+                    'order_id' => $orderId,
+                    'available_payments' => Payment::pluck('order_id')->toArray()
+                ]);
+                
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Payment not found'
                 ], 404);
             }
+
+            Log::info('Payment found', [
+                'payment_id' => $payment->id,
+                'current_status' => $payment->status,
+                'booking_id' => $payment->booking_id
+            ]);
 
             // Begin transaction untuk data consistency
             DB::beginTransaction();
@@ -132,15 +147,22 @@ class MidtransNotificationController extends Controller
                     'midtrans_response' => json_encode($request->all())
                 ]);
 
+                Log::info('Payment metadata updated', [
+                    'payment_id' => $payment->id,
+                    'transaction_id' => $transactionId,
+                    'payment_type' => $paymentType
+                ]);
+
                 // Handle transaction status
                 $this->handleTransactionStatus($payment, $transactionStatus, $fraudStatus);
 
                 DB::commit();
 
-                Log::info('Payment Updated Successfully', [
+                Log::info('=== WEBHOOK PROCESSED SUCCESSFULLY ===', [
                     'order_id' => $orderId,
                     'payment_id' => $payment->id,
-                    'status' => $payment->status
+                    'final_status' => $payment->fresh()->status,
+                    'booking_status' => $payment->booking->status ?? 'N/A'
                 ]);
 
                 return response()->json([

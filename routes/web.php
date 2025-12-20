@@ -120,7 +120,7 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
     
     // Midtrans Payment Routes
     Route::get('/payments-midtrans/create', function() {
-        $userId = auth()->id();
+        $userId = \Illuminate\Support\Facades\Auth::id();
         
         // Get bookings that need payment (Midtrans status check)
         $availableBookings = \App\Models\Booking::with(['room.boardingHouse', 'payments'])
