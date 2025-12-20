@@ -130,7 +130,7 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () 
             ->get();
 
         return view('tenant.payments.midtrans', compact('availableBookings'));
-    })->name('payments-midtrans.create');
+    })->name('payments.midtrans.create');
 
     Route::post('/payments/midtrans/checkout', [\App\Http\Controllers\Tenant\PaymentController::class, 'createMidtransCheckout'])
         ->name('payments.midtrans.checkout');
