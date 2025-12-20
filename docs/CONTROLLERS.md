@@ -2,6 +2,10 @@
 
 Dokumentasi lengkap untuk semua Controllers beserta methods, parameters, dan variables yang digunakan.
 
+**Last Updated**: December 21, 2025  
+**Laravel Version**: 12  
+**Status**: Production Ready
+
 ---
 
 ## Public Controllers

@@ -52,12 +52,14 @@ Dokumentasi lengkap routing, arsitektur aplikasi, dan alur user flow.
 
 ### Technology Stack
 
--   **Framework:** Laravel 11
--   **Frontend:** Blade Templates + Tailwind CSS
--   **Database:** MySQL
--   **Authentication:** Laravel Breeze
--   **File Storage:** Local (public disk)
+-   **Framework:** Laravel 12
+-   **Frontend:** Blade Templates + Tailwind CSS + Vite
+-   **Database:** MySQL (Railway Production)
+-   **Authentication:** Laravel Breeze + Sanctum (API)
+-   **Payment Gateway:** Midtrans Snap API
+-   **File Storage:** Railway persistent storage (public disk)
 -   **Assets:** Vite
+-   **API:** RESTful API v1 with Sanctum authentication
 
 ---
 

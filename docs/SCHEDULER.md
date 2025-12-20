@@ -1,5 +1,10 @@
 # Laravel Scheduler - Booking Status Automation
 
+**Last Updated**: December 21, 2025  
+**Laravel Version**: 12  
+**Production**: Railway Deployment  
+**Status**: ✅ Active & Configured
+
 ## Overview
 
 Sistem ini menggunakan Laravel Scheduler untuk **otomatis mengubah status booking dari `confirmed` menjadi `active`** saat tanggal check-in tiba.

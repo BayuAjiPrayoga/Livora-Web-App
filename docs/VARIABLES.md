@@ -2,6 +2,11 @@
 
 > Comprehensive reference of all variables used across LIVORA application files, organized by controller/class with types, descriptions, and usage context.
 
+**Last Updated**: December 21, 2025  
+**Laravel Version**: 12  
+**Scope**: Web Controllers & API Controllers  
+**Status**: Comprehensive reference for all active controllers
+
 ---
 
 ## 📋 Table of Contents

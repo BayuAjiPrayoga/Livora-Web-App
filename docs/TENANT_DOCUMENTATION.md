@@ -2,6 +2,12 @@
 
 Dokumentasi lengkap untuk fitur, fungsi, dan method yang digunakan pada bagian Tenant (Penyewa) di aplikasi Livora. Dokumen ini ditujukan sebagai acuan untuk pengembangan aplikasi mobile (Flutter).
 
+**Last Updated**: December 21, 2025  
+**Laravel Version**: 12  
+**API Endpoint**: https://livora-web-app-production.up.railway.app/api/v1  
+**Status**: ✅ Web & API Ready  
+**Note**: Semua endpoint juga tersedia dalam REST API dengan Sanctum authentication
+
 ---
 
 ## 📋 Daftar Isi
@@ -123,11 +129,21 @@ Format item activity:
 
 **Controller:** `Tenant\PaymentController`
 
+### Payment Methods
+
+1. **Manual Payment**: Upload bukti transfer manual untuk verifikasi admin/mitra
+2. **Midtrans Payment**: Payment gateway online dengan berbagai metode:
+    - Credit/Debit Card (Visa, Mastercard, JCB, Amex)
+    - E-Wallet (GoPay, OVO, DANA, ShopeePay, LinkAja)
+    - Bank Transfer (BCA, Mandiri, BNI, BRI, Permata)
+    - Convenience Store (Alfamart, Indomaret)
+
 ### Status Payment
 
--   `pending`: Menunggu verifikasi
--   `verified`: Pembayaran diterima
+-   `pending`: Menunggu verifikasi atau pembayaran
+-   `verified`: Pembayaran diterima/berhasil
 -   `rejected`: Pembayaran ditolak
+-   `failed`: Pembayaran gagal (Midtrans)
 
 ### Fitur & Method
 

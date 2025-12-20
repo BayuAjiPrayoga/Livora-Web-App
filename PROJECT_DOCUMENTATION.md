@@ -10,12 +10,15 @@ LIVORA adalah platform manajemen kos modern yang menghubungkan pemilik kos (owne
 
 ### **Tech Stack**
 
--   **Framework**: Laravel 11
--   **Database**: MySQL
--   **Frontend**: Tailwind CSS + Blade Templates
--   **Authentication**: Laravel Breeze
+-   **Framework**: Laravel 12
+-   **Database**: MySQL (Railway Production)
+-   **Frontend**: Tailwind CSS + Blade Templates + Vite
+-   **Authentication**: Laravel Breeze + Sanctum (API)
+-   **Payment Gateway**: Midtrans (Sandbox & Production)
+-   **Export**: Maatwebsite Excel, DomPDF
 -   **Charts**: Chart.js
 -   **Interactive Components**: Alpine.js
+-   **Deployment**: Railway (Production)
 
 ### **User Roles**
 
@@ -203,23 +206,32 @@ Route::get('/', function () {
 
 ---
 
-## 🎯 Status Development
+## 🎯 Status Development (Updated December 21, 2025)
 
 ### ✅ **Yang Sudah Selesai:**
 
-1. **Authentication System**: Multi-role login/logout ✅
-2. **Route Structure**: Semua route admin, mitra, tenant ✅
-3. **Admin Controllers**: BookingController, PaymentController, TicketController, ReportController, SettingController ✅
-4. **Database Models**: User, BoardingHouse, Room, Booking, Payment, Ticket ✅
-5. **Admin Dashboard**: Basic layout dan navigation ✅
+1. **Authentication System**: Multi-role login/logout (Web + API) ✅
+2. **Route Structure**: Web routes + API routes (api/v1) ✅
+3. **Admin Controllers**: Full CRUD untuk semua modul + Export (Excel/PDF) ✅
+4. **Mitra Controllers**: Full CRUD + Room management ✅
+5. **Tenant Controllers**: Dashboard, Booking, Payment, Ticket ✅
+6. **Database Models**: User, BoardingHouse, Room, Booking, Payment, Ticket dengan relations ✅
+7. \*✨ **Fitur Utama yang Sudah Berfungsi:**
 
-### ⚠️ **Yang Perlu Diperbaiki:**
+8. **Admin Panel**: Full management dashboard dengan analytics
+9. **Mitra Panel**: Property & room management, booking verification
+10. **Tenant Panel**: Booking system dengan payment via Midtrans
+11. **Payment System**: Integrasi lengkap dengan Midtrans Snap
+12. **Reporting**: Export ke Excel dan PDF untuk semua data
+13. **API Mobile**: RESTful API ready untuk Flutter mobile app
+14. **Ticketing**: Support ticket system untuk semua role
+15. **Multi-tenancy**: Clean separation antar role
 
-1. **Admin Views**: Banyak view files yang belum dibuat atau tidak konsisten
-2. **Mitra Controllers & Views**: Sebagian besar belum diimplement dengan benar
-3. **Tenant Controllers & Views**: Masih banyak yang missing
-4. **UI Consistency**: Tampilan tidak konsisten, styling berantakan
-5. **Functionality**: Banyak fitur yang belum fully functional
+16. **Admin Views**: Banyak view files yang belum dibuat atau tidak konsisten
+17. **Mitra Controllers & Views**: Sebagian besar belum diimplement dengan benar
+18. **Tenant Controllers & Views**: Masih banyak yang missing
+19. **UI Consistency**: Tampilan tidak konsisten, styling berantakan
+20. **Functionality**: Banyak fitur yang belum fully functional
 
 ### 🚧 **Priority Tasks untuk Development Selanjutnya:**
 
@@ -315,9 +327,13 @@ Route::get('/', function () {
 
 ```json
 {
-    "laravel/framework": "^11.0",
-    "laravel/breeze": "^2.0",
-    "laravel/tinker": "^2.8"
+    "laravel/framework": "^12.0",
+    "laravel/sanctum": "^4.2",
+    "laravel/tinker": "^2.10.1",
+    "barryvdh/laravel-dompdf": "^3.1",
+    "maatwebsite/excel": "^3.1",
+    "midtrans/midtrans-php": "^2.6",
+    "laravel/breeze": "^2.3"
 }
 ```
 
@@ -369,9 +385,13 @@ php artisan serve
 
 ---
 
-## 📞 Contact & Notes
+## 📞 Contact & Notes(Local) / Railway (Production)
 
-**Project Location**: `c:\laragon\www\Livora`  
+**Development Date**: November - December 2025  
+**Last Update**: December 21, 2025  
+**Status**: ✅ Production Ready - Deployed on Railway  
+**Production URL**: https://livora-web-app-production.up.railway.app  
+**API Endpoint**: https://livora-web-app-production.up.railway.app/api/v1
 **Database**: MySQL via Laragon  
 **Development Date**: November 2025  
 **Status**: In Development - Core structure complete, features need implementation

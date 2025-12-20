@@ -2,6 +2,11 @@
 
 Dokumentasi lengkap untuk semua Eloquent Models beserta field, relationship, dan method yang digunakan.
 
+**Last Updated**: December 21, 2025  
+**Laravel Version**: 12  
+**Database**: MySQL (Railway Production)  
+**Status**: All models implemented and tested
+
 ---
 
 ## 1. User Model
@@ -248,22 +253,39 @@ getNextBooking(): ?Booking
 **File:** `app/Models/Booking.php`  
 **Table:** `bookings`
 
+**Important Note**: Field names have been updated in recent migrations:
+
+-   `start_date` → `check_in_date`
+-   `end_date` → `check_out_date`
+-   `duration` → `duration_months` / `duration_days`
+-   `total_price` / `total_amount` → `final_amount`
+
 ### Fields
 
-| Field          | Type          | Nullable | Default   | Description                                              |
-| -------------- | ------------- | -------- | --------- | -------------------------------------------------------- |
-| `id`           | bigint        | No       | AUTO      | Primary key                                              |
-| `user_id`      | bigint        | No       | -         | Foreign key ke users (tenant)                            |
-| `room_id`      | bigint        | No       | -         | Foreign key ke rooms                                     |
-| `start_date`   | date          | No       | -         | Tanggal mulai sewa                                       |
-| `duration`     | integer       | No       | -         | Durasi sewa (bulan)                                      |
-| `end_date`     | date          | No       | -         | Tanggal selesai sewa                                     |
-| `total_price`  | decimal(10,2) | No       | -         | Harga total sebelum diskon                               |
-| `final_amount` | decimal(10,2) | Yes      | NULL      | Harga final setelah diskon                               |
-| `status`       | enum          | No       | 'pending' | Status: pending, confirmed, active, completed, cancelled |
-| `notes`        | text          | Yes      | NULL      | Catatan booking                                          |
-| `created_at`   | timestamp     | Yes      | CURRENT   | Waktu dibuat                                             |
-| `updated_at`   | timestamp     | Yes      | CURRENT   | Waktu diupdate                                           |
+| Field                    | Type          | Nullable | Default   | Description                                              |
+| ------------------------ | ------------- | -------- | --------- | -------------------------------------------------------- |
+| `id`                     | bigint        | No       | AUTO      | Primary key                                              |
+| `user_id`                | bigint        | No       | -         | Foreign key ke users (tenant)                            |
+| `room_id`                | bigint        | No       | -         | Foreign key ke rooms                                     |
+| `boarding_house_id`      | bigint        | No       | -         | Foreign key ke boarding_houses                           |
+| `booking_code`           | string(50)    | No       | -         | Unique booking code (BK-XXXXXX)                          |
+| `booking_type`           | enum          | No       | 'monthly' | Type: monthly, yearly                                    |
+| `check_in_date`          | date          | No       | -         | Tanggal check-in                                         |
+| `check_out_date`         | date          | No       | -         | Tanggal check-out                                        |
+| `duration_months`        | integer       | No       | -         | Durasi sewa (bulan)                                      |
+| `duration_days`          | integer       | No       | -         | Durasi sewa (hari)                                       |
+| `monthly_price`          | decimal(10,2) | No       | -         | Harga bulanan kamar                                      |
+| `deposit_amount`         | decimal(10,2) | Yes      | 0         | Jumlah deposit                                           |
+| `admin_fee`              | decimal(10,2) | Yes      | 0         | Biaya admin                                              |
+| `discount_amount`        | decimal(10,2) | Yes      | 0         | Jumlah diskon                                            |
+| `final_amount`           | decimal(10,2) | No       | -         | Total akhir yang harus dibayar                           |
+| `status`                 | enum          | No       | 'pending' | Status: pending, confirmed, active, completed, cancelled |
+| `notes`                  | text          | Yes      | NULL      | Catatan booking                                          |
+| `tenant_identity_number` | string        | Yes      | NULL      | Nomor KTP tenant                                         |
+| `ktp_image`              | string        | Yes      | NULL      | Path foto KTP                                            |
+| `cancellation_reason`    | text          | Yes      | NULL      | Alasan pembatalan                                        |
+| `created_at`             | timestamp     | Yes      | CURRENT   | Waktu dibuat                                             |
+| `updated_at`             | timestamp     | Yes      | CURRENT   | Waktu diupdate                                           |
 
 ### Status Constants
 
@@ -413,19 +435,30 @@ scopeCancelled($query)
 **File:** `app/Models/Payment.php`  
 **Table:** `payments`
 
+**Payment Methods Supported**:
+
+-   Manual Upload: Upload bukti transfer untuk verifikasi manual
+-   Midtrans: Online payment gateway (Credit Card, E-Wallet, Bank Transfer, dll)
+
 ### Fields
 
-| Field         | Type          | Nullable | Default   | Description                         |
-| ------------- | ------------- | -------- | --------- | ----------------------------------- |
-| `id`          | bigint        | No       | AUTO      | Primary key                         |
-| `booking_id`  | bigint        | No       | -         | Foreign key ke bookings             |
-| `amount`      | decimal(10,2) | No       | -         | Jumlah pembayaran                   |
-| `proof_image` | string(255)   | Yes      | NULL      | Path bukti transfer                 |
-| `status`      | enum          | No       | 'pending' | Status: pending, verified, rejected |
-| `notes`       | text          | Yes      | NULL      | Catatan payment                     |
-| `verified_at` | timestamp     | Yes      | NULL      | Waktu diverifikasi                  |
-| `created_at`  | timestamp     | Yes      | CURRENT   | Waktu dibuat                        |
-| `updated_at`  | timestamp     | Yes      | CURRENT   | Waktu diupdate                      |
+| Field                 | Type          | Nullable | Default   | Description                                  |
+| --------------------- | ------------- | -------- | --------- | -------------------------------------------- |
+| `id`                  | bigint        | No       | AUTO      | Primary key                                  |
+| `booking_id`          | bigint        | No       | -         | Foreign key ke bookings                      |
+| `amount`              | decimal(10,2) | No       | -         | Jumlah pembayaran                            |
+| `payment_method`      | enum          | No       | 'manual'  | Method: manual, midtrans                     |
+| `proof_image`         | string(255)   | Yes      | NULL      | Path bukti transfer (untuk manual)           |
+| `status`              | enum          | No       | 'pending' | Status: pending, verified, rejected, failed  |
+| `midtrans_order_id`   | string        | Yes      | NULL      | Order ID dari Midtrans                       |
+| `midtrans_snap_token` | string        | Yes      | NULL      | Snap token untuk payment popup               |
+| `payment_type`        | string        | Yes      | NULL      | Type dari Midtrans (credit_card, gopay, dll) |
+| `transaction_id`      | string        | Yes      | NULL      | Transaction ID dari Midtrans                 |
+| `notes`               | text          | Yes      | NULL      | Catatan payment                              |
+| `verified_at`         | timestamp     | Yes      | NULL      | Waktu diverifikasi                           |
+| `verified_by`         | bigint        | Yes      | NULL      | User ID yang verifikasi                      |
+| `created_at`          | timestamp     | Yes      | CURRENT   | Waktu dibuat                                 |
+| `updated_at`          | timestamp     | Yes      | CURRENT   | Waktu diupdate                               |
 
 ### Status Constants
 

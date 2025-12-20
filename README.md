@@ -2,10 +2,11 @@
 
 > Platform management kost/boarding house berbasis web dengan sistem multi-tenant (Tenant, Owner/Mitra, Admin).
 
-![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?logo=laravel)
-![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?logo=php)
+![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel)
+![PHP](https://img.shields.io/badge/PHP-8.3+-777BB4?logo=php)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?logo=mysql)
 ![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38B2AC?logo=tailwind-css)
+![Railway](https://img.shields.io/badge/Deployed-Railway-0B0D0E?logo=railway)
 
 ---
 
@@ -26,9 +27,12 @@
 
 ## 🏠 Tentang LIVORA
 
-**LIVORA (Live Better, Stay Better)** adalah platform management kost/boarding house berbasis web yang dibangun dengan Laravel 11. Aplikasi ini dirancang dengan arsitektur multi-tenant yang mendukung 3 role utama: **Tenant** (pencari kost), **Owner/Mitra** (pemilik kost), dan **Admin** (administrator sistem).
+**LIVORA (Live Better, Stay Better)** adalah platform management kost/boarding house berbasis web yang dibangun dengan Laravel 12. Aplikasi ini dirancang dengan arsitektur multi-tenant yang mendukung 3 role utama: **Tenant** (pencari kost), **Owner/Mitra** (pemilik kost), dan **Admin** (administrator sistem).
 
-Platform ini menyediakan solusi lengkap untuk pengelolaan kost mulai dari pencarian properti, booking, pembayaran, hingga manajemen kompleks seperti laporan keuangan dan tiket layanan pelanggan.
+Platform ini menyediakan solusi lengkap untuk pengelolaan kost mulai dari pencarian properti, booking, pembayaran online via Midtrans, hingga manajemen kompleks seperti laporan keuangan dan tiket layanan pelanggan.
+
+**Status**: ✅ Production Ready - Deployed on [Railway](https://livora-web-app-production.up.railway.app)  
+**API**: ✅ RESTful API ready untuk Flutter Mobile App
 
 ### 🎯 Tujuan Proyek
 
@@ -53,7 +57,8 @@ Platform ini menyediakan solusi lengkap untuk pengelolaan kost mulai dari pencar
 
 -   **Dashboard**: Statistik booking, pembayaran, dan aktivitas terkini
 -   **Booking Management**: Buat, lihat, dan batalkan booking
--   **Payment Management**: Upload bukti pembayaran, download receipt
+-   **Payment Management**: Upload bukti pembayaran manual, atau bayar via Midtrans
+-   **Midtrans Integration**: Payment gateway online (Credit Card, E-Wallet, Bank Transfer)
 -   **Ticket System**: Buat dan kelola tiket keluhan/permintaan
 -   **Profile Management**: Update profil dan informasi akun
 -   **Notification System**: Notifikasi real-time untuk booking, pembayaran, dan tiket
@@ -86,17 +91,31 @@ Platform ini menyediakan solusi lengkap untuk pengelolaan kost mulai dari pencar
 
 ### Backend
 
--   **Laravel 11**: Framework PHP
--   **PHP 8.2+**: Language
--   **MySQL 8.0+**: Database
+-   **Laravel 12**: Framework PHP
+-   **PHP 8.3+**: Language
+-   **MySQL 8.0+**: Database (Railway)
 -   **Eloquent ORM**: Database management
+-   **Laravel Sanctum**: API authentication
+-   **Midtrans**: Payment gateway integration
 
 ### Frontend
 
 -   **Blade**: Templating engine
 -   **Tailwind CSS**: Styling framework
 -   **Alpine.js**: JavaScript framework (minimal)
--   **Vite**: Build tool
+-   **Chart.js**: Data visualization
+-   **Vite**: Build tool & asset bundler
+
+### Export & Reporting
+
+-   **Maatwebsite Excel**: Excel export functionality
+-   **DomPDF**: PDF generation for reports & receipts
+
+### Deployment
+
+-   **Platform**: Railway.app
+-   **Database**: Railway MySQL
+-   **Storage**: Railway persistent storage
 
 ### Tools & Libraries
 
@@ -188,6 +207,13 @@ MAIL_FROM_ADDRESS="noreply@livora.com"
 MAIL_FROM_NAME="${APP_NAME}"
 
 FILESYSTEM_DISK=public
+
+# Midtrans Configuration (Production)
+MIDTRANS_SERVER_KEY=your_server_key
+MIDTRANS_CLIENT_KEY=your_client_key
+MIDTRANS_IS_PRODUCTION=false
+MIDTRANS_IS_SANITIZED=true
+MIDTRANS_IS_3DS=true
 ```
 
 ### Storage Configuration
@@ -323,6 +349,17 @@ Dokumentasi lengkap proyek tersedia di folder `/docs`:
 -   **Main Controllers**: HomeController, DashboardController (Tenant/Mitra/Admin), PropertyController, RoomController, BookingController, PaymentController, TicketController
 -   **Key Routes**: `/`, `/browse`, `/tenant/dashboard`, `/mitra/dashboard`, `/admin/dashboard`
 
+### API Documentation
+
+RESTful API tersedia untuk mobile app development:
+
+-   **Base URL Production**: `https://livora-web-app-production.up.railway.app/api/v1`
+-   **Base URL Local**: `http://localhost:8000/api/v1`
+-   **Authentication**: Laravel Sanctum (Bearer Token)
+-   **Full Documentation**: See [MOBILE_APP_SPEC.md](MOBILE_APP_SPEC.md)
+-   **Endpoints**: Auth, Boarding Houses, Rooms, Bookings, Payments (Midtrans), Tickets, Profile
+-   **CORS**: Configured for mobile app access
+
 ---
 
 ## 🔧 Troubleshooting
@@ -415,9 +452,11 @@ php artisan bookings:recalculate-amounts
 
 ## 📞 Support & Contact
 
--   **Production**: https://livora-web-app-production.up.railway.app
+-   **Production Web**: https://livora-web-app-production.up.railway.app
+-   **Production API**: https://livora-web-app-production.up.railway.app/api/v1
 -   **Repository**: https://github.com/BayuAjiPrayoga/Livora-Web-App
--   **Documentation**: `/docs`
+-   **Documentation**: `/docs` folder & [MOBILE_APP_SPEC.md](MOBILE_APP_SPEC.md)
+-   **API Spec**: Complete mobile app specification available
 -   **Issues**: GitHub Issues
 
 ---
@@ -437,6 +476,6 @@ This project is licensed under the MIT License.
 
 ---
 
-**Last Updated**: December 19, 2025
+**Last Updated**: December 21, 2025
 
 **LIVORA** - Live Better, Stay Better 🏠✨

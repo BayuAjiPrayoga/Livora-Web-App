@@ -1,13 +1,13 @@
 # 📱 LIVORA MOBILE APP - Technical Specification
 
-**Version:** 2.0  
-**Date:** December 19, 2025  
-**Last Updated:** December 19, 2025  
+**Version:** 2.1  
+**Date:** December 21, 2025  
+**Last Updated:** December 21, 2025  
 **Target Platform:** Flutter (Android & iOS)  
-**Backend:** Laravel 11 + Sanctum  
+**Backend:** Laravel 12 + Sanctum  
 **Scope:** Tenant & Mitra Only - Admin Dashboard EXCLUDED  
 **Note:** "Mitra" is the property owner role (formerly called "owner")  
-**Backend Status:** ✅ Fully Implemented & Tested
+**Backend Status:** ✅ Fully Implemented, Tested & Deployed to Production
 
 ---
 
@@ -43,9 +43,11 @@ Local:      http://localhost:8000/storage/
 **Important Notes:**
 
 -   ✅ Backend Laravel API fully implemented and deployed to Railway
--   ✅ MySQL database hosted on Railway
+-   ✅ MySQL database hosted on Railway (Production Ready)
 -   ✅ All API endpoints tested and production-ready
 -   ✅ CORS configured for mobile app access
+-   ✅ Midtrans payment gateway integrated (Production Mode Ready)
+-   ✅ File storage configured for image uploads
 -   ⚠️ **Use Production URL for mobile app release**
 -   💡 Use Local URLs during development/testing
 
