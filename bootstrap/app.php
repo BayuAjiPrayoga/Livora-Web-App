@@ -24,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Exclude webhook from authentication
         $middleware->api(prepend: [
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ]);
     })
