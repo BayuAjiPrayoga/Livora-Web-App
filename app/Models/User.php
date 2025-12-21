@@ -95,7 +95,7 @@ class User extends Authenticatable
     }
 
     // LIVORA Relationships
-    
+
     /**
      * Get the boarding houses owned by this user.
      *
@@ -124,6 +124,16 @@ class User extends Authenticatable
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class, 'user_id');
+    }
+
+    /**
+     * Get the payments associated with this user through bookings.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough<Payment>
+     */
+    public function payments()
+    {
+        return $this->hasManyThrough(Payment::class, Booking::class, 'user_id', 'booking_id', 'id', 'id');
     }
 
     /**
