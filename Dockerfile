@@ -191,5 +191,6 @@ EXPOSE 8080
 CMD php artisan migrate --force || true && \
     php artisan db:seed --force || true && \
     php artisan config:clear && \
+    chown -R www-data:www-data /app/storage && \
     php artisan storage:link || true && \
     /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
