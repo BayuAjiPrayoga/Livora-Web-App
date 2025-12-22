@@ -29,8 +29,8 @@ class PropertyController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('city', 'like', "%{$search}%")
-                  ->orWhere('address', 'like', "%{$search}%");
+                    ->orWhere('city', 'like', "%{$search}%")
+                    ->orWhere('address', 'like', "%{$search}%");
             });
         }
 
@@ -90,9 +90,12 @@ class PropertyController extends Controller
                 },
                 'owner'
             ])
-            ->withCount(['rooms', 'rooms as available_rooms_count' => function ($q) {
-                $q->where('is_available', true);
-            }])
+            ->withCount([
+                'rooms',
+                'rooms as available_rooms_count' => function ($q) {
+                    $q->where('is_available', true);
+                }
+            ])
             ->where('is_active', true)
             ->first();
 
@@ -116,7 +119,7 @@ class PropertyController extends Controller
      */
     public function ownerProperties(Request $request)
     {
-        $user = auth()->user();
+        $user = $request->user();
 
         $query = BoardingHouse::query()
             ->with(['rooms'])
@@ -133,8 +136,8 @@ class PropertyController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('city', 'like', "%{$search}%")
-                  ->orWhere('address', 'like', "%{$search}%");
+                    ->orWhere('city', 'like', "%{$search}%")
+                    ->orWhere('address', 'like', "%{$search}%");
             });
         }
 
