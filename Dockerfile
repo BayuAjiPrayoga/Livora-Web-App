@@ -193,4 +193,5 @@ CMD php artisan migrate --force || true && \
     php artisan config:clear && \
     chown -R www-data:www-data /app/storage && \
     php artisan storage:link || true && \
+    php artisan fix:icons || true && \
     /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
