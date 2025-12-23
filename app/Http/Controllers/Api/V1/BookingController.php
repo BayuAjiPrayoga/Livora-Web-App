@@ -27,14 +27,14 @@ class BookingController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        
+
         $query = Booking::with([
             'room.boardingHouse',
             'user',
             'payments'
         ])
-        ->where('user_id', $user->id)
-        ->withCount('payments');
+            ->where('user_id', $user->id)
+            ->withCount('payments');
 
         // Filter by status
         if ($request->filled('status')) {
@@ -79,8 +79,8 @@ class BookingController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        // Check if user is owner
-        if ($user->role !== 'owner') {
+        // Check if user is owner or mitra
+        if (!in_array($user->role, ['owner', 'mitra'])) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized. Only owners can access this endpoint.',
@@ -94,10 +94,10 @@ class BookingController extends Controller
             'user',
             'payments'
         ])
-        ->whereHas('room.boardingHouse', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })
-        ->withCount('payments');
+            ->whereHas('room.boardingHouse', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })
+            ->withCount('payments');
 
         // Filter by status
         if ($request->filled('status')) {
@@ -148,7 +148,7 @@ class BookingController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        
+
         $request->validate([
             'room_id' => 'required|exists:rooms,id',
             'start_date' => 'required|date|after_or_equal:today',
@@ -185,21 +185,21 @@ class BookingController extends Controller
                 // Debug: log conflicting bookings
                 $conflicts = $room->bookings()
                     ->whereIn('status', ['confirmed', 'active'])
-                    ->where(function($q) use ($startDate, $endDate) {
+                    ->where(function ($q) use ($startDate, $endDate) {
                         $q->whereBetween('check_in_date', [$startDate, $endDate])
-                          ->orWhereBetween('check_out_date', [$startDate, $endDate])
-                          ->orWhere(function($subQ) use ($startDate, $endDate) {
-                              $subQ->where('check_in_date', '<=', $startDate)
-                                   ->where('check_out_date', '>=', $endDate);
-                          });
+                            ->orWhereBetween('check_out_date', [$startDate, $endDate])
+                            ->orWhere(function ($subQ) use ($startDate, $endDate) {
+                                $subQ->where('check_in_date', '<=', $startDate)
+                                    ->where('check_out_date', '>=', $endDate);
+                            });
                     })->get(['id', 'status', 'check_in_date', 'check_out_date']);
-                
+
                 \Log::warning('Room not available', [
                     'room_id' => $room->id,
                     'requested_dates' => [$startDate, $endDate],
                     'conflicting_bookings' => $conflicts
                 ]);
-                
+
                 return response()->json([
                     'success' => false,
                     'message' => 'Room is not available for the selected dates. Please choose different dates.',
@@ -283,16 +283,16 @@ class BookingController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        
+
         $booking = Booking::with([
             'room.boardingHouse.owner',
             'room.facilities',
             'user',
             'payments'
         ])
-        ->withCount('payments')
-        ->where('user_id', $user->id)
-        ->find($id);
+            ->withCount('payments')
+            ->where('user_id', $user->id)
+            ->find($id);
 
         if (!$booking) {
             return response()->json([
@@ -319,7 +319,7 @@ class BookingController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        
+
         $booking = Booking::where('user_id', $user->id)
             ->find($id);
 
@@ -377,8 +377,8 @@ class BookingController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        // Check if user is owner
-        if ($user->role !== 'owner') {
+        // Check if user is owner or mitra
+        if (!in_array($user->role, ['owner', 'mitra'])) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized. Only owners can verify payments.',
@@ -459,8 +459,8 @@ class BookingController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        // Check if user is owner
-        if ($user->role !== 'owner') {
+        // Check if user is owner or mitra
+        if (!in_array($user->role, ['owner', 'mitra'])) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized. Only owners can reject payments.',

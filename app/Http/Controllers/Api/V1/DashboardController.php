@@ -27,8 +27,8 @@ class DashboardController extends Controller
             ], 401);
         }
 
-        // Check if user is mitra (owner)
-        if ($user->role !== 'mitra') {
+        // Check if user is mitra or owner
+        if (!in_array($user->role, ['owner', 'mitra'])) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized. Only property owners can access this endpoint.',
@@ -86,10 +86,10 @@ class DashboardController extends Controller
             $revenueThisMonth = Payment::whereHas('booking.room', function ($q) use ($boardingHouses) {
                 $q->whereIn('boarding_house_id', $boardingHouses);
             })
-            ->where('status', 'verified')
-            ->whereMonth('verified_at', now()->month)
-            ->whereYear('verified_at', now()->year)
-            ->sum('amount');
+                ->where('status', 'verified')
+                ->whereMonth('verified_at', now()->month)
+                ->whereYear('verified_at', now()->year)
+                ->sum('amount');
 
             // Recent bookings
             $recentBookings = Booking::with([
@@ -97,12 +97,12 @@ class DashboardController extends Controller
                 'user',
                 'payments'
             ])
-            ->whereHas('room', function ($q) use ($boardingHouses) {
-                $q->whereIn('boarding_house_id', $boardingHouses);
-            })
-            ->latest()
-            ->take(5)
-            ->get();
+                ->whereHas('room', function ($q) use ($boardingHouses) {
+                    $q->whereIn('boarding_house_id', $boardingHouses);
+                })
+                ->latest()
+                ->take(5)
+                ->get();
 
             return response()->json([
                 'success' => true,

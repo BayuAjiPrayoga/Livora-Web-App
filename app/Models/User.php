@@ -170,7 +170,12 @@ class User extends Authenticatable
 
     public function isOwner(): bool
     {
-        return $this->role === 'owner';
+        return in_array($this->role, ['owner', 'mitra']);
+    }
+
+    public function isMitra(): bool
+    {
+        return $this->isOwner();
     }
 
     public function isTenant(): bool
