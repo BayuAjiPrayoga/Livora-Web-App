@@ -161,4 +161,44 @@ class PaymentController extends Controller
             ]
         ], 200);
     }
+
+    /**
+     * Get payment detail
+     * FIX: This method was missing, causing 404 error
+     */
+    public function show($id)
+    {
+        $payment = Payment::whereHas('booking', function ($q) {
+            $q->where('user_id', auth()->id());
+        })->with('booking.room.boardingHouse')->find($id);
+
+        if (!$payment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment not found',
+                'data' => null
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment retrieved successfully',
+            'data' => [
+                'id' => $payment->id,
+                'booking_id' => $payment->booking_id,
+                'booking_reference' => $payment->booking?->room?->boardingHouse?->name . ' - ' . $payment->booking?->room?->name,
+                'amount' => (float) $payment->amount,
+                'amount_formatted' => 'Rp ' . number_format($payment->amount, 0, ',', '.'),
+                'status' => $payment->status,
+                'status_label' => ucfirst($payment->status),
+                'proof_image' => $payment->proof_image ? url('storage/' . $payment->proof_image) : null,
+                'payment_type' => $payment->payment_type,
+                'midtrans_order_id' => $payment->midtrans_order_id,
+                'notes' => $payment->notes,
+                'verified_at' => $payment->verified_at?->toISOString(),
+                'created_at' => $payment->created_at->toISOString(),
+                'created_at_formatted' => $payment->created_at->format('d M Y H:i'),
+            ]
+        ], 200);
+    }
 }
