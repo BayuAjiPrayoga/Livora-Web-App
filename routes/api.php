@@ -40,8 +40,12 @@ Route::prefix('v1')->group(function () {
 
         // Tenant Payments
         Route::get('/payments', [PaymentController::class, 'index']);
-        Route::post('/payments', [PaymentController::class, 'store']);
-        Route::get('/payments/{id}', [PaymentController::class, 'show']); // FIX: Added this line
+
+        // 🔥 PENTING: Midtrans Route harus DI ATAS route {id}
+        Route::post('/payments/midtrans', [PaymentController::class, 'create']);
+
+        Route::post('/payments', [PaymentController::class, 'store']); // Manual Upload
+        Route::get('/payments/{id}', [PaymentController::class, 'show']); // Dynamic param always last
 
         // Owner routes
         Route::prefix('owner')->group(function () {

@@ -8,8 +8,83 @@ use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+use App\Services\MidtransService;
+
 class PaymentController extends Controller
 {
+    protected $midtransService;
+
+    public function __construct(MidtransService $midtransService)
+    {
+        $this->midtransService = $midtransService;
+    }
+
+    /**
+     * Create Midtrans Payment (Snap Token)
+     */
+    public function create(Request $request)
+    {
+        $request->validate([
+            'booking_id' => 'required|exists:bookings,id',
+        ]);
+
+        $booking = Booking::with('room.boardingHouse', 'user')
+            ->where('id', $request->booking_id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if (!$booking) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Booking not found',
+                'data' => null
+            ], 404);
+        }
+
+        try {
+            $user = auth()->user();
+            // Create pending payment record
+            $payment = Payment::create([
+                'booking_id' => $booking->id,
+                'amount' => $booking->final_amount ?? $booking->total_price,
+                'status' => 'pending',
+                'payment_type' => 'midtrans',
+                'notes' => 'Menunggu pembayaran via Midtrans',
+            ]);
+
+            $params = $this->midtransService->buildTransactionParams($booking, $user);
+            // Override order_id to include payment id to be unique
+            $params['transaction_details']['order_id'] = 'ORDER-' . $payment->id . '-' . time();
+
+            // Get Snap Token
+            $snapToken = $this->midtransService->createTransaction($params);
+
+            // Update payment with token
+            $payment->update([
+                'midtrans_token' => $snapToken,
+                'midtrans_redirect_url' => 'https://app.sandbox.midtrans.com/snap/v2/vtweb/' . $snapToken,
+                'midtrans_order_id' => $params['transaction_details']['order_id']
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment initiation success',
+                'data' => [
+                    'token' => $snapToken,
+                    'redirect_url' => 'https://app.sandbox.midtrans.com/snap/v2/vtweb/' . $snapToken,
+                    'payment' => $payment
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to initiate payment: ' . $e->getMessage(),
+                'data' => null
+            ], 500);
+        }
+    }
+
     /**
      * Store payment proof
      */
@@ -45,7 +120,9 @@ class PaymentController extends Controller
         }
 
         // Validate amount doesn't exceed booking total
-        if ($request->amount > $booking->final_amount) {
+        // Use total_price if final_amount is null
+        $totalAmount = $booking->final_amount ?? $booking->total_price;
+        if ($request->amount > $totalAmount) {
             return response()->json([
                 'success' => false,
                 'message' => 'Payment amount cannot exceed booking total',
@@ -66,6 +143,7 @@ class PaymentController extends Controller
                 'amount' => $request->amount,
                 'proof_image' => $proofPath,
                 'status' => 'pending',
+                'payment_type' => 'manual',
                 'notes' => $request->notes,
             ]);
 
@@ -164,13 +242,10 @@ class PaymentController extends Controller
 
     /**
      * Get payment detail
-     * FIX: This method was missing, causing 404 error
      */
     public function show($id)
     {
-        $payment = Payment::whereHas('booking', function ($q) {
-            $q->where('user_id', auth()->id());
-        })->with('booking.room.boardingHouse')->find($id);
+        $payment = Payment::with('booking.room.boardingHouse')->find($id);
 
         if (!$payment) {
             return response()->json([
@@ -178,6 +253,15 @@ class PaymentController extends Controller
                 'message' => 'Payment not found',
                 'data' => null
             ], 404);
+        }
+
+        // Secure: ensure user owns the payment's booking
+        if ($payment->booking->user_id !== auth()->id()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+                'data' => null
+            ], 403);
         }
 
         return response()->json([
@@ -191,11 +275,10 @@ class PaymentController extends Controller
                 'amount_formatted' => 'Rp ' . number_format($payment->amount, 0, ',', '.'),
                 'status' => $payment->status,
                 'status_label' => ucfirst($payment->status),
+                'midtrans_token' => $payment->midtrans_token,
+                'midtrans_redirect_url' => $payment->midtrans_redirect_url,
                 'proof_image' => $payment->proof_image ? url('storage/' . $payment->proof_image) : null,
-                'payment_type' => $payment->payment_type,
-                'midtrans_order_id' => $payment->midtrans_order_id,
                 'notes' => $payment->notes,
-                'verified_at' => $payment->verified_at?->toISOString(),
                 'created_at' => $payment->created_at->toISOString(),
                 'created_at_formatted' => $payment->created_at->format('d M Y H:i'),
             ]
