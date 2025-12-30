@@ -15,7 +15,7 @@ class PaymentController extends Controller
     {
         // Start building query for payments that belong to mitra's properties
         $mitraId = Auth::id();
-        
+
         $query = Payment::with(['booking.room.boardingHouse', 'booking.user'])
             ->whereHas('booking.room.boardingHouse', function ($q) use ($mitraId) {
                 $q->where('user_id', $mitraId);
@@ -36,10 +36,10 @@ class PaymentController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('amount', 'like', '%' . $search . '%')
-                  ->orWhereHas('booking', function ($bq) use ($search) {
-                      $bq->where('tenant_name', 'like', '%' . $search . '%')
-                        ->orWhere('tenant_phone', 'like', '%' . $search . '%');
-                  });
+                    ->orWhereHas('booking', function ($bq) use ($search) {
+                        $bq->where('tenant_name', 'like', '%' . $search . '%')
+                            ->orWhere('tenant_phone', 'like', '%' . $search . '%');
+                    });
             });
         }
 
@@ -66,9 +66,9 @@ class PaymentController extends Controller
         $statistics = [
             'total_payments' => (clone $baseQuery)->count(),
             'pending_payments' => (clone $baseQuery)->where('status', Payment::STATUS_PENDING)->count(),
-            'verified_payments' => (clone $baseQuery)->where('status', Payment::STATUS_VERIFIED)->count(),
-            'rejected_payments' => (clone $baseQuery)->where('status', Payment::STATUS_REJECTED)->count(),
-            'total_amount' => (clone $baseQuery)->where('status', Payment::STATUS_VERIFIED)->sum('amount'),
+            'verified_payments' => (clone $baseQuery)->whereIn('status', [Payment::STATUS_VERIFIED, Payment::STATUS_SETTLEMENT, 'capture'])->count(),
+            'rejected_payments' => (clone $baseQuery)->whereIn('status', [Payment::STATUS_REJECTED, Payment::STATUS_FAILED, Payment::STATUS_CANCELLED, Payment::STATUS_EXPIRED, 'deny', 'cancel', 'expire'])->count(),
+            'total_amount' => (clone $baseQuery)->whereIn('status', [Payment::STATUS_VERIFIED, Payment::STATUS_SETTLEMENT, 'capture'])->sum('amount'),
             'pending_amount' => (clone $baseQuery)->where('status', Payment::STATUS_PENDING)->sum('amount'),
         ];
 
@@ -110,15 +110,15 @@ class PaymentController extends Controller
 
         if ($request->status === Payment::STATUS_VERIFIED) {
             $updateData['verified_at'] = now();
-            
+
             // Update booking status to confirmed when payment is verified
             $payment->booking->update(['status' => 'confirmed']);
-            
+
             // Mark room as unavailable since payment is verified
             $payment->booking->room->update(['is_available' => false]);
         } elseif ($request->status === Payment::STATUS_REJECTED) {
             $updateData['verified_at'] = null;
-            
+
             // If payment rejected, cancel the booking
             $payment->booking->update(['status' => 'cancelled']);
         } else {
@@ -196,14 +196,14 @@ class PaymentController extends Controller
         }
 
         $disk = Storage::disk('public');
-        
+
         if (!$disk->exists($payment->proof_image)) {
             abort(404, 'File bukti pembayaran tidak ditemukan.');
         }
 
         // Get file path
         $filePath = $disk->path($payment->proof_image);
-        
+
         // Get mime type, default to image/jpeg if detection fails
         try {
             $mimeType = $disk->mimeType($payment->proof_image);
@@ -249,7 +249,7 @@ class PaymentController extends Controller
         ]);
 
         $mitraId = Auth::id();
-        
+
         // Get payments that belong to mitra
         $payments = Payment::whereIn('id', $request->payment_ids)
             ->whereHas('booking.room.boardingHouse', function ($q) use ($mitraId) {
@@ -290,8 +290,8 @@ class PaymentController extends Controller
             $count++;
         }
 
-        $message = $request->action === 'verify' 
-            ? "Berhasil memverifikasi {$count} pembayaran." 
+        $message = $request->action === 'verify'
+            ? "Berhasil memverifikasi {$count} pembayaran."
             : "Berhasil menolak {$count} pembayaran.";
 
         return redirect()->back()->with('success', $message);
