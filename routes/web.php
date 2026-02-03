@@ -94,7 +94,7 @@ Route::prefix('mitra')->name('mitra.')->middleware('auth')->group(function () {
 });
 
 // LIVORA Tenant Routes
-Route::prefix('tenant')->name('tenant.')->middleware('auth')->group(function () {
+Route::prefix('tenant')->name('tenant.')->middleware(['auth', 'role:tenant'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Tenant\DashboardController::class, 'index'])->name('dashboard');
 
     // Profile Management Routes

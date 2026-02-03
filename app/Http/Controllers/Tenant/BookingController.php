@@ -61,6 +61,11 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+        // Check if user is tenant
+        if (Auth::user()->role !== 'tenant') {
+            abort(403, 'Only tenants can create bookings. Please register as a tenant.');
+        }
+
         $this->authorize('create', Booking::class);
 
         $validated = $request->validate([
