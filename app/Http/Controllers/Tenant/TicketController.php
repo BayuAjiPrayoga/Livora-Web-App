@@ -107,7 +107,7 @@ class TicketController extends Controller
     public function show(Ticket $ticket)
     {
         // Check authorization
-        if ($ticket->user_id !== Auth::id()) {
+        if ($ticket->user_id != Auth::id()) {
             abort(403, 'Anda tidak memiliki akses ke tiket ini.');
         }
 
@@ -119,7 +119,7 @@ class TicketController extends Controller
     public function edit(Ticket $ticket)
     {
         // Check authorization and ticket status
-        if ($ticket->user_id !== Auth::id()) {
+        if ($ticket->user_id != Auth::id()) {
             abort(403, 'Anda tidak memiliki akses ke tiket ini.');
         }
 
@@ -145,7 +145,7 @@ class TicketController extends Controller
     public function update(Request $request, Ticket $ticket)
     {
         // Check authorization and ticket status
-        if ($ticket->user_id !== Auth::id()) {
+        if ($ticket->user_id != Auth::id()) {
             abort(403, 'Anda tidak memiliki akses ke tiket ini.');
         }
 
@@ -196,7 +196,7 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         // Check authorization and ticket status
-        if ($ticket->user_id !== Auth::id()) {
+        if ($ticket->user_id != Auth::id()) {
             abort(403, 'Anda tidak memiliki akses ke tiket ini.');
         }
 

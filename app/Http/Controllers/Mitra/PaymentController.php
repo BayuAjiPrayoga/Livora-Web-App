@@ -78,7 +78,7 @@ class PaymentController extends Controller
     public function show(Payment $payment)
     {
         // Check authorization
-        if ($payment->booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($payment->booking->room->boardingHouse->user_id != Auth::id()) {
             abort(403, 'Anda tidak memiliki akses ke pembayaran ini.');
         }
 
@@ -90,7 +90,7 @@ class PaymentController extends Controller
     public function update(Request $request, Payment $payment)
     {
         // Check authorization
-        if ($payment->booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($payment->booking->room->boardingHouse->user_id != Auth::id()) {
             abort(403, 'Anda tidak memiliki akses ke pembayaran ini.');
         }
 
@@ -133,7 +133,7 @@ class PaymentController extends Controller
     public function verify(Payment $payment)
     {
         // Check authorization
-        if ($payment->booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($payment->booking->room->boardingHouse->user_id != Auth::id()) {
             return response()->json(['success' => false, 'message' => 'Tidak memiliki akses.'], 403);
         }
 
@@ -161,7 +161,7 @@ class PaymentController extends Controller
     public function reject(Request $request, Payment $payment)
     {
         // Check authorization
-        if ($payment->booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($payment->booking->room->boardingHouse->user_id != Auth::id()) {
             return response()->json(['success' => false, 'message' => 'Tidak memiliki akses.'], 403);
         }
 
@@ -187,7 +187,7 @@ class PaymentController extends Controller
     public function downloadProof(Payment $payment)
     {
         // Check authorization
-        if ($payment->booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($payment->booking->room->boardingHouse->user_id != Auth::id()) {
             abort(403, 'Anda tidak memiliki akses ke bukti pembayaran ini.');
         }
 
@@ -221,7 +221,7 @@ class PaymentController extends Controller
     public function downloadReceipt(Payment $payment)
     {
         // Check authorization
-        if ($payment->booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($payment->booking->room->boardingHouse->user_id != Auth::id()) {
             abort(403, 'Anda tidak memiliki akses ke kwitansi ini.');
         }
 

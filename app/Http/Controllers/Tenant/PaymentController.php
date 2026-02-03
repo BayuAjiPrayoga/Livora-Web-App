@@ -174,7 +174,7 @@ class PaymentController extends Controller
     public function show(Payment $payment)
     {
         // Check authorization
-        if ($payment->booking->user_id !== Auth::id()) {
+        if ($payment->booking->user_id != Auth::id()) {
             abort(403, 'Anda tidak memiliki akses ke pembayaran ini.');
         }
 
@@ -276,7 +276,7 @@ class PaymentController extends Controller
     public function downloadReceipt(Payment $payment)
     {
         // Check authorization
-        if ($payment->booking->user_id !== Auth::id()) {
+        if ($payment->booking->user_id != Auth::id()) {
             abort(403, 'Anda tidak memiliki akses ke bukti pembayaran ini.');
         }
 
