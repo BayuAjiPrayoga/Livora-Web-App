@@ -110,6 +110,25 @@
                     @endif
                 </div>
 
+                <!-- Room Facilities -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-livora-text mb-4">Fasilitas Kamar</h3>
+                    @if($room->facilities && $room->facilities->count() > 0)
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            @foreach($room->facilities as $facility)
+                            <div class="flex items-center space-x-2 text-sm">
+                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">{{ $facility->name }}</span>
+                            </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-gray-500 italic">Belum ada fasilitas untuk kamar ini.</p>
+                    @endif
+                </div>
+
                 <!-- Booking History -->
                 <div class="bg-white rounded-lg shadow-md">
                     <div class="px-6 py-4 border-b border-gray-200">
