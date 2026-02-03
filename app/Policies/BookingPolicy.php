@@ -44,11 +44,11 @@ class BookingPolicy
 
         // Mitra can view bookings for their properties
         if ($user->role === 'mitra') {
-            return $booking->room->boardingHouse->user_id === $user->id;
+            return $booking->room->boardingHouse->user_id == $user->id;
         }
 
         // Tenants can only view their own bookings
-        return $booking->user_id === $user->id;
+        return $booking->user_id == $user->id;
     }
 
     /**
@@ -79,7 +79,7 @@ class BookingPolicy
 
         // Tenants can only update their own pending bookings
         if ($user->role === 'tenant') {
-            return $booking->user_id === $user->id 
+            return $booking->user_id == $user->id 
                 && $booking->status === Booking::STATUS_PENDING;
         }
 
@@ -102,7 +102,7 @@ class BookingPolicy
 
         // Tenants can only cancel their own pending or confirmed bookings
         if ($user->role === 'tenant') {
-            return $booking->user_id === $user->id 
+            return $booking->user_id == $user->id 
                 && in_array($booking->status, [
                     Booking::STATUS_PENDING, 
                     Booking::STATUS_CONFIRMED
@@ -127,7 +127,7 @@ class BookingPolicy
         }
 
         if ($user->role === 'mitra') {
-            return $booking->room->boardingHouse->user_id === $user->id
+            return $booking->room->boardingHouse->user_id == $user->id
                 && $booking->status === Booking::STATUS_PENDING;
         }
 
@@ -149,7 +149,7 @@ class BookingPolicy
         }
 
         if ($user->role === 'mitra') {
-            return $booking->room->boardingHouse->user_id === $user->id
+            return $booking->room->boardingHouse->user_id == $user->id
                 && $booking->status === Booking::STATUS_CONFIRMED;
         }
 
@@ -171,7 +171,7 @@ class BookingPolicy
         }
 
         if ($user->role === 'mitra') {
-            return $booking->room->boardingHouse->user_id === $user->id
+            return $booking->room->boardingHouse->user_id == $user->id
                 && $booking->status === Booking::STATUS_ACTIVE;
         }
 
