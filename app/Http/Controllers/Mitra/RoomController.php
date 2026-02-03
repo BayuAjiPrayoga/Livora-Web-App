@@ -81,7 +81,7 @@ class RoomController extends Controller
         }
 
         return redirect()
-            ->route('mitra.rooms.show', ['property' => $property->id, 'room' => $room->id])
+            ->route('mitra.rooms.index', ['property' => $property->id])
             ->with('success', 'Kamar berhasil ditambahkan!');
     }
 
@@ -180,7 +180,7 @@ class RoomController extends Controller
         $room->facilities()->sync($facilities);
 
         return redirect()
-            ->route('mitra.rooms.show', ['property' => $property->id, 'room' => $room->id])
+            ->route('mitra.rooms.index', ['property' => $property->id])
             ->with('success', 'Kamar berhasil diupdate!');
     }
 
