@@ -80,7 +80,7 @@ class BookingController extends Controller
     public function propertyBookings(BoardingHouse $property)
     {
         // Check if the property belongs to the authenticated user
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
 
@@ -129,14 +129,14 @@ class BookingController extends Controller
             $property = $room->boardingHouse;
             
             // Check if the property belongs to the authenticated user
-            if ($property->user_id !== Auth::id()) {
+            if ($property->user_id != Auth::id()) {
                 abort(403, 'Unauthorized access to this room.');
             }
         } elseif ($property_id) {
             $property = BoardingHouse::findOrFail($property_id);
             
             // Check if the property belongs to the authenticated user
-            if ($property->user_id !== Auth::id()) {
+            if ($property->user_id != Auth::id()) {
                 abort(403, 'Unauthorized access to this property.');
             }
             
@@ -160,7 +160,7 @@ class BookingController extends Controller
             $room = Room::with('boardingHouse')->findOrFail($validatedData['room_id']);
         
             // Check if the property belongs to the authenticated user
-            if ($room->boardingHouse->user_id !== Auth::id()) {
+            if ($room->boardingHouse->user_id != Auth::id()) {
                 abort(403, 'Unauthorized access to this room.');
             }
 
@@ -276,7 +276,7 @@ class BookingController extends Controller
     public function show(Booking $booking)
     {
         // Check if the booking belongs to a property owned by the authenticated user
-        if ($booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($booking->room->boardingHouse->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this booking.');
         }
 
@@ -291,7 +291,7 @@ class BookingController extends Controller
     public function edit(Booking $booking)
     {
         // Check if the booking belongs to a property owned by the authenticated user
-        if ($booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($booking->room->boardingHouse->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this booking.');
         }
 
@@ -311,7 +311,7 @@ class BookingController extends Controller
     public function update(UpdateBookingRequest $request, Booking $booking)
     {
         // Check if the booking belongs to a property owned by the authenticated user
-        if ($booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($booking->room->boardingHouse->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this booking.');
         }
 
@@ -391,7 +391,7 @@ class BookingController extends Controller
     public function confirm(Booking $booking)
     {
         // Check if the booking belongs to a property owned by the authenticated user
-        if ($booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($booking->room->boardingHouse->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this booking.');
         }
 
@@ -416,7 +416,7 @@ class BookingController extends Controller
     public function checkIn(Booking $booking)
     {
         // Check if the booking belongs to a property owned by the authenticated user
-        if ($booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($booking->room->boardingHouse->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this booking.');
         }
 
@@ -453,7 +453,7 @@ class BookingController extends Controller
     public function checkOut(Booking $booking)
     {
         // Check if the booking belongs to a property owned by the authenticated user
-        if ($booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($booking->room->boardingHouse->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this booking.');
         }
 
@@ -497,7 +497,7 @@ class BookingController extends Controller
     public function cancel(Request $request, Booking $booking)
     {
         // Check if the booking belongs to a property owned by the authenticated user
-        if ($booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($booking->room->boardingHouse->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this booking.');
         }
 
@@ -525,7 +525,7 @@ class BookingController extends Controller
     public function destroy(Booking $booking)
     {
         // Check if the booking belongs to a property owned by the authenticated user
-        if ($booking->room->boardingHouse->user_id !== Auth::id()) {
+        if ($booking->room->boardingHouse->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this booking.');
         }
 
@@ -549,7 +549,7 @@ class BookingController extends Controller
     public function getRooms(BoardingHouse $boardingHouse)
     {
         // Check if the property belongs to the authenticated user
-        if ($boardingHouse->user_id !== Auth::id()) {
+        if ($boardingHouse->user_id != Auth::id()) {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 

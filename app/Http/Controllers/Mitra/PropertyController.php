@@ -74,7 +74,7 @@ class PropertyController extends Controller
     public function show(BoardingHouse $property)
     {
         // Ensure user owns this property
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
         
@@ -90,7 +90,7 @@ class PropertyController extends Controller
      */
     public function edit(BoardingHouse $property)
     {
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
         
@@ -102,7 +102,7 @@ class PropertyController extends Controller
      */
     public function update(Request $request, BoardingHouse $property)
     {
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
         
@@ -165,7 +165,7 @@ class PropertyController extends Controller
      */
     public function destroy(BoardingHouse $property)
     {
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
         

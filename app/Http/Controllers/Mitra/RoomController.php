@@ -19,7 +19,7 @@ class RoomController extends Controller
     public function index(BoardingHouse $property)
     {
         // Check if the property belongs to the authenticated user
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
 
@@ -37,7 +37,7 @@ class RoomController extends Controller
     public function create(BoardingHouse $property)
     {
         // Check if the property belongs to the authenticated user
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
 
@@ -52,7 +52,7 @@ class RoomController extends Controller
     public function store(StoreRoomRequest $request, BoardingHouse $property)
     {
         // Check if the property belongs to the authenticated user
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
 
@@ -91,7 +91,7 @@ class RoomController extends Controller
     public function show(BoardingHouse $property, Room $room)
     {
         // Check if the property belongs to the authenticated user
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
 
@@ -112,7 +112,7 @@ class RoomController extends Controller
     public function edit(BoardingHouse $property, Room $room)
     {
         // Check if the property belongs to the authenticated user
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
 
@@ -133,7 +133,7 @@ class RoomController extends Controller
     public function update(UpdateRoomRequest $request, BoardingHouse $property, Room $room)
     {
         // Check if the property belongs to the authenticated user
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
 
@@ -190,7 +190,7 @@ class RoomController extends Controller
     public function destroy(BoardingHouse $property, Room $room)
     {
         // Check if the property belongs to the authenticated user
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
 
@@ -226,7 +226,7 @@ class RoomController extends Controller
     public function toggleAvailability(BoardingHouse $property, Room $room)
     {
         // Check if the property belongs to the authenticated user
-        if ($property->user_id !== Auth::id()) {
+        if ($property->user_id != Auth::id()) {
             abort(403, 'Unauthorized access to this property.');
         }
 
