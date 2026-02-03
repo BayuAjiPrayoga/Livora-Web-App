@@ -96,8 +96,8 @@ class RoomController extends Controller
         }
 
         // Check if the room belongs to the property
-        if ($room->boarding_house_id !== $property->id) {
-            abort(404, 'Room not found in this property.');
+        if ($room->boarding_house_id != $property->id) {
+            abort(403, 'Kamar ini bukan milik properti yang dipilih.');
         }
 
         // Load relationships
@@ -117,8 +117,8 @@ class RoomController extends Controller
         }
 
         // Check if the room belongs to the property
-        if ($room->boarding_house_id !== $property->id) {
-            abort(404, 'Room not found in this property.');
+        if ($room->boarding_house_id != $property->id) {
+            abort(403, 'Kamar ini bukan milik properti yang dipilih.');
         }
 
         $facilities = \App\Models\Facility::orderBy('name')->get();
@@ -138,8 +138,8 @@ class RoomController extends Controller
         }
 
         // Check if the room belongs to the property
-        if ($room->boarding_house_id !== $property->id) {
-            abort(404, 'Room not found in this property.');
+        if ($room->boarding_house_id != $property->id) {
+            abort(403, 'Kamar ini bukan milik properti yang dipilih.');
         }
 
         $validatedData = $request->validated();
@@ -195,8 +195,8 @@ class RoomController extends Controller
         }
 
         // Check if the room belongs to the property
-        if ($room->boarding_house_id !== $property->id) {
-            abort(404, 'Room not found in this property.');
+        if ($room->boarding_house_id != $property->id) {
+            abort(403, 'Kamar ini bukan milik properti yang dipilih.');
         }
 
         // Check if room has active bookings
@@ -231,8 +231,8 @@ class RoomController extends Controller
         }
 
         // Check if the room belongs to the property
-        if ($room->boarding_house_id !== $property->id) {
-            abort(404, 'Room not found in this property.');
+        if ($room->boarding_house_id != $property->id) {
+            abort(403, 'Kamar ini bukan milik properti yang dipilih.');
         }
 
         $room->update(['is_available' => !$room->is_available]);
