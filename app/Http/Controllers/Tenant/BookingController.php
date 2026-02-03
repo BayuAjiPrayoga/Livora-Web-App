@@ -47,7 +47,9 @@ class BookingController extends Controller
     {
         $this->authorize('create', Booking::class);
 
-        $boardingHouses = BoardingHouse::with(['rooms' => function($query) {
+        $boardingHouses = BoardingHouse::with(['rooms.facilities' => function($query) {
+            $query->select('facilities.id', 'facilities.name');
+        }, 'rooms' => function($query) {
             $query->where('is_available', true);
         }])->get();
 

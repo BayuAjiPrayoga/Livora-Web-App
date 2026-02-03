@@ -75,6 +75,8 @@
         @if($property->rooms->count() > 0)
             <div class="space-y-3">
                 <h4 class="text-sm font-medium text-gray-900">Rooms Status:</h4>
+                
+                <!-- Initial visible rooms (first 3) -->
                 @foreach($property->rooms->take(3) as $room)
                     @php
                         $roomStatus = $room->getCurrentStatus();
@@ -129,6 +131,28 @@
                             </div>
                         </div>
 
+                        <!-- Room Facilities -->
+                        @if($room->facilities && $room->facilities->count() > 0)
+                            <div class="mb-3 pb-3 border-b border-gray-100">
+                                <p class="text-xs font-medium text-gray-700 mb-2">Fasilitas:</p>
+                                <div class="flex flex-wrap gap-1">
+                                    @foreach($room->facilities->take(6) as $facility)
+                                        <span class="inline-flex items-center px-2 py-1 rounded-md bg-green-50 text-green-700 text-xs">
+                                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                            {{ $facility->name }}
+                                        </span>
+                                    @endforeach
+                                    @if($room->facilities->count() > 6)
+                                        <span class="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-600 text-xs">
+                                            +{{ $room->facilities->count() - 6 }} more
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+
                         <!-- Book Button -->
                         @if($isAvailable)
                             <button type="button" 
@@ -155,10 +179,125 @@
                     </div>
                 @endforeach
 
+                <!-- Hidden rooms (collapsed by default) -->
                 @if($property->rooms->count() > 3)
+                    <div class="hidden-rooms-{{ $property->id }}" style="display: none;">
+                        @foreach($property->rooms->skip(3) as $room)
+                            @php
+                                $roomStatus = $room->getCurrentStatus();
+                                $isAvailable = $roomStatus === 'available';
+                            @endphp
+                            <div class="border border-gray-200 rounded-lg p-3 {{ $isAvailable ? 'hover:border-[#ff6900]' : 'opacity-75' }} transition-colors relative">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h5 class="font-medium text-gray-900">{{ $room->name }}</h5>
+                                        @if($room->description)
+                                            <p class="text-sm text-gray-600">{{ Str::limit($room->description, 60) }}</p>
+                                        @endif
+                                        <!-- Room Status Badge -->
+                                        <div class="mt-1">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
+                                                @if($roomStatus === 'available') bg-green-100 text-green-800
+                                                @elseif($roomStatus === 'occupied') bg-red-100 text-red-800
+                                                @elseif($roomStatus === 'reserved') bg-yellow-100 text-yellow-800
+                                                @else bg-gray-100 text-gray-800
+                                                @endif">
+                                                {{ $room->getStatusLabel() }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-lg font-bold text-[#ff6900]">
+                                            Rp {{ number_format($room->price, 0, ',', '.') }}
+                                        </p>
+                                        <p class="text-xs text-gray-500">per month</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Room Details -->
+                                <div class="flex items-center justify-between text-sm text-gray-600 mb-3">
+                                    <div class="flex items-center space-x-4">
+                                        @if($room->capacity)
+                                            <span class="flex items-center">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                                </svg>
+                                                {{ $room->capacity }} person{{ $room->capacity > 1 ? 's' : '' }}
+                                            </span>
+                                        @endif
+                                        @if($room->size)
+                                            <span class="flex items-center">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                                                </svg>
+                                                {{ $room->size }}m²
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <!-- Room Facilities -->
+                                @if($room->facilities && $room->facilities->count() > 0)
+                                    <div class="mb-3 pb-3 border-b border-gray-100">
+                                        <p class="text-xs font-medium text-gray-700 mb-2">Fasilitas:</p>
+                                        <div class="flex flex-wrap gap-1">
+                                            @foreach($room->facilities->take(6) as $facility)
+                                                <span class="inline-flex items-center px-2 py-1 rounded-md bg-green-50 text-green-700 text-xs">
+                                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                    </svg>
+                                                    {{ $facility->name }}
+                                                </span>
+                                            @endforeach
+                                            @if($room->facilities->count() > 6)
+                                                <span class="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-600 text-xs">
+                                                    +{{ $room->facilities->count() - 6 }} more
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
+
+                                <!-- Book Button -->
+                                @if($isAvailable)
+                                    <button type="button" 
+                                            class="book-room-btn w-full bg-blue-600 text-white py-3 px-4 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors cursor-pointer"
+                                            data-room-id="{{ $room->id }}"
+                                            data-room-name="{{ $room->name }}"
+                                            data-property-name="{{ $property->name }}"
+                                            data-location="{{ $property->city }}"
+                                            data-price="{{ $room->price }}">
+                                        📅 Book This Room
+                                    </button>
+                                @else
+                                    <button type="button" disabled
+                                            class="w-full bg-gray-400 text-white py-3 px-4 rounded-lg text-sm font-medium cursor-not-allowed">
+                                        @if($roomStatus === 'occupied')
+                                            🔒 Currently Occupied
+                                        @elseif($roomStatus === 'reserved')  
+                                            📋 Already Booked
+                                        @else
+                                            ❌ Not Available
+                                        @endif
+                                    </button>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+
                     <div class="text-center">
-                        <button type="button" class="text-[#ff6900] text-sm font-medium hover:underline">
-                            View {{ $property->rooms->count() - 3 }} more rooms
+                        <button type="button" 
+                                class="toggle-rooms-btn text-[#ff6900] text-sm font-medium hover:underline flex items-center justify-center mx-auto"
+                                data-property-id="{{ $property->id }}"
+                                data-total-hidden="{{ $property->rooms->count() - 3 }}">
+                            <span class="view-more-text">View {{ $property->rooms->count() - 3 }} more rooms</span>
+                            <span class="view-less-text" style="display: none;">Show less rooms</span>
+                            <svg class="w-4 h-4 ml-1 arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                            <svg class="w-4 h-4 ml-1 arrow-up" style="display: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                            </svg>
                         </button>
                     </div>
                 @endif

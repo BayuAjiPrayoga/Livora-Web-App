@@ -101,7 +101,7 @@ class RoomController extends Controller
         }
 
         // Load relationships
-        $room->load(['bookings.user', 'tickets']);
+        $room->load(['facilities', 'bookings.user', 'tickets']);
 
         return view('mitra.rooms.show', compact('property', 'room'));
     }

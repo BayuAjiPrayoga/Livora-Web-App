@@ -280,6 +280,37 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('All handlers set up successfully');
     
+    // Toggle rooms visibility
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.toggle-rooms-btn')) {
+            const btn = e.target.closest('.toggle-rooms-btn');
+            const propertyId = btn.getAttribute('data-property-id');
+            const hiddenRooms = document.querySelector(`.hidden-rooms-${propertyId}`);
+            const viewMoreText = btn.querySelector('.view-more-text');
+            const viewLessText = btn.querySelector('.view-less-text');
+            const arrowDown = btn.querySelector('.arrow-down');
+            const arrowUp = btn.querySelector('.arrow-up');
+            
+            if (hiddenRooms) {
+                if (hiddenRooms.style.display === 'none') {
+                    // Show hidden rooms
+                    hiddenRooms.style.display = 'block';
+                    viewMoreText.style.display = 'none';
+                    viewLessText.style.display = 'inline';
+                    arrowDown.style.display = 'none';
+                    arrowUp.style.display = 'inline';
+                } else {
+                    // Hide rooms again
+                    hiddenRooms.style.display = 'none';
+                    viewMoreText.style.display = 'inline';
+                    viewLessText.style.display = 'none';
+                    arrowDown.style.display = 'inline';
+                    arrowUp.style.display = 'none';
+                }
+            }
+        }
+    });
+    
     // KTP image preview
     const ktpInput = document.getElementById('ktp_image');
     const ktpPreview = document.getElementById('ktp_preview');
