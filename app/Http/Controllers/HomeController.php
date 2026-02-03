@@ -106,7 +106,7 @@ class HomeController extends Controller
 
     public function show($id)
     {
-        $property = BoardingHouse::with(['rooms', 'user'])
+        $property = BoardingHouse::with(['rooms.facilities', 'user'])
             ->withCount(['rooms', 'rooms as available_rooms_count' => function($query) {
                 $query->where('is_available', true);
             }])

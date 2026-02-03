@@ -93,20 +93,23 @@
                         <div class="space-y-4">
                             @foreach($availableRooms as $room)
                                 <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
-                                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                    <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
                                         <div class="flex-1">
                                             <div class="flex items-center gap-3 mb-2">
-                                                <h3 class="text-lg font-bold text-gray-900">{{ $room->name }}</h3>
+                                                <h3 class="text-lg font-bold text-gray-900 cursor-pointer hover:text-[#ff6900] transition-colors room-name" 
+                                                    data-room-id="{{ $room->id }}">
+                                                    {{ $room->name }}
+                                                </h3>
                                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                                     Tersedia
                                                 </span>
                                             </div>
                                             
                                             @if($room->description)
-                                                <p class="text-gray-600 text-sm mb-3">{{ $room->description }}</p>
+                                                <p class="text-gray-600 text-sm mb-3">{{ Str::limit($room->description, 100) }}</p>
                                             @endif
                                             
-                                            <div class="flex flex-wrap gap-4 text-sm text-gray-600">
+                                            <div class="flex flex-wrap gap-4 text-sm text-gray-600 mb-3">
                                                 @if($room->size)
                                                     <div class="flex items-center">
                                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,6 +127,82 @@
                                                         {{ $room->capacity }} orang
                                                     </div>
                                                 @endif
+                                            </div>
+
+                                            <!-- Facilities Preview -->
+                                            @if($room->facilities && $room->facilities->count() > 0)
+                                                <div class="mb-3">
+                                                    <p class="text-xs font-medium text-gray-700 mb-2">Fasilitas:</p>
+                                                    <div class="flex flex-wrap gap-1">
+                                                        @foreach($room->facilities->take(5) as $facility)
+                                                            <span class="inline-flex items-center px-2 py-1 rounded-md bg-green-50 text-green-700 text-xs">
+                                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                                </svg>
+                                                                {{ $facility->name }}
+                                                            </span>
+                                                        @endforeach
+                                                        @if($room->facilities->count() > 5)
+                                                            <span class="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-600 text-xs">
+                                                                +{{ $room->facilities->count() - 5 }} more
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            @endif
+
+                                            <!-- View Details Button -->
+                                            <button type="button" 
+                                                    class="text-[#ff6900] hover:text-blue-700 text-sm font-medium flex items-center view-details-btn"
+                                                    data-room-id="{{ $room->id }}">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                                </svg>
+                                                Lihat Detail Kamar
+                                            </button>
+
+                                            <!-- Hidden Detail Section -->
+                                            <div class="room-details mt-4 hidden" id="room-details-{{ $room->id }}">
+                                                <div class="border-t pt-4 space-y-3">
+                                                    @if($room->description)
+                                                        <div>
+                                                            <h4 class="font-semibold text-gray-900 mb-2">Deskripsi Lengkap:</h4>
+                                                            <p class="text-gray-600 text-sm">{{ $room->description }}</p>
+                                                        </div>
+                                                    @endif
+
+                                                    @if($room->facilities && $room->facilities->count() > 0)
+                                                        <div>
+                                                            <h4 class="font-semibold text-gray-900 mb-2">Semua Fasilitas:</h4>
+                                                            <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                                                                @foreach($room->facilities as $facility)
+                                                                    <div class="flex items-center text-sm text-gray-700">
+                                                                        <svg class="w-4 h-4 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                                        </svg>
+                                                                        {{ $facility->name }}
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    @endif
+
+                                                    @if($room->images && count($room->images) > 0)
+                                                        <div>
+                                                            <h4 class="font-semibold text-gray-900 mb-2">Foto Kamar:</h4>
+                                                            <div class="grid grid-cols-3 gap-2">
+                                                                @foreach($room->images as $image)
+                                                                    <div class="aspect-video bg-gray-200 rounded-lg overflow-hidden">
+                                                                        <img src="{{ Storage::url($image) }}" 
+                                                                             alt="{{ $room->name }}" 
+                                                                             class="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer">
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                         
@@ -318,6 +397,47 @@
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             closeImageModal();
+        }
+    });
+
+    // Toggle room details
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('view-details-btn') || e.target.closest('.view-details-btn')) {
+            const btn = e.target.classList.contains('view-details-btn') ? e.target : e.target.closest('.view-details-btn');
+            const roomId = btn.getAttribute('data-room-id');
+            const detailsDiv = document.getElementById('room-details-' + roomId);
+            
+            if (detailsDiv) {
+                if (detailsDiv.classList.contains('hidden')) {
+                    detailsDiv.classList.remove('hidden');
+                    btn.innerHTML = `
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                        </svg>
+                        Sembunyikan Detail
+                    `;
+                } else {
+                    detailsDiv.classList.add('hidden');
+                    btn.innerHTML = `
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                        Lihat Detail Kamar
+                    `;
+                }
+            }
+        }
+    });
+
+    // Click room name to toggle details
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('room-name')) {
+            const roomId = e.target.getAttribute('data-room-id');
+            const btn = document.querySelector('.view-details-btn[data-room-id="' + roomId + '"]');
+            if (btn) {
+                btn.click();
+            }
         }
     });
 </script>
